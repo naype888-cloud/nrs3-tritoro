@@ -97,3 +97,7 @@ import NRS3Tritoro
 #print axioms TorusSectorCut.form_bracket_two
 #print axioms TorusSectorCut.bracketTwoSteps_eq
 #print axioms TorusSectorCut.card_bracketTwoSteps
+#print axioms TorusSectorPatterns.swap_mem_of_mem_patterns
+#print axioms TorusSectorPatterns.mem_patterns_iff
+#print axioms TorusSectorPatterns.card_patterns_le
+#print axioms TorusSectorPatterns.card_patterns_lt
