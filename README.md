@@ -24,6 +24,9 @@ Solo local, dependencias por ruta.
 | todo eje de todo estado cae en el cono futuro cerrado | `TorusCone.axisVector_mem_futureCone` |
 | el intervalo de un eje es su defecto de Robertson–Schrödinger | `TorusCone.interval_axisVector` |
 | en la banda el eje es estrictamente temporal; tiempo propio > 0 | `TorusCone.timelike_of_band`, `TorusCone.properTime_pos_of_band` |
+| luz + oscuro = 1 en cada eje, todo estado | `TorusDark.lightShare_add_darkShare` |
+| en la banda cada eje guarda una parte oscura > 0, todo estado | `TorusDark.darkShare_pos_of_band` |
+| en `c` cada eje resuelve `4/5` y guarda `1/5` oscuro (el cubo abierto de 3 guarda `0`) | `TorusDark.lightShare_maxState`, `TorusDark.darkShare_maxState` |
 
 ### La prueba del estricto, en una línea por paso
 
@@ -40,7 +43,7 @@ todos los ejes son cerrados y el doble corchete basta.
 
 ## Pendiente (orden del porte)
 
-reparto luz/oscuro (`DarkShare`) → ley de área `S → Λ` → Mandelstam–Tamm → nivel de campo
+ley de área `S → Λ` → Mandelstam–Tamm → nivel de campo
 (`FieldLevel`, sector `n = 1`) → costuras LQG / de Sitter.
 
 ## Verificación

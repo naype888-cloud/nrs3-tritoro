@@ -20,3 +20,7 @@ import NRS3Tritoro
 #print axioms TorusCone.interval_axisVector
 #print axioms TorusCone.timelike_of_band
 #print axioms TorusCone.properTime_pos_of_band
+#print axioms TorusDark.lightShare_add_darkShare
+#print axioms TorusDark.darkShare_pos_of_band
+#print axioms TorusDark.lightShare_maxState
+#print axioms TorusDark.darkShare_maxState
