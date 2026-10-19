@@ -10,3 +10,4 @@ public import NRS3Tritoro.TorusTime
 public import NRS3Tritoro.TorusSpeed
 public import NRS3Tritoro.TorusSpectrum
 public import NRS3Tritoro.TorusSharp
+public import NRS3Tritoro.TorusField

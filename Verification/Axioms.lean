@@ -64,3 +64,13 @@ import NRS3Tritoro
 #print axioms TorusSharp.two_branches_orthogonal
 #print axioms TorusSharp.ring_orthogonality_exact
 #print axioms TorusSharp.torus_orthogonality_exact
+#print axioms TorusField.secondQuant_lie
+#print axioms TorusField.secondQuant_oneExcitation
+#print axioms TorusField.form_oneExcitation
+#print axioms TorusField.uncertainty_oneExcitation
+#print axioms TorusField.lie_secondQuant_torus
+#print axioms TorusField.bracketX_apply
+#print axioms TorusField.bracketCrossSteps_eq
+#print axioms TorusField.card_bracketCrossSteps
+#print axioms TorusField.uncertainty_torus
+#print axioms TorusField.form_bracket_torus
