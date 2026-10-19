@@ -32,6 +32,9 @@ Solo local, dependencias por ruta.
 | `D ⁅M, N⁆ = ⁅D M, D N⁆` | `TorusSectors.twoBody_lie` |
 | la forma `β` en dos excitaciones es `Ψ̄ · (Φ + Φᵀ)`; en simétricos, `2 Ψ̄ · Φ` | `TorusSectors.form_twoExcitation`, `form_twoExcitation_symm` |
 | el campo de incertidumbre de dos excitaciones es el de `D M, D N` sobre `√2 Ψ` | `TorusSectors.uncertainty_twoExcitation` |
+| el corchete del campo en dos excitaciones lee `2 Ψ̄ · D[T3c, P_x] Ψ` | `TorusSectorCut.form_bracket_two` |
+| los pasos del corte de dos excitaciones: un paso de frontera de una, la otra quieta | `TorusSectorCut.bracketTwoSteps_eq` |
+| son `2 · (dx·dy·dz) · (2·dy·dz)` | `TorusSectorCut.card_bracketTwoSteps` |
 
 ### La prueba del estricto, en una línea por paso
 
@@ -49,7 +52,12 @@ todos los ejes son cerrados y el doble corchete basta.
 ## Pendiente (orden del porte)
 
 Hecho: ley de área, Mandelstam–Tamm, nivel de campo `n = 1`, costuras LQG / de Sitter, patrones de corte,
-sector `n = 2`. Abierto: sectores `n ≥ 3` (potencia simétrica general) y el corte de `n = 2`.
+sector `n = 2` y sus pasos de corte. Abierto: patrones abiertos/cerrados de `n = 2` (ver abajo) y sectores `n ≥ 3`.
+
+Nota sobre los patrones en `n = 2`: un estado simétrico abre un paso de una excitación junto con su
+imagen intercambiada, y si abre `(a,r)→(b,r)` por separado en dos pasos de la otra excitación también
+lo abre sin quererlo. El conjunto de patrones no es todo el conjunto potencia como en `n = 1`; contarlo
+es trabajo abierto, no está en Lean.
 
 ## Verificación
 

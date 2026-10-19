@@ -14,3 +14,4 @@ public import NRS3Tritoro.TorusField
 public import NRS3Tritoro.TorusSeams
 public import NRS3Tritoro.TorusPatterns
 public import NRS3Tritoro.TorusSectors
+public import NRS3Tritoro.TorusSectorCut

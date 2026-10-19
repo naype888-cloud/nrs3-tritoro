@@ -94,3 +94,6 @@ import NRS3Tritoro
 #print axioms TorusSectors.form_twoExcitation
 #print axioms TorusSectors.form_twoExcitation_symm
 #print axioms TorusSectors.uncertainty_twoExcitation
+#print axioms TorusSectorCut.form_bracket_two
+#print axioms TorusSectorCut.bracketTwoSteps_eq
+#print axioms TorusSectorCut.card_bracketTwoSteps
