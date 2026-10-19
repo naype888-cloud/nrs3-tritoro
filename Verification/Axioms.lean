@@ -101,3 +101,12 @@ import NRS3Tritoro
 #print axioms TorusSectorPatterns.mem_patterns_iff
 #print axioms TorusSectorPatterns.card_patterns_le
 #print axioms TorusSectorPatterns.card_patterns_lt
+#print axioms TorusFock.secondQuant_nExcitation
+#print axioms TorusFock.nBody_lie
+#print axioms TorusFock.a_nExcitation
+#print axioms TorusFock.form_word_nExcitation
+#print axioms TorusFock.form_nExcitation_symm
+#print axioms TorusFock.uncertainty_nExcitation
+#print axioms TorusFockCut.form_bracket_n
+#print axioms TorusFockCut.bracketNSteps_eq
+#print axioms TorusFockCut.card_bracketNSteps

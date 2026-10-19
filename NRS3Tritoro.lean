@@ -16,3 +16,6 @@ public import NRS3Tritoro.TorusPatterns
 public import NRS3Tritoro.TorusSectors
 public import NRS3Tritoro.TorusSectorCut
 public import NRS3Tritoro.TorusSectorPatterns
+public import NRS3Tritoro.TorusFock
+public import NRS3Tritoro.TorusFock
+public import NRS3Tritoro.TorusFockCut

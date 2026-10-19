@@ -35,6 +35,12 @@ Solo local, dependencias por ruta.
 | el corchete del campo en dos excitaciones lee `2 Ψ̄ · D[T3c, P_x] Ψ` | `TorusSectorCut.form_bracket_two` |
 | los pasos del corte de dos excitaciones: un paso de frontera de una, la otra quieta | `TorusSectorCut.bracketTwoSteps_eq` |
 | son `2 · (dx·dy·dz) · (2·dy·dz)` | `TorusSectorCut.card_bracketTwoSteps` |
+| patrones en dos excitaciones = conjuntos cerrados e invariantes por intercambio; a lo más `2^(N·2dydz)`, estrictamente menos | `TorusSectorPatterns.mem_patterns_iff`, `card_patterns_le`, `card_patterns_lt` |
+| sector de `n` excitaciones: `dΓ M` actúa como `D_n M` (una posición a la vez) | `TorusFock.secondQuant_nExcitation` |
+| `D_n ⁅M, N⁆ = ⁅D_n M, D_n N⁆` | `TorusFock.nBody_lie`, `nBodyMat_lie` |
+| en simétricos `β = n! Ψ̄ · Φ` | `TorusFock.form_nExcitation_symm` |
+| el campo de incertidumbre de `n` excitaciones es el de `D_n M, D_n N` sobre `√(n!) Ψ` | `TorusFock.uncertainty_nExcitation` |
+| el corte de `n` excitaciones: `n·(2dydz)·(dxdydz)^(n-1)` pasos | `TorusFockCut.card_bracketNSteps` |
 
 ### La prueba del estricto, en una línea por paso
 
@@ -52,7 +58,7 @@ todos los ejes son cerrados y el doble corchete basta.
 ## Pendiente (orden del porte)
 
 Hecho: ley de área, Mandelstam–Tamm, nivel de campo `n = 1`, costuras LQG / de Sitter, patrones de corte,
-sector `n = 2` y sus pasos de corte. Abierto: patrones abiertos/cerrados de `n = 2` (ver abajo) y sectores `n ≥ 3`.
+sector `n = 2` y sus pasos de corte. Hecho también: caracterización de los patrones de `n = 2` y sectores `n` generales con su corte. Abierto: conteo exacto de patrones de `n = 2` y patrones de `n ≥ 3`.
 
 Nota sobre los patrones en `n = 2`: un estado simétrico abre un paso de una excitación junto con su
 imagen intercambiada, y si abre `(a,r)→(b,r)` por separado en dos pasos de la otra excitación también
