@@ -1,0 +1,16 @@
+name = "NRS3Tritoro"
+defaultTargets = ["NRS3Tritoro"]
+
+[leanOptions]
+autoImplicit = false
+
+[[require]]
+name = "NRS3Hopf"
+path = "../nrs3-hopf"
+
+[[require]]
+name = "NRS3Dark"
+path = "../nrs3-dark"
+
+[[lean_lib]]
+name = "NRS3Tritoro"
