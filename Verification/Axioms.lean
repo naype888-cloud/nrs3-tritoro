@@ -24,3 +24,12 @@ import NRS3Tritoro
 #print axioms TorusDark.darkShare_pos_of_band
 #print axioms TorusDark.lightShare_maxState
 #print axioms TorusDark.darkShare_maxState
+#print axioms TorusArea.ring_ne_zero_iff
+#print axioms TorusArea.T3c_ne_zero_iff
+#print axioms TorusArea.card_planeSteps
+#print axioms TorusArea.card_seamSteps
+#print axioms TorusArea.crossSteps_eq
+#print axioms TorusArea.card_crossSteps
+#print axioms TorusArea.cutEntropy_eq
+#print axioms TorusArea.cutEntropy_eq_of_depth
+#print axioms TorusArea.bekensteinHawking_iff
