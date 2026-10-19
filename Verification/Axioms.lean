@@ -33,3 +33,14 @@ import NRS3Tritoro
 #print axioms TorusArea.cutEntropy_eq
 #print axioms TorusArea.cutEntropy_eq_of_depth
 #print axioms TorusArea.bekensteinHawking_iff
+#print axioms TorusArea.cutDefect_eq
+#print axioms TorusArea.cutDefect_pos
+#print axioms TorusArea.cutEntropy_eq_mul_cutDefect
+#print axioms TorusArea.prod_cutDefect
+#print axioms TorusArea.volQuantum_eq_boundary
+#print axioms TorusTime.isHermitian_ring
+#print axioms TorusTime.isHermitian_T3c
+#print axioms TorusTime.cos_le_norm_ring
+#print axioms TorusTime.orthogonality_time_ring
+#print axioms TorusTime.cos_le_norm_torus
+#print axioms TorusTime.orthogonality_time_torus

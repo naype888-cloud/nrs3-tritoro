@@ -12,5 +12,9 @@ path = "../nrs3-hopf"
 name = "NRS3Dark"
 path = "../nrs3-dark"
 
+[[require]]
+name = "NRS3MandelstamTammCramerRao"
+path = "../nrs3-mandelstam-tamm-cramer-rao"
+
 [[lean_lib]]
 name = "NRS3Tritoro"

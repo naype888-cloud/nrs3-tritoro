@@ -6,6 +6,8 @@ Authors: Eduardo Nava-Hernandez
 module
 
 public import NavaRobertsonIndependent.Mathematics.D37f_LightCone
+public import NavaRobertsonIndependent.Mathematics.D25_DimensionalQuantum
+public import NavaRobertsonIndependent.Mathematics.D37e_VolumetricQuantum
 
 /-!
 # The area law of the three-torus
@@ -22,6 +24,13 @@ is `S = 2 · dy · dz · log 2`: twice the open cube, still an area, independent
 and of where the plane sits. The Bekenstein–Hawking law holds exactly when each step has area
 `a² = 4 ℓ_P² log 2`, the same bit of area as on the open cube.
 
+Every boundary step carries the dimensional quantum `δ(dx)` of the axis, so the defect of the cut
+is `Ω = 2 · dy · dz · δ(dx)`, half on the plane and half on the seam, and the entropy counts it,
+`S = (log 2 / δ) Ω` from `4` positions on. Cut the torus across each of its three axes: the three
+faces carry `Ω_x Ω_y Ω_z = 8 V² 𝒱`, with `V = dx dy dz` and `𝒱 = δ(dx) δ(dy) δ(dz)` the
+volumetric quantum, and the entropies multiply to `8 V² (log 2)³`, so the interior quantum is read
+on the boundary exactly as on the cube: `𝒱 = (log 2)³ Ω_x Ω_y Ω_z / (S_x S_y S_z)`.
+
 ## Main results
 
 - `TorusArea.card_planeSteps`, `TorusArea.card_seamSteps` : each of the two cuts has `dy · dz`
@@ -29,13 +38,17 @@ and of where the plane sits. The Bekenstein–Hawking law holds exactly when eac
 - `TorusArea.card_crossSteps` : the boundary has `2 · dy · dz` steps.
 - `TorusArea.cutEntropy_eq` : `S = 2 · dy · dz · log 2`.
 - `TorusArea.cutEntropy_eq_of_depth` : it does not depend on the depth nor on the plane.
+- `TorusArea.cutDefect_eq` : the defect of the cut is `2 · dy · dz · δ(dx)`, half per cut.
+- `TorusArea.cutEntropy_eq_mul_cutDefect` : for `dx ≥ 4`, `S = (log 2 / δ) Ω`.
+- `TorusArea.prod_cutDefect` : the three faces carry `Ω_x Ω_y Ω_z = 8 V² 𝒱`.
+- `TorusArea.volQuantum_eq_boundary` : `𝒱 = (log 2)³ Ω_x Ω_y Ω_z / (S_x S_y S_z)`.
 - `TorusArea.bekensteinHawking_iff` : with area `a²` per step, `S = a² A / (4 ℓ_P²)` iff
   `a² = 4 ℓ_P² log 2`.
 -/
 
 @[expose] public noncomputable section
 
-open TransportPosition PathGraph3DNRS LightCone
+open TransportPosition PathGraph3DNRS LightCone DimensionalQuantum VolumetricQuantum
 open PathGraph3D (Site3D)
 
 namespace TorusArea
@@ -197,5 +210,64 @@ theorem bekensteinHawking_iff {a ℓ : ℝ} (hℓ : ℓ ≠ 0) (hy : 0 < dy) (hz
   · intro h
     rw [h]
     ring
+
+/-! ## 4. Entropy and defect of the cut -/
+
+/-- The defect of the cut: the quantum `δ(dx)` on each boundary step. -/
+def cutDefect (dx dy dz c : ℕ) : ℝ := (crossSteps dx dy dz c).card * dimQuantum dx
+
+/-- **The defect of the cut is `2 · dy · dz · δ(dx)`**, `dy · dz · δ` on the plane and the same on
+the seam. -/
+theorem cutDefect_eq {c : ℕ} (hc : c + 1 < dx) (hd : 3 ≤ dx) :
+    cutDefect dx dy dz c = (dy * dz : ℕ) * dimQuantum dx + (dy * dz : ℕ) * dimQuantum dx := by
+  rw [cutDefect, card_crossSteps hc hd]
+  push_cast
+  ring
+
+theorem cutDefect_eq_zero (h : dx = 3) {c : ℕ} : cutDefect dx dy dz c = 0 := by
+  subst h
+  simp [cutDefect, dimQuantum_three]
+
+theorem cutDefect_pos (hd : 4 ≤ dx) (hy : 0 < dy) (hz : 0 < dz) {c : ℕ} (hc : c + 1 < dx) :
+    0 < cutDefect dx dy dz c := by
+  rw [cutDefect, card_crossSteps hc (by omega)]
+  have := dimQuantum_pos hd
+  positivity
+
+/-- **The entropy counts the defect: `S = (log 2 / δ) Ω`** from `4` positions on. -/
+theorem cutEntropy_eq_mul_cutDefect (hd : 4 ≤ dx) {c : ℕ} (hc : c + 1 < dx) :
+    cutEntropy dx dy dz c = Real.log 2 / dimQuantum dx * cutDefect dx dy dz c := by
+  have := (dimQuantum_pos hd).ne'
+  rw [cutEntropy_eq hc (by omega), cutDefect, card_crossSteps hc (by omega)]
+  field_simp
+
+/-! ## 5. The interior is read on the faces -/
+
+/-- **The three faces carry the interior: `Ω_x Ω_y Ω_z = 8 V² · 𝒱`.** The cut across `y` is the
+`x` cut of the torus with `y` first, `cutDefect dy dz dx`; across `z`, `cutDefect dz dx dy`. -/
+theorem prod_cutDefect {cx cy cz : ℕ} (hx : cx + 1 < dx) (hy : cy + 1 < dy) (hz : cz + 1 < dz)
+    (hdx : 3 ≤ dx) (hdy : 3 ≤ dy) (hdz : 3 ≤ dz) :
+    cutDefect dx dy dz cx * cutDefect dy dz dx cy * cutDefect dz dx dy cz =
+      8 * ((dx * dy * dz : ℕ) : ℝ) ^ 2 * volQuantum dx dy dz := by
+  rw [cutDefect, cutDefect, cutDefect, card_crossSteps hx hdx, card_crossSteps hy hdy,
+    card_crossSteps hz hdz, volQuantum]
+  push_cast
+  ring
+
+/-- **The dark quantum of the interior is read on the faces of the torus**,
+`𝒱 = (log 2)³ Ω_x Ω_y Ω_z / (S_x S_y S_z)`, the same at every size and the same law as on the
+cube. -/
+theorem volQuantum_eq_boundary {cx cy cz : ℕ} (hx : cx + 1 < dx) (hy : cy + 1 < dy)
+    (hz : cz + 1 < dz) (hdx : 3 ≤ dx) (hdy : 3 ≤ dy) (hdz : 3 ≤ dz) :
+    volQuantum dx dy dz =
+      Real.log 2 ^ 3 * (cutDefect dx dy dz cx * cutDefect dy dz dx cy * cutDefect dz dx dy cz) /
+        (cutEntropy dx dy dz cx * cutEntropy dy dz dx cy * cutEntropy dz dx dy cz) := by
+  have hl : Real.log 2 ≠ 0 := (Real.log_pos (by norm_num)).ne'
+  have hV : ((dx * dy * dz : ℕ) : ℝ) ≠ 0 := by positivity
+  rw [prod_cutDefect hx hy hz hdx hdy hdz, cutEntropy_eq hx hdx, cutEntropy_eq hy hdy,
+    cutEntropy_eq hz hdz]
+  push_cast at hV ⊢
+  field_simp
+  norm_num
 
 end TorusArea
