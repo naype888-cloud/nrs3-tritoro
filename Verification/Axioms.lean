@@ -52,3 +52,15 @@ import NRS3Tritoro
 #print axioms TorusSpeed.row_sum_T3c_le_three
 #print axioms TorusSpeed.abs_energy_torus_le_three
 #print axioms TorusSpeed.pi_div_six_le_time_torus
+#print axioms TorusSpectrum.eigenvalue_of_diag
+#print axioms TorusSpectrum.ring_mulVec_wave
+#print axioms TorusSpectrum.det_waves_ne_zero
+#print axioms TorusSpectrum.eq_cos_of_eigenvector
+#print axioms TorusSpectrum.exists_eigenvector_one
+#print axioms TorusSpectrum.T3c_mulVec_wave3
+#print axioms TorusSpectrum.eq_lam3_of_eigenvector
+#print axioms TorusSharp.evolve_eigenvector
+#print axioms TorusSharp.inner_evolve_two_branches
+#print axioms TorusSharp.two_branches_orthogonal
+#print axioms TorusSharp.ring_orthogonality_exact
+#print axioms TorusSharp.torus_orthogonality_exact
