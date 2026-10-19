@@ -82,3 +82,10 @@ import NRS3Tritoro
 #print axioms TorusSeams.horizonArea_cutCosmologicalConstant
 #print axioms TorusSeams.cut_firstOrderFriedmann
 #print axioms TorusSeams.cut_secondOrderFriedmann
+#print axioms TorusPatterns.bracketX_swap
+#print axioms TorusPatterns.bracketX_stepTerm
+#print axioms TorusPatterns.openSteps_supportVec
+#print axioms TorusPatterns.cutPatterns_eq
+#print axioms TorusPatterns.card_cutPatterns
+#print axioms TorusPatterns.cutEntropy_eq_cutPatterns
+#print axioms TorusPatterns.exists_field_pattern
