@@ -44,3 +44,11 @@ import NRS3Tritoro
 #print axioms TorusTime.orthogonality_time_ring
 #print axioms TorusTime.cos_le_norm_torus
 #print axioms TorusTime.orthogonality_time_torus
+#print axioms TorusSpeed.row_sum_le_one
+#print axioms TorusSpeed.abs_energy_le_one
+#print axioms TorusSpeed.spread_le
+#print axioms TorusSpeed.ringSpread_le_one
+#print axioms TorusSpeed.pi_div_two_le_time_ring
+#print axioms TorusSpeed.row_sum_T3c_le_three
+#print axioms TorusSpeed.abs_energy_torus_le_three
+#print axioms TorusSpeed.pi_div_six_le_time_torus
