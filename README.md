@@ -28,6 +28,11 @@ Solo local, dependencias por ruta.
 | en la banda cada eje guarda una parte oscura > 0, todo estado | `TorusDark.darkShare_pos_of_band` |
 | en `c` cada eje resuelve `4/5` y guarda `1/5` oscuro (el cubo abierto de 3 guarda `0`) | `TorusDark.lightShare_maxState`, `TorusDark.darkShare_maxState` |
 
+| sector de **dos excitaciones**: `dΓ M (Σ Ψ a†a† Ω) = Σ (D M Ψ) a†a† Ω`, con `D M = M ⊗ 1 + 1 ⊗ M` | `TorusSectors.secondQuant_twoExcitation` |
+| `D ⁅M, N⁆ = ⁅D M, D N⁆` | `TorusSectors.twoBody_lie` |
+| la forma `β` en dos excitaciones es `Ψ̄ · (Φ + Φᵀ)`; en simétricos, `2 Ψ̄ · Φ` | `TorusSectors.form_twoExcitation`, `form_twoExcitation_symm` |
+| el campo de incertidumbre de dos excitaciones es el de `D M, D N` sobre `√2 Ψ` | `TorusSectors.uncertainty_twoExcitation` |
+
 ### La prueba del estricto, en una línea por paso
 
 1. En la igualdad cada eje tiene defecto, así que las relaciones (dimensión ≥ 3) cruzan cada eje
@@ -43,8 +48,8 @@ todos los ejes son cerrados y el doble corchete basta.
 
 ## Pendiente (orden del porte)
 
-ley de área `S → Λ` → Mandelstam–Tamm → nivel de campo
-(`FieldLevel`, sector `n = 1`) → costuras LQG / de Sitter.
+Hecho: ley de área, Mandelstam–Tamm, nivel de campo `n = 1`, costuras LQG / de Sitter, patrones de corte,
+sector `n = 2`. Abierto: sectores `n ≥ 3` (potencia simétrica general) y el corte de `n = 2`.
 
 ## Verificación
 

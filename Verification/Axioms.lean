@@ -89,3 +89,8 @@ import NRS3Tritoro
 #print axioms TorusPatterns.card_cutPatterns
 #print axioms TorusPatterns.cutEntropy_eq_cutPatterns
 #print axioms TorusPatterns.exists_field_pattern
+#print axioms TorusSectors.twoBody_lie
+#print axioms TorusSectors.secondQuant_twoExcitation
+#print axioms TorusSectors.form_twoExcitation
+#print axioms TorusSectors.form_twoExcitation_symm
+#print axioms TorusSectors.uncertainty_twoExcitation
