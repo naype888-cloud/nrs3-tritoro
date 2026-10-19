@@ -74,3 +74,11 @@ import NRS3Tritoro
 #print axioms TorusField.card_bracketCrossSteps
 #print axioms TorusField.uncertainty_torus
 #print axioms TorusField.form_bracket_torus
+#print axioms TorusSeams.cutEntropy_eq_punctureEntropy
+#print axioms TorusSeams.torus_immirzi_iff
+#print axioms TorusSeams.cutCosmologicalConstant_eq
+#print axioms TorusSeams.cutCosmologicalConstant_eq_half
+#print axioms TorusSeams.cutCosmologicalConstant_pos
+#print axioms TorusSeams.horizonArea_cutCosmologicalConstant
+#print axioms TorusSeams.cut_firstOrderFriedmann
+#print axioms TorusSeams.cut_secondOrderFriedmann
