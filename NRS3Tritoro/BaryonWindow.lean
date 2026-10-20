@@ -8,21 +8,20 @@ module
 public import NRS3Dark.Dark
 
 /-!
-# The baryon window `g_s e^{−η}` as an explicit postulate
+# The baryon window `g_s e^{−η}` inside the measured `Ω_b`
 
 For a coherence constant `c > 1` the window is `(1 − 1/c) e^{−1/c}`: the share of the quantum,
 `g_s = 1 − 1/c`, times the Boltzmann factor `e^{−η}` with `η = 1/c`. With the Szegő limit of the
 open axis, `c = C∞`, it is `omegaPi` (`D26a`), and `omegaPi` lies inside the measured `Ω_b`
 (`NRS3Dark.omegaPi_mem_planck`).
 
-The factor `e^{−η}` is not derived in the corpus: it is the postulate
+The baryon density `Ω_b` enters as the measured datum (CMB, deuterium, BAO), as `c` enters as the
+slope of the light cone, and the dark part is what is left, `1 − Ω_b` (`NRS3Dark.darkFraction`).
+Nothing below is needed for that. The window is the number that lies inside the datum, and
+`Postulate Ωb c` records that reading: `Ω_b = window c`, with `c` the coherence constant of the
+quantum of the pair `(T_d, P_d)`.
 
-  `Ω_b = window c`.
-
-Here the postulate is stated once, as a hypothesis, and tied to the open axis. The window is built
-from the coherence constant of the quantum, the ratio `‖x‖² ‖y‖² / ‖⟪x, y⟫‖²` of the pair
-`(T_d, P_d)` at the state `c`. It is not a function of the tension of another operator: the
-closed transport `T° = (A_d + S)/2` has its own tension `ClosedAxis.cMax`, which tends to `1`
+The closed transport `T° = (A_d + S)/2` has its own tension `ClosedAxis.cMax`, which tends to `1`
 while the defect of the closed axis stays: its dark share tends to `1/2`
 (`RingSzego.tendsto_darkShare`) and is positive for every state in the band
 (`TorusDark.darkShare_pos_of_band`). Closing the axis adds one link, one more quantum; the
