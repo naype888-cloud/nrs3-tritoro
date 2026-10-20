@@ -41,6 +41,10 @@ Solo local, dependencias por ruta.
 | en simétricos `β = n! Ψ̄ · Φ` | `TorusFock.form_nExcitation_symm` |
 | el campo de incertidumbre de `n` excitaciones es el de `D_n M, D_n N` sobre `√(n!) Ψ` | `TorusFock.uncertainty_nExcitation` |
 | el corte de `n` excitaciones: `n·(2dydz)·(dxdydz)^(n-1)` pasos | `TorusFockCut.card_bracketNSteps` |
+| eje cerrado en `ℂ^d`: todo estado unitario con `\|t\| ≥ 1` concentra su peso en la costura, `Var T° → 1/2`, `Var P → 1`, `Cov → 0` | `RingSzego.seam_bounds`, `tendsto_variance_transport`, `tendsto_variance_PdOp`, `tendsto_covariance` |
+| **límite de Szegő del eje cerrado**: luz y oscuro → `1/2`, ángulo → `45°` | `RingSzego.tendsto_lightShare`, `tendsto_darkShare`, `tendsto_angle` |
+| `det Σ / \|det Ω\|` del eje → `2` | `RingSzego.tendsto_det_ratio` |
+| todo tamaño tiene su estado `c`; en `c` el ángulo → `45°` y la razón → `2` | `RingSzego.exists_cState`, `tendsto_angle_cState`, `tendsto_det_ratio_cState` |
 
 ### La prueba del estricto, en una línea por paso
 

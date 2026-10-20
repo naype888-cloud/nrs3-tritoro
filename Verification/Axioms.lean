@@ -110,3 +110,11 @@ import NRS3Tritoro
 #print axioms TorusFockCut.form_bracket_n
 #print axioms TorusFockCut.bracketNSteps_eq
 #print axioms TorusFockCut.card_bracketNSteps
+#print axioms RingSzego.seam_bounds
+#print axioms RingSzego.tendsto_lightShare
+#print axioms RingSzego.tendsto_darkShare
+#print axioms RingSzego.tendsto_angle
+#print axioms RingSzego.tendsto_det_ratio
+#print axioms RingSzego.exists_cState
+#print axioms RingSzego.tendsto_angle_cState
+#print axioms RingSzego.tendsto_det_ratio_cState

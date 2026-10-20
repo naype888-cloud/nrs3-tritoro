@@ -419,4 +419,288 @@ theorem norm_inner_seam_sub_le {A B : Hd (n + 3) →ₗ[ℂ] Hd (n + 3)} {CA CB 
     _ ≤ CA * CB * ‖ψ - seamPart ψ‖ * (1 + 1) := by gcongr
     _ = _ := by ring
 
+/-! ## 7. The limit -/
+
+/-- `x_k → L` when `|x_k − y_k| ≤ e_k → 0` and `y_k → L`. -/
+theorem tendsto_of_abs_sub_le {x y e : ℕ → ℝ} {L : ℝ} (hy : Tendsto y atTop (𝓝 L))
+    (he : Tendsto e atTop (𝓝 0)) (h : ∀ k, |x k - y k| ≤ e k) : Tendsto x atTop (𝓝 L) := by
+  have h0 : Tendsto (fun k => x k - y k) atTop (𝓝 0) :=
+    squeeze_zero_norm (by simpa [Real.norm_eq_abs] using h) he
+  simpa using hy.add h0
+
+theorem tendsto_eps : Tendsto (fun n : ℕ => 2 / ((n : ℝ) + 2)) atTop (𝓝 0) :=
+  tendsto_const_nhds.div_atTop (tendsto_natCast_atTop_atTop.atTop_add tendsto_const_nhds)
+
+theorem tendsto_sqrt_eps (c : ℝ) :
+    Tendsto (fun n : ℕ => √(c * (2 / ((n : ℝ) + 2)))) atTop (𝓝 0) := by
+  have h : Tendsto (fun n : ℕ => c * (2 / ((n : ℝ) + 2))) atTop (𝓝 0) := by
+    simpa using tendsto_eps.const_mul c
+  have h2 := (Real.continuous_sqrt.tendsto 0).comp h
+  rw [Real.sqrt_zero] at h2
+  exact h2
+
+section Limit
+
+variable (ψ : (n : ℕ) → Hd (n + 3)) (hψ : ∀ n, ‖ψ n‖ = 1) (ht : ∀ n, 1 ≤ |tension n (ψ n)|)
+include hψ ht
+
+/-- `|ψ_{d−1}|² + |ψ₀|² → 1`: the weight goes to the seam. -/
+theorem tendsto_seamWeight :
+    Tendsto (fun n => ‖ψ n 0‖ ^ 2 + ‖ψ n (last n)‖ ^ 2) atTop (𝓝 1) := by
+  refine tendsto_of_abs_sub_le tendsto_const_nhds tendsto_eps fun n => ?_
+  obtain ⟨⟨h1, h2⟩, -⟩ := seam_bounds (hψ n) (ht n)
+  rw [abs_le]; constructor <;> linarith
+
+theorem tendsto_rest : Tendsto (fun n => ‖ψ n - seamPart (ψ n)‖) atTop (𝓝 0) := by
+  refine squeeze_zero (fun _ => norm_nonneg _) (fun n => Real.le_sqrt_of_sq_le ?_)
+    (tendsto_sqrt_eps 1)
+  rw [one_mul]
+  exact (seam_bounds (hψ n) (ht n)).2.1
+
+theorem tendsto_re : Tendsto (fun n => ((starRingEnd ℂ) (ψ n 0) * ψ n (last n)).re) atTop
+    (𝓝 0) := by
+  refine tendsto_of_abs_sub_le tendsto_const_nhds (tendsto_sqrt_eps (1 / 2)) fun n => ?_
+  obtain ⟨-, -, h, -⟩ := seam_bounds (hψ n) (ht n)
+  rw [sub_zero]
+  exact Real.abs_le_sqrt (by linarith)
+
+theorem tendsto_diff : Tendsto (fun n => ‖ψ n (last n)‖ ^ 2 - ‖ψ n 0‖ ^ 2) atTop (𝓝 0) := by
+  refine tendsto_of_abs_sub_le tendsto_const_nhds (tendsto_sqrt_eps 2) fun n => ?_
+  obtain ⟨-, -, -, h, -⟩ := seam_bounds (hψ n) (ht n)
+  rw [sub_zero]
+  exact Real.abs_le_sqrt h
+
+theorem tendsto_abs_im :
+    Tendsto (fun n => |((starRingEnd ℂ) (ψ n 0) * ψ n (last n)).im|) atTop (𝓝 (1 / 2)) := by
+  have he : Tendsto (fun n : ℕ => 2 / ((n : ℝ) + 2) / 2) atTop (𝓝 0) := by
+    simpa using tendsto_eps.div_const 2
+  refine tendsto_of_abs_sub_le tendsto_const_nhds he fun n => ?_
+  obtain ⟨-, -, -, -, h1, h2⟩ := seam_bounds (hψ n) (ht n)
+  rw [abs_le]; constructor <;> linarith
+
+theorem tendsto_rest_mul (C : ℝ) :
+    Tendsto (fun n => C * ‖ψ n - seamPart (ψ n)‖ * 2) atTop (𝓝 0) := by
+  simpa using ((tendsto_rest ψ hψ ht).const_mul C).mul_const 2
+
+/-- `⟨T°⟩ → 0`. -/
+theorem tendsto_mean_transport : Tendsto (fun n => mean (transport n) (ψ n)) atTop (𝓝 0) := by
+  refine tendsto_of_abs_sub_le (tendsto_re ψ hψ ht) (tendsto_rest_mul ψ hψ ht (1 * 2))
+    fun n => ?_
+  have h := norm_inner_seam_sub_le (A := LinearMap.id) (B := transport n) zero_le_one
+    zero_le_two (fun x => by simp) norm_transport_le (hψ n) (seam_bounds (hψ n) (ht n)).1.2
+  have hre : (inner ℂ (seamPart (ψ n)) (transport n (seamPart (ψ n)))).re =
+      ((starRingEnd ℂ) (ψ n 0) * ψ n (last n)).re := by
+    rw [inner_seamPart_transport]
+    simp [Complex.mul_re]
+    ring
+  simp only [LinearMap.id_apply] at h
+  rw [mean, ← hre, ← Complex.sub_re]
+  exact (Complex.abs_re_le_norm _).trans h
+
+/-- `‖T°ψ‖² → 1/2`. -/
+theorem tendsto_norm_transport_sq :
+    Tendsto (fun n => ‖transport n (ψ n)‖ ^ 2) atTop (𝓝 (1 / 2)) := by
+  have hy : Tendsto (fun n => ‖transport n (seamPart (ψ n))‖ ^ 2) atTop (𝓝 (1 / 2)) :=
+    ((tendsto_seamWeight ψ hψ ht).div_const 2).congr'
+      (eventually_atTop.2 ⟨1, fun n hn => (norm_transport_seamPart_sq (ψ n) hn).symm⟩)
+  refine tendsto_of_abs_sub_le hy (tendsto_rest_mul ψ hψ ht (2 * 2)) fun n => ?_
+  have h := norm_inner_seam_sub_le zero_le_two zero_le_two norm_transport_le norm_transport_le
+    (hψ n) (seam_bounds (hψ n) (ht n)).1.2
+  rw [norm_sq_eq_re_inner (𝕜 := ℂ), norm_sq_eq_re_inner (𝕜 := ℂ), ← map_sub]
+  exact (RCLike.abs_re_le_norm _).trans h
+
+/-- `⟨P⟩ → 0`. -/
+theorem tendsto_mean_PdOp : Tendsto (fun n => mean (PdOp (n + 3)) (ψ n)) atTop (𝓝 0) := by
+  refine tendsto_of_abs_sub_le (tendsto_diff ψ hψ ht) (tendsto_rest_mul ψ hψ ht (1 * 1))
+    fun n => ?_
+  have h := norm_inner_seam_sub_le (A := LinearMap.id) (B := PdOp (n + 3)) zero_le_one
+    zero_le_one (fun x => by simp) norm_PdOp_le' (hψ n) (seam_bounds (hψ n) (ht n)).1.2
+  simp only [LinearMap.id_apply] at h
+  have hre := congrArg Complex.re (inner_seamPart_PdOp (ψ n))
+  rw [Complex.ofReal_re] at hre
+  rw [mean, ← hre, ← Complex.sub_re]
+  exact (Complex.abs_re_le_norm _).trans h
+
+/-- `‖Pψ‖² → 1`. -/
+theorem tendsto_norm_PdOp_sq : Tendsto (fun n => ‖PdOp (n + 3) (ψ n)‖ ^ 2) atTop (𝓝 1) := by
+  refine tendsto_of_abs_sub_le (tendsto_seamWeight ψ hψ ht) (tendsto_rest_mul ψ hψ ht (1 * 1))
+    fun n => ?_
+  have h := norm_inner_seam_sub_le zero_le_one zero_le_one norm_PdOp_le' norm_PdOp_le' (hψ n)
+    (seam_bounds (hψ n) (ht n)).1.2
+  rw [← norm_PdOp_seamPart_sq, norm_sq_eq_re_inner (𝕜 := ℂ), norm_sq_eq_re_inner (𝕜 := ℂ),
+    ← map_sub]
+  exact (RCLike.abs_re_le_norm _).trans h
+
+/-- `⟪T°ψ, Pψ⟫ − i Im(ψ̄₀ψ_{d−1}) → 0`. -/
+theorem norm_inner_transport_PdOp_sub_le (n : ℕ) :
+    ‖inner ℂ (transport n (ψ n)) (PdOp (n + 3) (ψ n)) -
+        ((((starRingEnd ℂ) (ψ n 0) * ψ n (last n)).im : ℝ) : ℂ) * I‖ ≤
+      2 * 1 * ‖ψ n - seamPart (ψ n)‖ * 2 := by
+  rw [← inner_transport_PdOp_seamPart]
+  exact norm_inner_seam_sub_le zero_le_two zero_le_one norm_transport_le norm_PdOp_le' (hψ n)
+    (seam_bounds (hψ n) (ht n)).1.2
+
+/-- `|⟪T°ψ, Pψ⟫| → 1/2`. -/
+theorem tendsto_norm_inner_transport_PdOp :
+    Tendsto (fun n => ‖inner ℂ (transport n (ψ n)) (PdOp (n + 3) (ψ n))‖) atTop (𝓝 (1 / 2)) := by
+  refine tendsto_of_abs_sub_le (tendsto_abs_im ψ hψ ht) (tendsto_rest_mul ψ hψ ht (2 * 1))
+    fun n => ?_
+  have h := norm_inner_transport_PdOp_sub_le ψ hψ ht n
+  have hq : ‖((((starRingEnd ℂ) (ψ n 0) * ψ n (last n)).im : ℝ) : ℂ) * I‖ =
+      |((starRingEnd ℂ) (ψ n 0) * ψ n (last n)).im| := by
+    rw [norm_mul, Complex.norm_I, mul_one, Complex.norm_real, Real.norm_eq_abs]
+  rw [← hq]
+  exact (abs_norm_sub_norm_le _ _).trans h
+
+/-- `Var T° → 1/2`. -/
+theorem tendsto_variance_transport :
+    Tendsto (fun n => variance (transport n) (ψ n)) atTop (𝓝 (1 / 2)) := by
+  have h := (tendsto_norm_transport_sq ψ hψ ht).sub ((tendsto_mean_transport ψ hψ ht).pow 2)
+  rw [show (1 / 2 : ℝ) - 0 ^ 2 = 1 / 2 by norm_num] at h
+  exact h.congr fun n => (variance_eq transport_isSymmetric (hψ n)).symm
+
+/-- `Var P → 1`. -/
+theorem tendsto_variance_PdOp :
+    Tendsto (fun n => variance (PdOp (n + 3)) (ψ n)) atTop (𝓝 1) := by
+  have h := (tendsto_norm_PdOp_sq ψ hψ ht).sub ((tendsto_mean_PdOp ψ hψ ht).pow 2)
+  rw [show (1 : ℝ) - 0 ^ 2 = 1 by norm_num] at h
+  exact h.congr fun n => (variance_eq (PdOp_isSymmetric _) (hψ n)).symm
+
+/-- `|⟪δT°, δP⟫| → 1/2`. -/
+theorem tendsto_norm_inner_centered :
+    Tendsto (fun n => ‖inner ℂ (centered (transport n) (ψ n)) (centered (PdOp (n + 3)) (ψ n))‖)
+      atTop (𝓝 (1 / 2)) := by
+  have he : Tendsto (fun n => |mean (transport n) (ψ n) * mean (PdOp (n + 3)) (ψ n)|) atTop
+      (𝓝 0) := by
+    simpa using ((tendsto_mean_transport ψ hψ ht).mul (tendsto_mean_PdOp ψ hψ ht)).abs
+  refine tendsto_of_abs_sub_le (tendsto_norm_inner_transport_PdOp ψ hψ ht) he fun n => ?_
+  rw [inner_centered_eq transport_isSymmetric (PdOp_isSymmetric _) (hψ n)]
+  refine (abs_norm_sub_norm_le _ _).trans (le_of_eq ?_)
+  rw [sub_sub_cancel_left, norm_neg, Complex.norm_real, Real.norm_eq_abs]
+
+/-- **The Szegő limit of the closed axis**: for unit states with `|t| ≥ 1`, in particular the
+state `c`, the light share tends to `1/2`. -/
+theorem tendsto_lightShare :
+    Tendsto (fun n => lightShare (centered (transport n) (ψ n)) (centered (PdOp (n + 3)) (ψ n)))
+      atTop (𝓝 (1 / 2)) := by
+  have h := ((tendsto_norm_inner_centered ψ hψ ht).pow 2).div
+    ((tendsto_variance_transport ψ hψ ht).mul (tendsto_variance_PdOp ψ hψ ht)) (by norm_num)
+  rw [show ((1 / 2 : ℝ) ^ 2 / (1 / 2 * 1)) = 1 / 2 by norm_num] at h
+  refine h.congr fun n => ?_
+  simp only [lightShare, NRSInequality.variance, mul_pow, Pi.div_apply]
+
+/-- `Cov(T°, P) → 0`. -/
+theorem tendsto_covariance :
+    Tendsto (fun n => covariance (transport n) (PdOp (n + 3)) (ψ n)) atTop (𝓝 0) := by
+  have hre : Tendsto (fun n => (inner ℂ (transport n (ψ n)) (PdOp (n + 3) (ψ n))).re) atTop
+      (𝓝 0) := by
+    refine tendsto_of_abs_sub_le tendsto_const_nhds (tendsto_rest_mul ψ hψ ht (2 * 1))
+      fun n => ?_
+    have h := norm_inner_transport_PdOp_sub_le ψ hψ ht n
+    have h0 : ((((((starRingEnd ℂ) (ψ n 0) * ψ n (last n)).im : ℝ) : ℂ)) * I).re = 0 := by
+      simp
+    rw [sub_zero, ← sub_zero (inner ℂ _ _).re, ← h0, ← Complex.sub_re]
+    exact (Complex.abs_re_le_norm _).trans h
+  have h := hre.sub ((tendsto_mean_transport ψ hψ ht).mul (tendsto_mean_PdOp ψ hψ ht))
+  rw [mul_zero, sub_zero] at h
+  refine h.congr fun n => ?_
+  rw [covariance, inner_centered_eq transport_isSymmetric (PdOp_isSymmetric _) (hψ n),
+    Complex.sub_re, Complex.ofReal_re]
+
+/-- `Im⟪δT°, δP⟫² → 1/4`. -/
+theorem tendsto_imPart_sq :
+    Tendsto (fun n => imPart (transport n) (PdOp (n + 3)) (ψ n) ^ 2) atTop (𝓝 (1 / 4)) := by
+  have h := ((tendsto_norm_inner_centered ψ hψ ht).pow 2).sub
+    ((tendsto_covariance ψ hψ ht).pow 2)
+  rw [show ((1 / 2 : ℝ) ^ 2 - 0 ^ 2) = 1 / 4 by norm_num] at h
+  refine h.congr fun n => ?_
+  rw [imPart, covariance, Complex.sq_norm, Complex.normSq_apply]
+  ring
+
+/-- **Robertson 1934 on the axis tends to the seam value**: `det Σ / |det Ω| → 2`. -/
+theorem tendsto_det_ratio :
+    Tendsto (fun n => (variance (transport n) (ψ n) * variance (PdOp (n + 3)) (ψ n) -
+        covariance (transport n) (PdOp (n + 3)) (ψ n) ^ 2) /
+          imPart (transport n) (PdOp (n + 3)) (ψ n) ^ 2) atTop (𝓝 2) := by
+  have h := (((tendsto_variance_transport ψ hψ ht).mul (tendsto_variance_PdOp ψ hψ ht)).sub
+    ((tendsto_covariance ψ hψ ht).pow 2)).div (tendsto_imPart_sq ψ hψ ht) (by norm_num)
+  rwa [show ((1 / 2 * 1 - (0 : ℝ) ^ 2) / (1 / 4)) = 2 by norm_num] at h
+
+/-- The dark share tends to `1/2`. -/
+theorem tendsto_darkShare :
+    Tendsto (fun n => darkShare (centered (transport n) (ψ n)) (centered (PdOp (n + 3)) (ψ n)))
+      atTop (𝓝 (1 / 2)) := by
+  have hv := (tendsto_variance_transport ψ hψ ht).mul (tendsto_variance_PdOp ψ hψ ht)
+  have hpos : ∀ᶠ n in atTop, 0 < variance (transport n) (ψ n) * variance (PdOp (n + 3)) (ψ n) :=
+    hv.eventually (lt_mem_nhds (by norm_num))
+  have h := (tendsto_const_nhds (x := (1 : ℝ))).sub (tendsto_lightShare ψ hψ ht)
+  rw [show (1 : ℝ) - 1 / 2 = 1 / 2 by norm_num] at h
+  refine h.congr' (hpos.mono fun n hn => ?_)
+  have hne : ‖centered (transport n) (ψ n)‖ * ‖centered (PdOp (n + 3)) (ψ n)‖ ≠ 0 := by
+    rw [NRSInequality.variance, NRSInequality.variance, ← mul_pow] at hn
+    exact fun h0 => by rw [h0] at hn; norm_num at hn
+  linarith [lightShare_add_darkShare _ _ hne]
+
+/-- **The angle tends to `45°`**: `arccos √(light) → π/4`. -/
+theorem tendsto_angle :
+    Tendsto (fun n => Real.arccos
+      √(lightShare (centered (transport n) (ψ n)) (centered (PdOp (n + 3)) (ψ n))))
+      atTop (𝓝 (Real.pi / 4)) := by
+  have hc : Real.arccos √(1 / 2) = Real.pi / 4 := by
+    rw [show √(1 / 2 : ℝ) = √2 / 2 by
+      rw [Real.sqrt_div' _ (by norm_num : (0 : ℝ) ≤ 2), Real.sqrt_one]
+      field_simp
+      rw [Real.sq_sqrt (by norm_num)], ← Real.cos_pi_div_four,
+      Real.arccos_cos (by positivity) (by linarith [Real.pi_pos])]
+  rw [← hc]
+  exact (Real.continuous_arccos.tendsto _).comp
+    ((Real.continuous_sqrt.tendsto _).comp (tendsto_lightShare ψ hψ ht))
+
+end Limit
+
+/-! ## 8. The state `c` of each size -/
+
+theorem continuous_tension : Continuous (tension n) := by
+  have hT := LinearMap.continuous_of_finiteDimensional (transport n)
+  have hP := LinearMap.continuous_of_finiteDimensional (PdOp (n + 3))
+  exact continuous_const.mul (Complex.continuous_im.comp (hT.inner hP))
+
+/-- **Every size has its state `c`**: a unit state whose tension reaches `cMax`. -/
+theorem exists_cState (n : ℕ) : ∃ ψ : Hd (n + 3), ‖ψ‖ = 1 ∧ |tension n ψ| = cMax n := by
+  have hs : (Metric.sphere (0 : Hd (n + 3)) 1).Nonempty :=
+    ⟨seamState n, by simp [norm_seamState]⟩
+  obtain ⟨ψ, hψ, hmax⟩ := (isCompact_sphere (0 : Hd (n + 3)) 1).exists_isMaxOn hs
+    (continuous_tension.abs.continuousOn)
+  have hψ1 : ‖ψ‖ = 1 := by simpa using hψ
+  refine ⟨ψ, hψ1, le_antisymm ?_ ?_⟩
+  · exact le_csSup bddAbove_tensions ⟨ψ, hψ1, rfl⟩
+  · refine csSup_le ⟨_, ψ, hψ1, rfl⟩ ?_
+    rintro _ ⟨φ, hφ, rfl⟩
+    exact hmax (by simpa using hφ)
+
+/-- The state `c` of the closed axis with `n + 3` positions. -/
+def cState (n : ℕ) : Hd (n + 3) := (exists_cState n).choose
+
+theorem norm_cState (n : ℕ) : ‖cState n‖ = 1 := (exists_cState n).choose_spec.1
+
+theorem one_le_abs_tension_cState (n : ℕ) : 1 ≤ |tension n (cState n)| := by
+  have h := (exists_cState n).choose_spec.2
+  unfold cState
+  rw [h]
+  exact one_le_cMax
+
+/-- **At `c` the angle of the closed axis tends to `45°`.** -/
+theorem tendsto_angle_cState :
+    Tendsto (fun n => Real.arccos
+      √(lightShare (centered (transport n) (cState n)) (centered (PdOp (n + 3)) (cState n))))
+      atTop (𝓝 (Real.pi / 4)) :=
+  tendsto_angle cState norm_cState one_le_abs_tension_cState
+
+/-- **At `c`, `det Σ / |det Ω|` of the closed axis tends to `2`.** -/
+theorem tendsto_det_ratio_cState :
+    Tendsto (fun n => (variance (transport n) (cState n) * variance (PdOp (n + 3)) (cState n) -
+        covariance (transport n) (PdOp (n + 3)) (cState n) ^ 2) /
+          imPart (transport n) (PdOp (n + 3)) (cState n) ^ 2) atTop (𝓝 2) :=
+  tendsto_det_ratio cState norm_cState one_le_abs_tension_cState
+
 end RingSzego
