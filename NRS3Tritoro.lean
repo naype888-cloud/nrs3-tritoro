@@ -21,3 +21,4 @@ public import NRS3Tritoro.TorusFock
 public import NRS3Tritoro.TorusFock
 public import NRS3Tritoro.TorusFockCut
 public import NRS3Tritoro.BaryonWindow
+public import NRS3Tritoro.TorusCover

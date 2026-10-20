@@ -120,3 +120,6 @@ import NRS3Tritoro
 #print axioms RingSzego.tendsto_det_ratio_cState
 #print axioms BaryonWindow.window_coherenceConstantInf
 #print axioms BaryonWindow.window_pos
+#print axioms TorusCover.infinite_paths
+#print axioms TorusCover.exists_path_longer
+#print axioms TorusCover.distance_le
