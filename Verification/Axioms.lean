@@ -118,3 +118,5 @@ import NRS3Tritoro
 #print axioms RingSzego.exists_cState
 #print axioms RingSzego.tendsto_angle_cState
 #print axioms RingSzego.tendsto_det_ratio_cState
+#print axioms BaryonWindow.window_coherenceConstantInf
+#print axioms BaryonWindow.window_pos

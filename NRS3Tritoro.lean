@@ -20,3 +20,4 @@ public import NRS3Tritoro.TorusSectorPatterns
 public import NRS3Tritoro.TorusFock
 public import NRS3Tritoro.TorusFock
 public import NRS3Tritoro.TorusFockCut
+public import NRS3Tritoro.BaryonWindow
