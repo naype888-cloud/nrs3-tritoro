@@ -6,19 +6,23 @@ autoImplicit = false
 
 [[require]]
 name = "NRS3Hopf"
-path = "../nrs3-hopf"
+git = "https://github.com/naype888-cloud/nrs3-hopf.git"
+rev = "52336c6fd1ad7fa5965f61a39a064b3bd91e4b18"
 
 [[require]]
 name = "NRS3Dark"
-path = "../nrs3-dark"
+git = "https://github.com/naype888-cloud/nrs3-dark.git"
+rev = "9af3d53d184b627eeb3be46169fbcc84778e6874"
 
 [[require]]
 name = "NRS3MandelstamTammCramerRao"
-path = "../nrs3-mandelstam-tamm-cramer-rao"
+git = "https://github.com/naype888-cloud/nrs3-mandelstam-tamm-cramer-rao.git"
+rev = "bbe9fad5f3c346e58405c24dd574a35286eab264"
 
 [[require]]
 name = "NRS3DeSitter"
-path = "../nrs3-de-sitter"
+git = "https://github.com/naype888-cloud/nrs3-de-sitter.git"
+rev = "ecacef6d7aa513a56ee8119ee4f29a5053002722"
 
 [[lean_lib]]
 name = "NRS3Tritoro"

@@ -7,7 +7,7 @@ borde. Cada eje lleva el par `(T°, P₃)` del eje cerrado. La teoría del campo
 Lean 4 sobre [`nrs3-hopf`](../nrs3-hopf) (lemas del eje cerrado: `ClosedThree`,
 `ClosedAxisEntangled`, `StackedFibers`, `ClosedThreeIdeal`, `RobertsonEquality*`),
 [`nrs3-dark`](../nrs3-dark) y [`nrs3-uncertainty-cone`](https://github.com/naype888-cloud/nrs3-uncertainty-cone).
-Solo local, dependencias por ruta.
+Dependencias por git, fijadas a un commit: [`nrs3-hopf`](https://github.com/naype888-cloud/nrs3-hopf), [`nrs3-dark`](https://github.com/naype888-cloud/nrs3-dark), [`nrs3-mandelstam-tamm-cramer-rao`](https://github.com/naype888-cloud/nrs3-mandelstam-tamm-cramer-rao) y [`nrs3-de-sitter`](https://github.com/naype888-cloud/nrs3-de-sitter). Páginas: [de Sitter en T³](https://naype888-cloud.github.io/nrs3-de-sitter/t3.html), [SL(2, ℂ) en T³](https://naype888-cloud.github.io/nrs3-uncertainty-cone/lorentz-t3.html).
 
 ## Resultados
 
