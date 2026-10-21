@@ -74,4 +74,4 @@ es trabajo abierto, no está en Lean.
 `lake build` y `lake env lean Verification/Axioms.lean`: solo `propext`, `Classical.choice`,
 `Quot.sound`.
 
-**[▶ The baryon window on the ring](https://naype888-cloud.github.io/nrs3-tritoro/baryon.html)** · [Holography: open cube and T³](https://naype888-cloud.github.io/nrs3-tritoro/holography.html) — at the ring limit `c = √2` the window is positive (`window_sqrt_two_pos`) and above the measured `Ω_b` (`window_sqrt_two_gt_planck`).
+**[▶ The baryon window on the ring](https://naype888-cloud.github.io/nrs3-tritoro/baryon.html)** · [Holography: open cube and T³](https://naype888-cloud.github.io/nrs3-tritoro/holography.html) — at the ring limit `c = √2` the window is positive (`window_sqrt_two_pos`): the limit does not saturate.

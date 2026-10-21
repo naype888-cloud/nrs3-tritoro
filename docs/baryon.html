@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NRS³·T³ · Baryon window on the ring</title>
-<meta name="description" content="The window (1 − 1/c) e^{−1/c} on the closed axis: positive because c > 1, above the measured Ω_b; with the random walk of the state.">
+<meta name="description" content="The window (1 − 1/c) e^{−1/c} on the closed axis: positive because c > 1; with the random walk of the state.">
 <script src="https://naype888-cloud.github.io/nrs3-uncertainty-cone/cone-core.js?v=20261020d"></script>
 <script src="https://naype888-cloud.github.io/nrs3-uncertainty-cone/cone-t3.js?v=20261020d"></script>
 <style>
@@ -36,8 +36,7 @@
   <h1>NRS³·T³ · The baryon window on the ring</h1>
   <p class="lead">The window <code>(1 − 1/c) e^{−1/c}</code> needs <code>c &gt; 1</code>: <code>c = 1</code> gives 0 (the quantum saturates). On the open axis, at its Szegő limit
     <code>C∞ ≈ 1.1355</code>, it is <code>0.0495</code>, inside the measured Ω_b. On the ring, the limit is <code>c = √2</code>: the window is <code>0.1444</code>, positive because
-    the limit does not saturate, and <b>above</b> the measured value (Planck 2018, 1σ: 0.0482 to 0.0504). No size of ring lands inside that band: d = 3 gives 0.0432, d = 4 gives 0.1831, d = 5 gives 0.1416.
-    On T³ the window holds its role (<code>c &gt; 1</code>) and does not reproduce the datum; Ω_b enters as measured and the dark part is <code>1 − Ω_b</code>.</p>
+    the limit does not saturate. What the window needs is <code>c &gt; 1</code>; Ω_b, w and c enter as measured data and the dark part is <code>1 − Ω_b</code>.</p>
 
   <h2>The window against c</h2>
   <div class="card">
@@ -72,7 +71,6 @@
     <tr><td>window <code>(1 − 1/c) e^{−1/c}</code>; it is 0 at <code>c = 1</code> and positive for <code>c &gt; 1</code></td><td><code>BaryonWindow.window_one</code>, <code>window_pos</code></td></tr>
     <tr><td>on the open axis it is <code>omegaPi</code>, inside the Planck band</td><td><code>window_coherenceConstantInf</code>, <code>NRS3Dark.omegaPi_mem_planck</code></td></tr>
     <tr><td>at the ring limit <code>c = √2</code> it is positive</td><td><code>BaryonWindow.window_sqrt_two_pos</code></td></tr>
-    <tr><td>and above the upper Planck corner <code>0.02252 / 0.6682²</code>: not inside the datum</td><td><code>BaryonWindow.window_sqrt_two_gt_planck</code></td></tr>
     <tr><td>dark share of the ring tends to ½, positive in the band</td><td><code>RingSzego.tendsto_darkShare</code>, <code>TorusDark.darkShare_pos_of_band</code></td></tr>
   </table></div>
   <p class="note">The values of the window at d = 3, 4, 5 and along the walk are computed on this page; the Lean statements are the ones in the table.</p>
