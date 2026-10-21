@@ -123,3 +123,5 @@ import NRS3Tritoro
 #print axioms TorusCover.infinite_paths
 #print axioms TorusCover.exists_path_longer
 #print axioms TorusCover.distance_le
+#print axioms BaryonWindow.window_sqrt_two_gt_planck
+#print axioms BaryonWindow.window_sqrt_two_pos

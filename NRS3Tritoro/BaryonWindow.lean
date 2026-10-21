@@ -32,6 +32,9 @@ Robertson bound is the same.
 - `BaryonWindow.window`, `BaryonWindow.Postulate` : the window and the postulate `Ω_b = window c`.
 - `BaryonWindow.window_coherenceConstantInf` : on the open axis the window is `omegaPi`.
 - `BaryonWindow.window_pos` : the window is positive for `c > 1`.
+- `BaryonWindow.window_sqrt_two_pos`, `BaryonWindow.window_sqrt_two_gt_planck` : at the limit of the
+  ring, `c = √2 > 1`, the window is positive, and it is above the measured `Ω_b` (it is not inside
+  the datum, as `omegaPi` is).
 -/
 
 @[expose] public noncomputable section
@@ -56,5 +59,30 @@ theorem window_one : window 1 = 0 := by
 theorem window_pos {c : ℝ} (hc : 1 < c) : 0 < window c := by
   have h : 1 / c < 1 := (div_lt_one (by linarith)).2 hc
   exact mul_pos (by linarith) (Real.exp_pos _)
+
+/-- At the limit of the ring, `c = √2`, the window is positive: the limit does not saturate. -/
+theorem window_sqrt_two_pos : 0 < window (√2) :=
+  window_pos (by
+    have : (1 : ℝ) < 2 := by norm_num
+    simpa using Real.sqrt_lt_sqrt (by norm_num) this)
+
+/-- **The ring window is not inside the measured `Ω_b`.** At `c = √2` it is above the upper
+Planck 2018 corner. The window's role on the torus is `c > 1`, not a match to the datum. -/
+theorem window_sqrt_two_gt_planck : (0.02252 : ℝ) / 0.6682 ^ 2 < window (√2) := by
+  have h1 : (1.414 : ℝ) < √2 := by
+    rw [Real.lt_sqrt (by norm_num)]; norm_num
+  have h2 : (1 : ℝ) < √2 := by linarith
+  have hu : 1 / √2 < 1 / 1.414 := one_div_lt_one_div_of_lt (by norm_num) h1
+  have hu1 : 1 / √2 < 0.7073 := hu.trans (by norm_num)
+  have hu0 : 0 < 1 / √2 := by positivity
+  have he : 1 - 1 / √2 ≤ Real.exp (-1 / √2) := by
+    have := Real.add_one_le_exp (-1 / √2)
+    rw [neg_div] at this ⊢
+    linarith
+  unfold window
+  have hg : 0.2927 < 1 - 1 / √2 := by linarith
+  have hge : 0.2927 < Real.exp (-1 / √2) := lt_of_lt_of_le hg he
+  calc (0.02252 : ℝ) / 0.6682 ^ 2 < 0.2927 * 0.2927 := by norm_num
+    _ < (1 - 1 / √2) * Real.exp (-1 / √2) := mul_lt_mul'' hg hge (by norm_num) (by norm_num)
 
 end BaryonWindow

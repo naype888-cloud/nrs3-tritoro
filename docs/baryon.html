@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NRS³·T³ · Baryon window on the ring</title>
+<meta name="description" content="The window (1 − 1/c) e^{−1/c} on the closed axis: positive because c > 1, above the measured Ω_b; with the random walk of the state.">
+<script src="https://naype888-cloud.github.io/nrs3-uncertainty-cone/cone-core.js?v=20261020d"></script>
+<script src="https://naype888-cloud.github.io/nrs3-uncertainty-cone/cone-t3.js?v=20261020d"></script>
+<style>
+  :root { --bg:#fcfcfb; --panel:#fff; --ink:#0b0b0b; --ink2:#52514e; --muted:#8a8985; --grid:#e4e3df; --blue:#2a78d6; --orange:#eb6834; --red:#c0392b; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#111110; --panel:#191918; --ink:#f2f1ee; --ink2:#c4c3bf; --grid:#2c2b29; --blue:#5b9be6; --orange:#f08a5d; --red:#e07a6c; } }
+  :root[data-theme="dark"] { --bg:#111110; --panel:#191918; --ink:#f2f1ee; --ink2:#c4c3bf; --grid:#2c2b29; --blue:#5b9be6; --orange:#f08a5d; --red:#e07a6c; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  main { max-width:1080px; margin:0 auto; padding:24px 16px 40px; }
+  h1 { font-size:1.45rem; margin:0 0 4px; font-weight:650; } h2 { font-size:1.1rem; margin:26px 0 8px; font-weight:620; }
+  .lead,.note { color:var(--ink2); max-width:860px; } .note { font-size:.9rem; }
+  .theme,button { font:inherit; font-size:.9rem; padding:6px 12px; border-radius:999px; border:1px solid var(--grid); background:var(--panel); color:var(--ink); cursor:pointer; }
+  .theme { float:right; font-size:.8rem; }
+  .card { background:var(--panel); border:1px solid var(--grid); border-radius:10px; padding:12px; }
+  .controls { display:grid; grid-template-columns:auto 1fr 1fr 1fr; gap:10px 18px; align-items:center; margin-bottom:10px; }
+  @media (max-width:700px) { .controls { grid-template-columns:1fr; } }
+  .sl { display:flex; gap:10px; align-items:center; font-variant-numeric:tabular-nums; } .sl input { flex:1; min-width:0; accent-color:var(--blue); } .sl b { min-width:2.5em; text-align:right; }
+  canvas { width:100%; display:block; aspect-ratio:16/10; touch-action:none; }
+  .readout { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:10px; } @media (max-width:560px) { .readout { grid-template-columns:repeat(2,1fr); } }
+  .stat { background:var(--panel); border:1px solid var(--grid); border-radius:8px; padding:8px 10px; } .stat .k { font-size:.78rem; color:var(--muted); } .stat .v { font-size:1.05rem; font-variant-numeric:tabular-nums; }
+  .tw { overflow-x:auto; } table { border-collapse:collapse; font-size:.9rem; min-width:640px; } th,td { border:1px solid var(--grid); padding:6px 10px; text-align:left; vertical-align:top; } th { color:var(--ink2); }
+  code { font-size:.88em; } a { color:var(--blue); } footer { color:var(--muted); font-size:.85rem; margin-top:28px; }
+  .leg span { margin-right:14px; font-size:.85rem; color:var(--ink2); } .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:4px; }
+</style>
+</head>
+<body>
+<main>
+  <button class="theme" id="theme" type="button">Theme</button>
+  <h1>NRS³·T³ · The baryon window on the ring</h1>
+  <p class="lead">The window <code>(1 − 1/c) e^{−1/c}</code> needs <code>c &gt; 1</code>: <code>c = 1</code> gives 0 (the quantum saturates). On the open axis, at its Szegő limit
+    <code>C∞ ≈ 1.1355</code>, it is <code>0.0495</code>, inside the measured Ω_b. On the ring, the limit is <code>c = √2</code>: the window is <code>0.1444</code>, positive because
+    the limit does not saturate, and <b>above</b> the measured value (Planck 2018, 1σ: 0.0482 to 0.0504). No size of ring lands inside that band: d = 3 gives 0.0432, d = 4 gives 0.1831, d = 5 gives 0.1416.
+    On T³ the window holds its role (<code>c &gt; 1</code>) and does not reproduce the datum; Ω_b enters as measured and the dark part is <code>1 − Ω_b</code>.</p>
+
+  <h2>The window against c</h2>
+  <div class="card">
+    <div class="controls" style="grid-template-columns:auto 1fr"><label class="sl">ring positions d<input id="bd" type="range" min="3" max="40" value="3"><b id="vbd">3</b></label><span></span></div>
+    <canvas id="win" style="aspect-ratio:16/7" aria-label="Window against c with the measured band"></canvas>
+    <div class="readout" aria-live="polite">
+      <div class="stat"><div class="k">C°(d) = 1/β</div><div class="v" id="b1">–</div></div>
+      <div class="stat"><div class="k">window at C°(d)</div><div class="v" id="b2">–</div></div>
+      <div class="stat"><div class="k">ring limit c = √2</div><div class="v" id="b3">–</div></div>
+      <div class="stat"><div class="k">open C∞ → omegaPi</div><div class="v" id="b4">–</div></div>
+    </div>
+    <p class="note">Grey band: Ω_b = ω_b/h² from Planck 2018 at 1σ, 0.04820 to 0.05044. Orange: ring. Blue: open axis.</p>
+  </div>
+
+  <h2>The state walks and its window moves</h2>
+  <div class="card">
+    <p class="lead" style="margin:0 0 8px">A ring of <code>d</code> positions in the light sphere. Random walk: the state loses light, <code>c = 1/β</code> of the state grows, and its window moves along the curve above.
+      c = 1 would be the surface (saturated); inside the sphere c &gt; 1 and the window is positive. Drag to rotate.</p>
+    <div class="controls" style="grid-template-columns:auto 1fr"><button type="button" id="walk" aria-pressed="false">✦ Random walk (auto)</button><span></span></div>
+    <canvas id="sphere" aria-label="Ring state inside the light sphere"></canvas>
+    <div class="readout" aria-live="polite">
+      <div class="stat"><div class="k">light β²</div><div class="v" id="wl">–</div></div>
+      <div class="stat"><div class="k">c of the state = 1/β</div><div class="v" id="wc">–</div></div>
+      <div class="stat"><div class="k">window(c)</div><div class="v" id="ww">–</div></div>
+      <div class="stat"><div class="k">steps</div><div class="v" id="wn">0</div></div>
+    </div>
+  </div>
+
+  <h2>Lean</h2>
+  <div class="tw"><table>
+    <tr><th>Statement</th><th>Name</th></tr>
+    <tr><td>window <code>(1 − 1/c) e^{−1/c}</code>; it is 0 at <code>c = 1</code> and positive for <code>c &gt; 1</code></td><td><code>BaryonWindow.window_one</code>, <code>window_pos</code></td></tr>
+    <tr><td>on the open axis it is <code>omegaPi</code>, inside the Planck band</td><td><code>window_coherenceConstantInf</code>, <code>NRS3Dark.omegaPi_mem_planck</code></td></tr>
+    <tr><td>at the ring limit <code>c = √2</code> it is positive</td><td><code>BaryonWindow.window_sqrt_two_pos</code></td></tr>
+    <tr><td>and above the upper Planck corner <code>0.02252 / 0.6682²</code>: not inside the datum</td><td><code>BaryonWindow.window_sqrt_two_gt_planck</code></td></tr>
+    <tr><td>dark share of the ring tends to ½, positive in the band</td><td><code>RingSzego.tendsto_darkShare</code>, <code>TorusDark.darkShare_pos_of_band</code></td></tr>
+  </table></div>
+  <p class="note">The values of the window at d = 3, 4, 5 and along the walk are computed on this page; the Lean statements are the ones in the table.</p>
+  <footer>NRS Noncommercial License 1.0.0 · <a href="https://github.com/naype888-cloud/nrs3-tritoro">github.com/naype888-cloud/nrs3-tritoro</a></footer>
+</main>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id), C = Cone, R = Cone.ring, css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const win = (c) => (1 - 1 / c) * Math.exp(-1 / c), CINF = Math.sqrt(Math.PI ** 2 / 3 - 2), LO = 0.02222 / 0.679 ** 2, HI = 0.02252 / 0.6682 ** 2;
+  const dd = () => +$("bd").value;
+  function plot() {
+    const { g, w, h } = C.setup($("win")), L = 46, Rr = 14, T = 12, B = 30, W = w - L - Rr, H = h - T - B, cmax = 2.2, wmax = 0.3;
+    const X = (c) => L + (c - 1) / (cmax - 1) * W, Y = (v) => T + (1 - v / wmax) * H;
+    g.font = "12px system-ui"; g.strokeStyle = css("--grid"); g.fillStyle = css("--muted");
+    for (let v = 0; v <= wmax + 1e-9; v += 0.05) { g.beginPath(); g.moveTo(L, Y(v)); g.lineTo(L + W, Y(v)); g.stroke(); g.fillText(v.toFixed(2), 6, Y(v) + 4); }
+    for (let c = 1; c <= cmax + 1e-9; c += 0.2) g.fillText(c.toFixed(1), X(c) - 9, T + H + 18);
+    g.fillStyle = css("--grid"); g.fillRect(L, Y(HI), W, Y(LO) - Y(HI));
+    g.strokeStyle = css("--ink"); g.lineWidth = 2; g.beginPath();
+    for (let c = 1; c <= cmax + 1e-9; c += 0.01) { const x = X(c), y = Y(win(c)); c === 1 ? g.moveTo(x, y) : g.lineTo(x, y); } g.stroke();
+    const mark = (c, col, lab, up) => { g.fillStyle = css(col); g.beginPath(); g.arc(X(c), Y(win(c)), 6, 0, 7); g.fill(); g.fillText(lab, X(c) + 8, Y(win(c)) + (up ? -8 : 14)); };
+    mark(CINF, "--blue", "open C∞", false); mark(Math.SQRT2, "--orange", "ring √2", true);
+    const cd = R.CNava(dd()); if (cd <= cmax) { g.strokeStyle = css("--orange"); g.lineWidth = 1.5; g.strokeRect(X(cd) - 6, Y(win(cd)) - 6, 12, 12); }
+    g.fillStyle = css("--muted"); g.fillText("c", L + W - 8, T + H + 18);
+    $("vbd").textContent = dd(); $("b1").textContent = cd.toFixed(4); $("b2").textContent = win(cd).toFixed(4);
+    $("b3").textContent = win(Math.SQRT2).toFixed(6); $("b4").textContent = win(CINF).toFixed(6);
+  }
+  const view = { yaw: -0.6, pitch: 0.5, user: false };
+  let s = null, tr = [], walking = false, n = 0, rng = null;
+  const pt = (a) => [a.v[1] / a.v[0], a.v[2] / a.v[0], a.v[3] / a.v[0]];
+  const fresh = () => { s = R.state(dd(), 0, 1, false); tr = []; n = 0; };
+  function draw() {
+    const { g, w, h } = C.setup($("sphere")), P = C.projector(w, h, view, 0.36, 0), grid = css("--grid"), muted = css("--muted");
+    const ring = (f) => { const p = []; for (let t = 0; t <= 72; t++) p.push(f(t * Math.PI / 36)); return p; };
+    for (const f of [(a) => [Math.cos(a), Math.sin(a), 0], (a) => [Math.cos(a), 0, Math.sin(a)], (a) => [0, Math.cos(a), Math.sin(a)]]) C.poly(g, P, ring(f), C.mix(css("--red"), 0.5), 1.2);
+    C.line(g, P, [-1.2, 0, 0], [1.2, 0, 0], grid); C.line(g, P, [0, -1.2, 0], [0, 1.2, 0], grid); C.line(g, P, [0, 0, -1.2], [0, 0, 1.2], grid);
+    C.label(g, P, [1.25, 0, 0], "Re⟪x,y⟫", muted); C.label(g, P, [0, 1.25, 0], "Im⟪x,y⟫", muted); C.label(g, P, [0, 0, 1.25], "ΔVar", muted);
+    if (!s) fresh();
+    const a = R.analyse(dd(), s), col = css("--orange"), u = pt(a);
+    if (tr.length > 1) C.poly(g, P, tr, C.mix(col, 0.5), 1.4); C.line(g, P, [0, 0, 0], u, col, 2); C.dot(g, P, u, 6, col);
+    const be = Math.sqrt(a.light), c = be > 0 ? 1 / be : Infinity;
+    $("wl").textContent = a.light.toFixed(4); $("wc").textContent = c.toFixed(4); $("ww").textContent = win(c).toFixed(4); $("wn").textContent = n;
+  }
+  function step() {
+    if (!walking) return;
+    s = R.step(s, 0.05, rng); n++; tr.push(pt(R.analyse(dd(), s))); if (tr.length > 120) tr.shift();
+    draw(); setTimeout(() => requestAnimationFrame(step), 40);
+  }
+  function set(on) { walking = on; $("walk").setAttribute("aria-pressed", on); $("walk").textContent = on ? "❚❚ Stop" : "✦ Random walk (auto)";
+    fresh(); if (on) { rng = C.rng((Math.random() * 1e9) | 0); step(); } else draw(); }
+  $("walk").addEventListener("click", () => set(!walking));
+  $("bd").addEventListener("input", () => { set(false); plot(); });
+  C.view3d($("sphere"), view, draw);
+  (function spin() { if (!view.user) { view.yaw += 0.0025; draw(); } requestAnimationFrame(spin); })();
+  $("theme").addEventListener("click", () => { const r = document.documentElement, dk = matchMedia("(prefers-color-scheme: dark)").matches;
+    r.dataset.theme = (r.dataset.theme || (dk ? "dark" : "light")) === "dark" ? "light" : "dark"; setTimeout(() => { draw(); plot(); }, 0); });
+  window.addEventListener("resize", () => { draw(); plot(); }); plot(); draw();
+})();
+</script>
+</body>
+</html>
