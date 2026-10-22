@@ -232,4 +232,16 @@ import NRS3Tritoro
 #print axioms TorusWhiteBall.HWhiteBall.lightShare_pos_iff
 #print axioms TorusWhiteBall.ofModel_lightShare
 #print axioms TorusWhiteBall.ofModel_lightShare_le
+#print axioms TorusWhiteBall.chandrasekharSolar_gt
+#print axioms TorusWhiteBall.chandrasekharSolar_lt
+#print axioms TorusWhiteBall.white_iff
+#print axioms TorusWhiteBall.whiteDwarf_white
+#print axioms TorusWhiteBall.siriusB_white
+#print axioms TorusWhiteBall.cygnusX1_dark
+#print axioms TorusWhiteBall.thirty_dark
+#print axioms TorusWhiteBall.exists_white_and_dark
+#print axioms TorusWhiteBall.openCube_exists
+#print axioms TorusWhiteBall.torus_exists
+#print axioms TorusWhiteBall.fiberX_exists
+#print axioms TorusWhiteBall.fiberW_exists
 #print axioms TorusWhiteBall.toSaturationDark
