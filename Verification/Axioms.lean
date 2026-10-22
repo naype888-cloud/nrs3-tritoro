@@ -166,3 +166,12 @@ import NRS3Tritoro
 #print axioms TorusBoundaryField.configField_injective
 #print axioms TorusBoundaryField.card_fieldConfigs
 #print axioms TorusBoundaryField.log_card_fieldConfigs
+#print axioms TorusDarkFoam.openProb_uniform
+#print axioms TorusDarkFoam.meanBracket_apply
+#print axioms TorusDarkFoam.meanBracket_uniform
+#print axioms TorusDarkFoam.meanField_uniform
+#print axioms TorusDarkFoam.bitVariance_le
+#print axioms TorusDarkFoam.bitVariance_uniform
+#print axioms TorusDarkFoam.openProb_of_saturated
+#print axioms TorusDarkFoam.meanBracket_of_saturated
+#print axioms TorusDarkFoam.bitVariance_of_saturated
