@@ -11,6 +11,7 @@ public import NRS3Tritoro.OpenCubeBoundary
 public import NRS3Tritoro.ClausiusInput
 public import NRS3Tritoro.TorusBekenstein
 public import NRS3Tritoro.TorusSaturation
+public import NRS3Tritoro.TorusWhiteBall
 public import NRS3Tritoro.TorusBoundaryField
 public import NRS3Tritoro.TorusDarkFoam
 public import NRS3Tritoro.TorusBochner

@@ -228,3 +228,8 @@ import NRS3Tritoro
 #print axioms CutEinstein.clausius_openCube
 #print axioms CutEinstein.clausius_torus
 #print axioms CutEinstein.clausius_fiber
+#print axioms TorusWhiteBall.HWhiteBall.darkShare_eq_one_iff
+#print axioms TorusWhiteBall.HWhiteBall.lightShare_pos_iff
+#print axioms TorusWhiteBall.ofModel_lightShare
+#print axioms TorusWhiteBall.ofModel_lightShare_le
+#print axioms TorusWhiteBall.toSaturationDark
