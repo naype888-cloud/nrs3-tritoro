@@ -12,7 +12,9 @@ public import NRS3Tritoro.TorusBekenstein
 
 `TorusBekenstein` bounds what a region of the torus holds by its boundary, `H ≤ S`, and the
 bound is reached. A distribution with `H = S` has filled the region to capacity: no distribution
-of the same cut holds more (`isMax_of_saturated`).
+of the same cut holds more (`isMax_of_saturated`). It is reached only once: `−x log x` is strictly
+concave, so the equality case of Jensen forces every configuration to the same weight. Saturated
+means perfectly distributed, every boundary step alike (`saturated_iff_uniform`).
 
 **Nava's postulate (declared).** Compress matter until a quantum is filled to capacity and all of
 it becomes dark, dark matter and dark energy: the start of a singularity. It is declared as the
@@ -23,11 +25,15 @@ Lean does not derive the postulate; it derives what follows from it, and shows i
 ## Main results
 
 - `TorusSaturation.isMax_of_saturated` : a saturated distribution holds the most the cut allows.
+- `TorusSaturation.eq_uniform_of_entropy_eq` : `H = log |α|` only for the uniform distribution.
+- `TorusSaturation.saturated_iff_uniform` : `H = S` iff the distribution of the cut is uniform.
 - `TorusSaturation.HSaturationDark` : Nava's postulate, declared.
 - `TorusSaturation.hSaturationDark_satisfiable` : the bridge is consistent.
 - `TorusSaturation.HSaturationDark.darkShare_uniform` : the uniform distribution is dark.
 - `TorusSaturation.HSaturationDark.lightShare_eq_zero` : at saturation no light is left.
 - `TorusSaturation.HSaturationDark.darkShare_of_area` : reaching `A / (4 ℓ_P²)` is darkness.
+- `TorusSaturation.HSaturationDark.eq_uniform_of_saturation` : the dark region of the postulate is
+  the perfectly distributed one.
 -/
 
 @[expose] public noncomputable section
@@ -43,6 +49,37 @@ theorem isMax_of_saturated {d : ProbDistribution (Config dx dy dz c)}
     (h : Hₛ d = cutEntropy dx dy dz c) (d' : ProbDistribution (Config dx dy dz c)) :
     Hₛ d' ≤ Hₛ d :=
   h ▸ entropy_le_cutEntropy d'
+
+/-- **Only the uniform distribution reaches `log |α|`.** Equality in Jensen for the strictly
+concave `−x log x` puts the same weight on every outcome. -/
+theorem eq_uniform_of_entropy_eq {α : Type*} [Fintype α] [Nonempty α] {d : ProbDistribution α}
+    (h : Hₛ d = Real.log (Fintype.card α)) : d = ProbDistribution.uniform := by
+  set n : ℝ := (Fintype.card α : ℝ) with hn_def
+  have hn : 0 < n := by rw [hn_def]; exact_mod_cast Fintype.card_pos
+  have hw : ∑ _i : α, n⁻¹ = 1 := by
+    rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul, ← hn_def, mul_inv_cancel₀ hn.ne']
+  have hsum : ∑ i, n⁻¹ • (d i : ℝ) = n⁻¹ := by
+    rw [← Finset.smul_sum, d.normalized, smul_eq_mul, mul_one]
+  have heq : Real.negMulLog (∑ i, n⁻¹ • (d i : ℝ)) = ∑ i, n⁻¹ • Real.negMulLog (d i) := by
+    have hH : ∑ i, Real.negMulLog (d i) = Real.log n := h
+    rw [hsum, ← Finset.smul_sum, hH, Real.negMulLog, Real.log_inv, smul_eq_mul]
+    ring
+  have hall := (Real.strictConcaveOn_negMulLog.map_sum_eq_iff_of_pos (t := Finset.univ)
+    (fun _ _ => inv_pos.2 hn) hw (fun i _ => Set.mem_Ici.2 (d i).zero_le_coe)).1 heq
+  ext x
+  have hconst : ∑ i, (d i : ℝ) = ∑ _i : α, (d x : ℝ) :=
+    Finset.sum_congr rfl fun i _ => hall (Finset.mem_univ i) (Finset.mem_univ x)
+  rw [d.normalized, Finset.sum_const, Finset.card_univ, nsmul_eq_mul, ← hn_def] at hconst
+  rw [ProbDistribution.uniform_def, Finset.card_univ, ← hn_def]
+  field_simp
+  linarith
+
+/-- **Saturated means perfectly distributed.** A distribution of the cut reaches `H = S` iff it
+gives every configuration the same weight. -/
+theorem saturated_iff_uniform {d : ProbDistribution (Config dx dy dz c)} :
+    Hₛ d = cutEntropy dx dy dz c ↔ d = ProbDistribution.uniform :=
+  ⟨fun h => eq_uniform_of_entropy_eq (h.trans (log_card_config c).symm),
+    fun h => h ▸ entropy_uniform c⟩
 
 /-- **Nava's postulate (declared hypothesis).** Filling a quantum to capacity turns all of it
 dark: a distribution of the cut that saturates the Bekenstein bound has dark share `1`. -/
@@ -80,6 +117,11 @@ theorem darkShare_of_area {a ℓ : ℝ} (hℓ : ℓ ≠ 0) (hy : 0 < dy) (hz : 0
     {d : ProbDistribution (Config dx dy dz c)}
     (h : Hₛ d = a ^ 2 * (2 * (dy * dz) : ℕ) / (4 * ℓ ^ 2)) : H.darkShare d = 1 :=
   H.saturation d (h.trans ((bekensteinHawking_iff hℓ hy hz hc hd).2 ha).symm)
+
+/-- The region the postulate makes dark is the perfectly distributed one, and it is dark. -/
+theorem eq_uniform_of_saturation {d : ProbDistribution (Config dx dy dz c)}
+    (h : Hₛ d = cutEntropy dx dy dz c) : d = ProbDistribution.uniform ∧ H.darkShare d = 1 :=
+  ⟨saturated_iff_uniform.1 h, H.saturation d h⟩
 
 end HSaturationDark
 

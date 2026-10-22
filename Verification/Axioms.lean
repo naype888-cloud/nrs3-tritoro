@@ -157,3 +157,6 @@ import NRS3Tritoro
 #print axioms TorusSaturation.HSaturationDark.darkShare_uniform
 #print axioms TorusSaturation.HSaturationDark.lightShare_eq_zero
 #print axioms TorusSaturation.HSaturationDark.darkShare_of_area
+#print axioms TorusSaturation.eq_uniform_of_entropy_eq
+#print axioms TorusSaturation.saturated_iff_uniform
+#print axioms TorusSaturation.HSaturationDark.eq_uniform_of_saturation
