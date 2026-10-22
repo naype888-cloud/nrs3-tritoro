@@ -46,6 +46,7 @@ Dependencias por git, fijadas a un commit: [`nrs3-hopf`](https://github.com/nayp
 | **límite de Szegő del eje cerrado**: luz y oscuro → `1/2`, ángulo → `45°` | `RingSzego.tendsto_lightShare`, `tendsto_darkShare`, `tendsto_angle` |
 | `det Σ / \|det Ω\|` del eje → `2` | `RingSzego.tendsto_det_ratio` |
 | todo tamaño tiene su estado `c`; en `c` el ángulo → `45°` y la razón → `2` | `RingSzego.exists_cState`, `tendsto_angle_cState`, `tendsto_det_ratio_cState` |
+| raíz de Dirac en `T³` (lados pares, signos de Kogut–Susskind): `D_m² = T_x² + T_y² + T_z² + m²`; los ocho dobladores `(±π/2)³` (`4` divide cada lado) cumplen `D_m e_{uvw} = m e_{−u,−v,−w}`, ceros de `D_0` | `TorusDirac3.dirac3_sq`, `dirac3_wave` |
 
 ### La prueba del estricto, en una línea por paso
 
