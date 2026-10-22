@@ -16,12 +16,14 @@ public import NRS3Dark.Dark
 `TorusSaturation` declares Nava's postulate: compress matter until a quantum is filled to
 capacity, `H = S`, and the region becomes dark. This file declares its other half. If the
 compression does not fill the quantum, the region becomes a ball of yarn whose thread glows: from
-outside one sees a white point, the interior stays dark, and the face seen is the sum of all the
-connections the boundary allows, `2^|X|` patterns laid over the quanta (`card_cutPatterns`).
+outside one sees a white point, and the face seen is the sum of all the connections the boundary
+allows, `2^|X|` patterns laid over the quanta (`card_cutPatterns`). The quantum itself is
+transparent: its dark share is the dark field, which gives nothing to see, and behind it there is
+only black, what has not happened. It turns black itself only when it is filled.
 
 **Nava's white ball (declared).** `HWhiteBall X`, on any finite boundary `X`: the dark share of a
-region is positive (the interior stays dark), at most `1`, equal to `1` at saturation and below
-`1` under capacity. From it, with `BoundaryBits.saturated_iff_uniform`:
+region is positive (the transparent dark field of the interior), at most `1`, equal to `1` at
+saturation and below `1` under capacity. From it, with `BoundaryBits.saturated_iff_uniform`:
 
   `0 < lightShare d ↔ d ≠ uniform`,
 
@@ -73,8 +75,8 @@ abbrev capacity (X : Finset α) : ℝ := X.card * Real.log 2
 lemma capacity_pos (hX : X.Nonempty) : 0 < capacity X :=
   mul_pos (by exact_mod_cast hX.card_pos) (Real.log_pos one_lt_two)
 
-/-- **Nava's white ball (declared hypothesis).** The interior of a region stays dark, a full
-quantum is all dark, and a quantum below capacity keeps some light on its edge. -/
+/-- **Nava's white ball (declared hypothesis).** The interior of a region is transparent dark
+field, a full quantum is all dark, and a quantum below capacity keeps some light on its edge. -/
 structure HWhiteBall (X : Finset α) where
   darkShare : ProbDistribution (Config X) → ℝ
   interior : ∀ d, 0 < darkShare d
@@ -92,7 +94,7 @@ def lightShare (d : ProbDistribution (Config X)) : ℝ := 1 - W.darkShare d
 theorem lightShare_nonneg (d : ProbDistribution (Config X)) : 0 ≤ W.lightShare d :=
   sub_nonneg.2 (W.darkShare_le_one d)
 
-/-- The interior stays dark: the light share never reaches `1`. -/
+/-- The interior is transparent dark field: the light share never reaches `1`. -/
 theorem lightShare_lt_one (d : ProbDistribution (Config X)) : W.lightShare d < 1 :=
   sub_lt_self 1 (W.interior d)
 
@@ -186,7 +188,7 @@ def solarMass : ℝ := 1.98841e30
 /-- `ω₃⁰`, the Lane–Emden constant of the polytrope `n = 3` (Chandrasekhar 1939). -/
 def laneEmden3 : ℝ := 2.01824
 
-/-- Nucleons per electron of a carbon, oxygen or iron core, `μ_e = 2`. -/
+/-- Nucleons per electron of a helium, carbon or oxygen core, `μ_e = 2` (iron has `56/26`). -/
 def nucleonsPerElectron : ℝ := 2
 
 /-- **The Chandrasekhar mass** (1931), `ω₃⁰ √(3π) m_P³ / (2 (μ_e m_H)²)`, in kg. -/
