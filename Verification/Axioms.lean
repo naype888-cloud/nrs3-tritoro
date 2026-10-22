@@ -251,6 +251,14 @@ import NRS3Tritoro
 #print axioms TorusFiberDirac.abs_velocity_le_inv_goldenRatio
 #print axioms TorusFiberDirac.dirac_tensor
 #print axioms TorusFiberDirac.dirac_doublers
+#print axioms SiteHop.curw_isSymmetric
+#print axioms SiteHop.hop_curw
+#print axioms SiteHop.curw_sq_add_hop_sq
+#print axioms SiteHop.curw_hop_anticomm
+#print axioms SiteHop.hop_curw_anticomm
+#print axioms TorusFiberDirac.abs_velocity_y_le_inv_goldenRatio
+#print axioms TorusFiberDirac.abs_velocity_z_le_inv_goldenRatio
+#print axioms TorusFiberDirac.abs_velocity_le_inv_goldenRatio_axes
 #print axioms Rindler.period_ge
 #print axioms Rindler.unruhTemperature_mul_period
 #print axioms LightSheet.clausius_iff
