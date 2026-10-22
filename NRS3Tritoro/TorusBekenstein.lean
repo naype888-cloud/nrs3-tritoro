@@ -5,8 +5,8 @@ Authors: Eduardo Nava-Hernandez
 -/
 module
 
+public import NRS3Tritoro.BoundaryBits
 public import NRS3Tritoro.TorusArea
-public import QuantumInfo.ClassicalInfo.Entropy
 
 /-!
 # The Bekenstein bound on the three-torus
@@ -40,9 +40,7 @@ namespace TorusBekenstein
 variable {dx dy dz : ℕ}
 
 /-- A configuration of the cut: the set of its open boundary steps. -/
-abbrev Config (dx dy dz c : ℕ) := ↥(crossSteps dx dy dz c).powerset
-
-instance (c : ℕ) : Nonempty (Config dx dy dz c) := ⟨⟨∅, Finset.empty_mem_powerset _⟩⟩
+abbrev Config (dx dy dz c : ℕ) := BoundaryBits.Config (crossSteps dx dy dz c)
 
 lemma log_card_config (c : ℕ) :
     Real.log (Fintype.card (Config dx dy dz c)) = cutEntropy dx dy dz c := by

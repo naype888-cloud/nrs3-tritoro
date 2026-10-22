@@ -53,26 +53,8 @@ theorem isMax_of_saturated {d : ProbDistribution (Config dx dy dz c)}
 /-- **Only the uniform distribution reaches `log |α|`.** Equality in Jensen for the strictly
 concave `−x log x` puts the same weight on every outcome. -/
 theorem eq_uniform_of_entropy_eq {α : Type*} [Fintype α] [Nonempty α] {d : ProbDistribution α}
-    (h : Hₛ d = Real.log (Fintype.card α)) : d = ProbDistribution.uniform := by
-  set n : ℝ := (Fintype.card α : ℝ) with hn_def
-  have hn : 0 < n := by rw [hn_def]; exact_mod_cast Fintype.card_pos
-  have hw : ∑ _i : α, n⁻¹ = 1 := by
-    rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul, ← hn_def, mul_inv_cancel₀ hn.ne']
-  have hsum : ∑ i, n⁻¹ • (d i : ℝ) = n⁻¹ := by
-    rw [← Finset.smul_sum, d.normalized, smul_eq_mul, mul_one]
-  have heq : Real.negMulLog (∑ i, n⁻¹ • (d i : ℝ)) = ∑ i, n⁻¹ • Real.negMulLog (d i) := by
-    have hH : ∑ i, Real.negMulLog (d i) = Real.log n := h
-    rw [hsum, ← Finset.smul_sum, hH, Real.negMulLog, Real.log_inv, smul_eq_mul]
-    ring
-  have hall := (Real.strictConcaveOn_negMulLog.map_sum_eq_iff_of_pos (t := Finset.univ)
-    (fun _ _ => inv_pos.2 hn) hw (fun i _ => Set.mem_Ici.2 (d i).zero_le_coe)).1 heq
-  ext x
-  have hconst : ∑ i, (d i : ℝ) = ∑ _i : α, (d x : ℝ) :=
-    Finset.sum_congr rfl fun i _ => hall (Finset.mem_univ i) (Finset.mem_univ x)
-  rw [d.normalized, Finset.sum_const, Finset.card_univ, nsmul_eq_mul, ← hn_def] at hconst
-  rw [ProbDistribution.uniform_def, Finset.card_univ, ← hn_def]
-  field_simp
-  linarith
+    (h : Hₛ d = Real.log (Fintype.card α)) : d = ProbDistribution.uniform :=
+  BoundaryBits.eq_uniform_of_entropy_eq h
 
 /-- **Saturated means perfectly distributed.** A distribution of the cut reaches `H = S` iff it
 gives every configuration the same weight. -/

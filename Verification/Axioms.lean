@@ -180,3 +180,7 @@ import NRS3Tritoro
 #print axioms TorusBochner.torus_curvature
 #print axioms TorusBochner.torus_sharp
 #print axioms TorusBochner.not_curvature_pos
+#print axioms BoundaryBits.entropy_le
+#print axioms BoundaryBits.saturated_iff_uniform
+#print axioms BoundaryBits.openProb_uniform
+#print axioms BoundaryBits.bitVariance_uniform
