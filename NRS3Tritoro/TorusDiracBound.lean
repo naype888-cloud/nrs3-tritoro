@@ -7,6 +7,7 @@ module
 
 public import NRS3Tritoro.TorusDirac
 public import NRS3Tritoro.TorusUniverseIsolation
+public import Mathlib.NumberTheory.Real.GoldenRatio
 
 /-!
 # The speed limit of a massive Dirac state
@@ -21,7 +22,8 @@ Put `r = √(1 + m²) − |m|`, so `r² + 2|m| r = 1`. Then `r² (a + m²) − a
 
   `|⟨K⟩| ≤ √(1 + m²) − |m| < 1`:
 
-the mass sets how far below the cone a stationary state stays. At `m = 1/2` the limit is `1/φ`.
+the mass sets how far below the cone a stationary state stays. At `m = 1/2` the limit is
+`√5/2 − 1/2 = 1/φ`; at `m = 1` it is `√2 − 1`.
 
 ## Main results
 
@@ -29,6 +31,10 @@ the mass sets how far below the cone a stationary state stays. At `m = 1/2` the 
   commute, and `T°² + K² = 1`.
 - `TorusUniverse.abs_velocity_le_of_dirac` : `|⟨K⟩| ≤ √(1 + m²) − |m|` for an eigenvector of
   `D_m`.
+- `TorusUniverse.speedLimit_half`, `TorusUniverse.abs_velocity_le_inv_goldenRatio` : mass `1/2`,
+  speed at most `1/φ`.
+- `TorusUniverse.speedLimit_one`, `TorusUniverse.abs_velocity_le_sqrt_two_sub_one` : mass `1`,
+  speed at most `√2 − 1`.
 -/
 
 @[expose] public noncomputable section
@@ -169,5 +175,39 @@ theorem abs_velocity_le_of_dirac (h2 : 2 ∣ L) {m : ℝ} (hm : m ≠ 0) {E : �
       _ ≤ r ^ 2 * (a + m ^ 2) := hsq
       _ = (a + m ^ 2) * r ^ 2 := by ring
   exact (pow_le_pow_iff_left₀ (abs_nonneg v) hr0 two_ne_zero).1 (by rw [sq_abs]; exact hvr)
+
+/-- **At mass `1/2` the speed limit is `1/φ`**: `√(1 + 1/4) − 1/2 = (√5 − 1)/2`. -/
+theorem speedLimit_half {m : ℝ} (hm : |m| = 1 / 2) :
+    Real.sqrt (1 + m ^ 2) - |m| = Real.goldenRatio⁻¹ := by
+  have hm2 : m ^ 2 = 1 / 4 := by rw [← sq_abs, hm]; norm_num
+  have h5 : Real.sqrt (1 + m ^ 2) = Real.sqrt 5 / 2 := by
+    rw [hm2, show (1 + 1 / 4 : ℝ) = (Real.sqrt 5 / 2) ^ 2 by
+      rw [div_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 5)]; norm_num]
+    exact Real.sqrt_sq (by positivity)
+  rw [h5, hm, Real.inv_goldenRatio, Real.goldenConj]
+  ring
+
+/-- At mass `1` the speed limit is `√2 − 1`. -/
+theorem speedLimit_one {m : ℝ} (hm : |m| = 1) : Real.sqrt (1 + m ^ 2) - |m| = Real.sqrt 2 - 1 := by
+  have hm2 : m ^ 2 = 1 := by rw [← sq_abs, hm]; norm_num
+  rw [hm2, hm]
+  norm_num
+
+/-- **Mass `1/2`, speed `1/φ`**: an eigenvector of `D_m` with `|m| = 1/2` moves at most at
+`1/φ`. -/
+theorem abs_velocity_le_inv_goldenRatio (h2 : 2 ∣ L) {m : ℝ} (hm : |m| = 1 / 2) {E : ℝ}
+    {ψ : HU L} (hψ : ‖ψ‖ = 1) (hE : dirac m ψ = (E : ℂ) • ψ) :
+    |velocity ψ| ≤ Real.goldenRatio⁻¹ := by
+  have hm0 : m ≠ 0 := by rintro rfl; norm_num at hm
+  rw [← speedLimit_half hm]
+  exact abs_velocity_le_of_dirac h2 hm0 hψ hE
+
+/-- Mass `1`, speed `√2 − 1`. -/
+theorem abs_velocity_le_sqrt_two_sub_one (h2 : 2 ∣ L) {m : ℝ} (hm : |m| = 1) {E : ℝ}
+    {ψ : HU L} (hψ : ‖ψ‖ = 1) (hE : dirac m ψ = (E : ℂ) • ψ) :
+    |velocity ψ| ≤ Real.sqrt 2 - 1 := by
+  have hm0 : m ≠ 0 := by rintro rfl; norm_num at hm
+  rw [← speedLimit_one hm]
+  exact abs_velocity_le_of_dirac h2 hm0 hψ hE
 
 end TorusUniverse

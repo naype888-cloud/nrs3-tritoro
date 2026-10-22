@@ -46,6 +46,7 @@ public import NRS3Tritoro.OpenDirac
 public import NRS3Tritoro.FiberDark
 public import NRS3Tritoro.FiberBoundary
 public import NRS3Tritoro.FiberDirac
+public import NRS3Tritoro.FiberDiracAxis
 public import NRS3Tritoro.Gravity.Unruh
 public import NRS3Tritoro.Gravity.Clausius
 public import NRS3Tritoro.Gravity.NullForms

@@ -33,6 +33,8 @@ momentum cube: every transport kills them, so they are the zero modes of `D_0`, 
 - `TorusDirac3.dirac3_sq` : `D_m² = T_x² + T_y² + T_z² + m²`.
 - `TorusDirac3.dirac3_wave` : `D_m e_{uvw} = m e_{−u,−v,−w}`; with `m = 0` the eight doublers
   are zero modes.
+- `TorusDirac3.dirac3_pair_add`, `TorusDirac3.dirac3_pair_sub` : the mass splits each pair of
+  opposite doublers, `e_{uvw} ± e_{−u,−v,−w}` has energy `±m`. The eight doublers are four pairs.
 -/
 
 @[expose] public noncomputable section
@@ -204,5 +206,25 @@ theorem dirac3_wave (ha : 4 ∣ a) (hb : 4 ∣ b) (hc : 4 ∣ c) {u v w : ℂ} (
   linear_combination (u * u ^ x.val * v ^ y.val * w ^ z.val / 2) * sq_of hu +
     ((-1) ^ x.val * u ^ x.val * v * v ^ y.val * w ^ z.val / 2) * sq_of hv +
     ((-1) ^ x.val * (-1) ^ y.val * u ^ x.val * v ^ y.val * w * w ^ z.val / 2) * sq_of hw
+
+open TorusUniverse in
+/-- **The mass splits a pair of opposite doublers**: `e_{uvw} + e_{−u,−v,−w}` has energy `m`. -/
+theorem dirac3_pair_add (ha : 4 ∣ a) (hb : 4 ∣ b) (hc : 4 ∣ c) {u v w : ℂ} (hu : u = I ∨ u = -I)
+    (hv : v = I ∨ v = -I) (hw : w = I ∨ w = -I) (m : ℝ) :
+    dirac3 m (wave3 u v w + wave3 (-u) (-v) (-w) : H3 a b c) =
+      (m : ℂ) • (wave3 u v w + wave3 (-u) (-v) (-w)) := by
+  rw [map_add, dirac3_wave ha hb hc hu hv hw,
+    dirac3_wave ha hb hc (neg_of hu) (neg_of hv) (neg_of hw), neg_neg, neg_neg, neg_neg,
+    smul_add, add_comm]
+
+open TorusUniverse in
+/-- and `e_{uvw} − e_{−u,−v,−w}` has energy `−m`. -/
+theorem dirac3_pair_sub (ha : 4 ∣ a) (hb : 4 ∣ b) (hc : 4 ∣ c) {u v w : ℂ} (hu : u = I ∨ u = -I)
+    (hv : v = I ∨ v = -I) (hw : w = I ∨ w = -I) (m : ℝ) :
+    dirac3 m (wave3 u v w - wave3 (-u) (-v) (-w) : H3 a b c) =
+      (-(m : ℂ)) • (wave3 u v w - wave3 (-u) (-v) (-w)) := by
+  rw [map_sub, dirac3_wave ha hb hc hu hv hw,
+    dirac3_wave ha hb hc (neg_of hu) (neg_of hv) (neg_of hw), neg_neg, neg_neg, neg_neg]
+  module
 
 end TorusDirac3
