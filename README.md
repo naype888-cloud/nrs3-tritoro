@@ -94,3 +94,5 @@ es trabajo abierto, no está en Lean.
 `Quot.sound`.
 
 **[▶ The baryon window on the ring](https://naype888-cloud.github.io/nrs3-tritoro/baryon.html)** · [Holography: open cube and T³](https://naype888-cloud.github.io/nrs3-tritoro/holography.html) — at the ring limit `c = √2` the window is positive (`window_sqrt_two_pos`): the limit does not saturate.
+
+**[▶ Bits on the boundary](https://naype888-cloud.github.io/nrs3-tritoro/bekenstein.html)** · **[▶ The dark foam](https://naype888-cloud.github.io/nrs3-tritoro/foam.html)** — a region of T³ holds at most one bit per square of its walls, whatever its depth (`bekenstein_bound`); only the perfectly mixed state fills it (`saturated_iff_uniform`), and Nava's postulate makes it dark; that state is a foam, flat on average and flipping the most at every square (`openProb_uniform`, `bitVariance_uniform`); and by Bochner the torus is flat (`torus_curvature`, `not_curvature_pos`).
