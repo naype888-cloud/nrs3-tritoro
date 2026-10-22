@@ -52,6 +52,7 @@ public import NRS3Tritoro.SiteHop
 public import NRS3Tritoro.TorusFiberDirac
 public import NRS3Tritoro.TorusFiberGap
 public import NRS3Tritoro.TorusFiberAxes
+public import NRS3Tritoro.MinUncertaintyFiber
 public import NRS3Tritoro.TorusFiberDoublers
 public import NRS3Tritoro.Gravity.Unruh
 public import NRS3Tritoro.Gravity.Clausius

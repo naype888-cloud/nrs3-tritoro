@@ -259,6 +259,13 @@ import NRS3Tritoro
 #print axioms TorusFiberDirac.abs_velocity_y_le_inv_goldenRatio
 #print axioms TorusFiberDirac.abs_velocity_z_le_inv_goldenRatio
 #print axioms TorusFiberDirac.abs_velocity_le_inv_goldenRatio_axes
+#print axioms DiracSpeed.speedLimit_eq_inv_iff
+#print axioms DiracSpeed.speedLimit_sinh
+#print axioms DiracSpeed.sinh_log_goldenRatio
+#print axioms MinUncertaintyFiber.rho_four_sub_inv
+#print axioms MinUncertaintyFiber.speedLimit_fiber_eq_inv_rho
+#print axioms MinUncertaintyFiber.speedLimit_fiber_eq_exp
+#print axioms MinUncertaintyFiber.isGreatest_minUncertaintyTension
 #print axioms Rindler.period_ge
 #print axioms Rindler.unruhTemperature_mul_period
 #print axioms LightSheet.clausius_iff

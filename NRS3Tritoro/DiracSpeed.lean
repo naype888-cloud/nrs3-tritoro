@@ -7,6 +7,8 @@ module
 
 public import Mathlib.Analysis.InnerProductSpace.Symmetric
 public import Mathlib.NumberTheory.Real.GoldenRatio
+public import Mathlib.Analysis.Complex.Trigonometric
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
 
 /-!
 # The speed limit of a Dirac state, in any Hilbert space
@@ -30,6 +32,9 @@ At `|m| = 1/2` the limit is `1/φ`, at `|m| = 1` it is `√2 − 1`.
 
 - `DiracSpeed.speedLimit_sq`, `DiracSpeed.speedLimit_half`, `DiracSpeed.speedLimit_one` :
   `r = √(1 + m²) − |m|` solves `r² + 2|m| r = 1`; `r = 1/φ` at `|m| = 1/2`, `√2 − 1` at `|m| = 1`.
+- `DiracSpeed.speedLimit_eq_inv_iff` : `r = ρ⁻¹ ↔ ρ − ρ⁻¹ = 2m`.
+- `DiracSpeed.speedLimit_sinh`, `DiracSpeed.sinh_log_goldenRatio` : at `m = sinh θ`, `r = e^{−θ}`;
+  the mass `1/2` is the rapidity `log φ`.
 - `DiracSpeed.norm_sq_add_of_anticomm` : `‖(A + B)χ‖² = ‖Aχ‖² + ‖Bχ‖²` for anticommuting
   symmetric `A`, `B`.
 - `DiracSpeed.abs_energy_ge` : if `‖Bχ‖² ≥ m² ‖χ‖²`, every eigenvalue of `A + B` has `|E| ≥ |m|`.
@@ -71,6 +76,42 @@ theorem speedLimit_one {m : ℝ} (hm : |m| = 1) : Real.sqrt (1 + m ^ 2) - |m| = 
   have hm2 : m ^ 2 = 1 := by rw [← sq_abs, hm]; norm_num
   rw [hm2, hm]
   norm_num
+
+/-- **The speed limit is the inverse of `ρ` exactly when `ρ − ρ⁻¹ = 2m`**: for `ρ > 0`,
+`m ≥ 0`, `√(1 + m²) − m = ρ⁻¹ ↔ ρ − ρ⁻¹ = 2m`. -/
+theorem speedLimit_eq_inv_iff {m ρ : ℝ} (hm : 0 ≤ m) (hρ : 0 < ρ) :
+    Real.sqrt (1 + m ^ 2) - |m| = ρ⁻¹ ↔ ρ - ρ⁻¹ = 2 * m := by
+  rw [abs_of_nonneg hm]
+  have hρ' : ρ⁻¹ * ρ = 1 := inv_mul_cancel₀ hρ.ne'
+  constructor
+  · intro h
+    have hr := speedLimit_sq m
+    rw [abs_of_nonneg hm, h] at hr
+    have h2 : (ρ⁻¹ ^ 2 + 2 * m * ρ⁻¹) * ρ = ρ := by rw [hr, one_mul]
+    linear_combination (-1 : ℝ) * h2 + (ρ⁻¹ + 2 * m) * hρ'
+  · intro h
+    have hsq : 1 + m ^ 2 = (ρ⁻¹ + m) ^ 2 := by
+      have hm2 : 2 * m * ρ⁻¹ = 1 - ρ⁻¹ ^ 2 := by
+        rw [← h]; linear_combination hρ'
+      nlinarith only [hm2]
+    rw [hsq, Real.sqrt_sq (by positivity)]
+    ring
+
+/-- **Rapidity form**: at mass `m = sinh θ`, `θ ≥ 0`, the speed limit is `e^{−θ}`. -/
+theorem speedLimit_sinh {θ : ℝ} (hθ : 0 ≤ θ) :
+    Real.sqrt (1 + Real.sinh θ ^ 2) - |Real.sinh θ| = Real.exp (-θ) := by
+  have hs : 0 ≤ Real.sinh θ := by
+    rw [Real.sinh_eq]
+    have := Real.exp_le_exp.2 (by linarith : -θ ≤ θ)
+    linarith
+  rw [abs_of_nonneg hs, add_comm, ← Real.cosh_sq, Real.sqrt_sq (Real.cosh_pos θ).le,
+    Real.cosh_sub_sinh]
+
+/-- `sinh (log φ) = 1/2`: the mass `1/2` is the rapidity `log φ`. -/
+theorem sinh_log_goldenRatio : Real.sinh (Real.log Real.goldenRatio) = 1 / 2 := by
+  rw [Real.sinh_eq, Real.exp_log Real.goldenRatio_pos, Real.exp_neg, Real.exp_log
+    Real.goldenRatio_pos, Real.inv_goldenRatio]
+  linarith [Real.goldenRatio_add_goldenConj]
 
 /-- The scalar step: `(a + m²) v² ≤ a (1 − a)` gives `|v| ≤ √(1 + m²) − |m|`. -/
 theorem abs_le_speedLimit {a m v : ℝ} (hm : m ≠ 0) (ha0 : 0 ≤ a)
