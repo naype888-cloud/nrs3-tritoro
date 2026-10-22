@@ -41,3 +41,4 @@ public import NRS3Tritoro.TorusDiracBound
 public import NRS3Tritoro.TorusDirac3
 public import NRS3Tritoro.OpenDirac
 public import NRS3Tritoro.FiberDark
+public import NRS3Tritoro.FiberBoundary

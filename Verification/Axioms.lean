@@ -203,3 +203,12 @@ import NRS3Tritoro
 #print axioms FiberDark.darkShare_pos_of_band
 #print axioms FiberDark.lightShare_fiberMaxState
 #print axioms FiberDark.darkShare_fiberMaxState
+#print axioms FiberBoundary.card_xSteps
+#print axioms FiberBoundary.card_wSteps
+#print axioms FiberBoundary.entropy_le_x
+#print axioms FiberBoundary.entropy_le_w
+#print axioms FiberBoundary.saturated_iff_uniform_w
+#print axioms FiberBoundary.openProb_uniform_w
+#print axioms FiberBoundary.bitVariance_uniform_w
+#print axioms FiberBoundary.eta_x
+#print axioms FiberBoundary.eta_w
