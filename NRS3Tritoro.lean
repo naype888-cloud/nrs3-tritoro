@@ -10,6 +10,7 @@ public import NRS3Tritoro.TorusBekenstein
 public import NRS3Tritoro.TorusSaturation
 public import NRS3Tritoro.TorusBoundaryField
 public import NRS3Tritoro.TorusDarkFoam
+public import NRS3Tritoro.TorusBochner
 public import NRS3Tritoro.TorusTime
 public import NRS3Tritoro.TorusSpeed
 public import NRS3Tritoro.TorusSpectrum

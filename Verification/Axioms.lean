@@ -175,3 +175,8 @@ import NRS3Tritoro
 #print axioms TorusDarkFoam.openProb_of_saturated
 #print axioms TorusDarkFoam.meanBracket_of_saturated
 #print axioms TorusDarkFoam.bitVariance_of_saturated
+#print axioms TorusBochner.sum_adj_mul
+#print axioms TorusBochner.gam2_eq
+#print axioms TorusBochner.torus_curvature
+#print axioms TorusBochner.torus_sharp
+#print axioms TorusBochner.not_curvature_pos
