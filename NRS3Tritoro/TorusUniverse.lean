@@ -7,6 +7,7 @@ module
 
 public import Mathlib.Analysis.InnerProductSpace.PiL2
 public import Mathlib.Data.ZMod.Basic
+public import NavaRobertsonIndependent.Mathematics.D37_PathGraph3D
 
 /-!
 # The axis of the universe: the current link by link
@@ -26,8 +27,15 @@ The current is measured link by link, every link moves one position:
   axis, so if all links but one move `s`, the last one moves `−(L − 1) s`. For one cube closed on
   itself (`L = d`, `s = 2/(d − 1)`) this is the jump `−2` of the seam of `P_d`: the jump, not the
   state, is what gave tensions above `1` on the closed axis.
-* Nothing moves more than one position per step: `|⟨K⟩| ≤ 1` for unit states, and the phase
-  mode `i^j` reaches `−1` when `4 ∣ L`, the cone of `D38` on the whole axis.
+* Nothing moves more than one position per step: `|⟨K⟩| ≤ 1` for unit states. The phase mode
+  `i^j` reaches `−1` when `4 ∣ L`, but `T° i^j = 0`: its transport does not fluctuate.
+* Transport and current share the unit. The shift `S` is unitary, `T° = (S + S⁻¹)/2`,
+  `K = i(S − S⁻¹)/2`, so `T°² + K² = 1` and for every unit state
+
+    `⟨T°⟩² + Var T° + ⟨K⟩² + Var K = 1`.
+
+  A variance `0` would be a perfect estimate. With `Var T° > 0`, `|⟨K⟩| < 1`: the cone is a
+  limit that no state with fluctuating transport reaches.
 
 ## Main results
 
@@ -35,8 +43,10 @@ The current is measured link by link, every link moves one position:
 - `TorusUniverse.closing_step` : all links but one move `s`, the last one `−(L − 1) s`.
 - `TorusUniverse.step_eq_zero` : no coordinate moves the same nonzero step on every link.
 - `TorusUniverse.abs_velocity_le` : `|⟨K⟩| ≤ 1` for unit states.
-- `TorusUniverse.current_phaseMode`, `TorusUniverse.exists_velocity_eq_neg_one` : the phase mode
-  moves at `−1`, for `4 ∣ L`.
+- `TorusUniverse.current_phaseMode`, `TorusUniverse.transport_phaseMode` : the phase mode moves at
+  `−1` with `T° i^j = 0`, for `4 ∣ L`.
+- `TorusUniverse.statistics_sum` : `⟨T°⟩² + Var T° + ⟨K⟩² + Var K = 1`.
+- `TorusUniverse.abs_velocity_lt_one` : `Var T° > 0` gives `|⟨K⟩| < 1`.
 -/
 
 @[expose] public noncomputable section
@@ -201,6 +211,13 @@ theorem current_phaseMode (h4 : 4 ∣ L) : current (phaseMode L) = -phaseMode L 
     I_pow_val_add_one h4, I_pow_val_sub_one h4]
   linear_combination (I ^ j.val) * Complex.I_mul_I
 
+/-- **The phase mode does not fluctuate in transport**: `T° i^j = 0`, for `4 ∣ L`. -/
+theorem transport_phaseMode (h4 : 4 ∣ L) : transport (phaseMode L) = 0 := by
+  ext j
+  simp only [transport_apply, phaseMode, PiLp.zero_apply,
+    I_pow_val_add_one h4, I_pow_val_sub_one h4]
+  ring
+
 theorem norm_sq_phaseMode : ‖phaseMode L‖ ^ 2 = L := by
   rw [EuclideanSpace.norm_sq_eq]
   simp [phaseMode]
@@ -221,5 +238,52 @@ theorem exists_velocity_eq_neg_one (h4 : 4 ∣ L) :
     rw [map_smul, current_phaseMode h4, smul_neg]
   rw [velocity_of_current_eq_neg hK, hψ]
   norm_num
+
+/-! ## 5. Transport and current share the unit -/
+
+open PathGraph3DNRS
+
+/-- `‖T°ψ‖² + ‖Kψ‖² = ‖ψ‖²`: the parallelogram law on every link. -/
+theorem norm_sq_transport_add_norm_sq_current (ψ : HU L) :
+    ‖transport ψ‖ ^ 2 + ‖current ψ‖ ^ 2 = ‖ψ‖ ^ 2 := by
+  have h2 : ‖(2 : ℂ)‖ = 2 := by norm_num
+  have h : ∀ j, ‖transport ψ j‖ ^ 2 + ‖current ψ j‖ ^ 2 =
+      (‖ψ (j + 1)‖ ^ 2 + ‖ψ (j - 1)‖ ^ 2) / 2 := fun j => by
+    rw [transport_apply, current_apply, norm_div, norm_mul, norm_div, Complex.norm_I, h2]
+    linear_combination (1 / 4 : ℝ) * parallelogram_law_with_norm ℂ (ψ (j + 1)) (ψ (j - 1))
+  rw [EuclideanSpace.norm_sq_eq, EuclideanSpace.norm_sq_eq, EuclideanSpace.norm_sq_eq,
+    ← Finset.sum_add_distrib]
+  simp only [h, ← Finset.sum_div, Finset.sum_add_distrib]
+  rw [sum_add_one (fun j => ‖ψ j‖ ^ 2), sum_sub_one (fun j => ‖ψ j‖ ^ 2)]
+  ring
+
+/-- For a unit state, `Var A = ‖Aψ‖² − ⟨A⟩²`. -/
+theorem varianceG_eq (A : HU L →ₗ[ℂ] HU L) {ψ : HU L} (hψ : ‖ψ‖ = 1) :
+    varianceG A ψ = ‖A ψ‖ ^ 2 - meanG A ψ ^ 2 := by
+  have hre : (inner ℂ (A ψ) ψ).re = meanG A ψ := by
+    rw [meanG, ← inner_conj_symm, Complex.conj_re]
+  rw [varianceG, centeredG, norm_sub_sq (𝕜 := ℂ), inner_smul_right, norm_smul, hψ,
+    Complex.norm_real, Real.norm_eq_abs, mul_one, sq_abs, RCLike.re_to_complex,
+    Complex.re_ofReal_mul, hre]
+  ring
+
+/-- **Transport and current share the unit**: `⟨T°⟩² + Var T° + ⟨K⟩² + Var K = 1` for unit
+states. -/
+theorem statistics_sum {ψ : HU L} (hψ : ‖ψ‖ = 1) :
+    meanG transport ψ ^ 2 + varianceG transport ψ + velocity ψ ^ 2 + varianceG current ψ = 1 := by
+  have h := norm_sq_transport_add_norm_sq_current ψ
+  rw [hψ, one_pow] at h
+  rw [varianceG_eq _ hψ, varianceG_eq _ hψ, show meanG current ψ = velocity ψ from rfl]
+  linarith
+
+/-- **The cone is a limit**: a unit state whose transport fluctuates moves strictly below one
+position per step. -/
+theorem abs_velocity_lt_one {ψ : HU L} (hψ : ‖ψ‖ = 1) (hT : 0 < varianceG transport ψ) :
+    |velocity ψ| < 1 := by
+  have h := statistics_sum hψ
+  have hK : 0 ≤ varianceG current ψ := by unfold varianceG; positivity
+  have hv : velocity ψ ^ 2 < 1 := by nlinarith [sq_nonneg (meanG transport ψ)]
+  rw [← sq_abs] at hv
+  nlinarith [abs_nonneg (velocity ψ)]
 
 end TorusUniverse
