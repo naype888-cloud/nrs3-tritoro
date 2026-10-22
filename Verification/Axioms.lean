@@ -221,3 +221,4 @@ import NRS3Tritoro
 #print axioms Rindler.unruhTemperature_mul_period
 #print axioms LightSheet.clausius_iff
 #print axioms LightSheet.eight_pi
+#print axioms Lorentz.Vector.apply_eq_mul_minkowskiProduct_of_null
