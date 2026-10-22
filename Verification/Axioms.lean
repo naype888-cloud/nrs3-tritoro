@@ -245,3 +245,10 @@ import NRS3Tritoro
 #print axioms TorusWhiteBall.fiberX_exists
 #print axioms TorusWhiteBall.fiberW_exists
 #print axioms TorusWhiteBall.toSaturationDark
+#print axioms TorusLayers.card_interiors
+#print axioms TorusLayers.lightShare_pos_iff
+#print axioms TorusLayers.lightShare_eq_zero_of_full
+#print axioms TorusLayers.exists_dark_iff
+#print axioms TorusLayers.disjoint_planeSteps
+#print axioms TorusLayers.card_layerSteps
+#print axioms TorusLayers.card_interiors_torus
