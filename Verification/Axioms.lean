@@ -191,3 +191,7 @@ import NRS3Tritoro
 #print axioms OpenCubeBoundary.saturated_iff_uniform
 #print axioms OpenCubeBoundary.openProb_uniform
 #print axioms OpenCubeBoundary.bitVariance_uniform
+#print axioms OpenDirac.sq_add_of_anticomm
+#print axioms OpenDirac.dirac_sq_of_relations
+#print axioms OpenDirac.stagger_mul_Td
+#print axioms OpenDirac.dirac_sq

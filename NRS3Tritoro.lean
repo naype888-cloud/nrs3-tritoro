@@ -38,3 +38,4 @@ public import NRS3Tritoro.TorusUniverseBand
 public import NRS3Tritoro.TorusDirac
 public import NRS3Tritoro.TorusDiracBound
 public import NRS3Tritoro.TorusDirac3
+public import NRS3Tritoro.OpenDirac
