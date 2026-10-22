@@ -152,3 +152,8 @@ import NRS3Tritoro
 #print axioms TorusBekenstein.entropy_uniform
 #print axioms TorusBekenstein.bekenstein_bound
 #print axioms TorusBekenstein.exists_saturating
+#print axioms TorusSaturation.isMax_of_saturated
+#print axioms TorusSaturation.hSaturationDark_satisfiable
+#print axioms TorusSaturation.HSaturationDark.darkShare_uniform
+#print axioms TorusSaturation.HSaturationDark.lightShare_eq_zero
+#print axioms TorusSaturation.HSaturationDark.darkShare_of_area

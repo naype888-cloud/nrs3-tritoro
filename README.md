@@ -31,6 +31,7 @@ Dependencias por git, fijadas a un commit: [`nrs3-hopf`](https://github.com/nayp
 | Bekenstein–Hawking: con área `a²` por paso, `S = a²A/(4ℓ_P²)` ⟺ `a² = 4ℓ_P² log 2`, el mismo bit que en el cubo abierto | `TorusArea.bekensteinHawking_iff` |
 | defecto del corte `Ω = 2·dy·dz·δ(dx)`, mitad por cara; desde `4` posiciones `S = (log 2/δ) Ω`; las tres caras cargan `Ω_xΩ_yΩ_z = 8V²𝒱` y el cuanto del interior se lee en el borde, `𝒱 = (log 2)³ Ω_xΩ_yΩ_z/(S_xS_yS_z)` | `TorusArea.cutDefect_eq`, `cutEntropy_eq_mul_cutDefect`, `prod_cutDefect`, `volQuantum_eq_boundary` |
 | **cota de Bekenstein en T³**: toda distribución de los bits del borde tiene `H ≤ S = 2·dy·dz·log 2`; con el bit de área, `H ≤ A/(4ℓ_P²)`; la uniforme la alcanza | `TorusBekenstein.entropy_le_cutEntropy`, `entropy_le`, `bekenstein_bound`, `entropy_uniform`, `exists_saturating` |
+| una región saturada (`H = S`) está llena: ninguna distribución del corte guarda más; **postulado de Nava (puente declarado)**: saturar un cuanto lo vuelve oscuro, parte oscura `1` y luz `0`; satisfacible; la uniforme y toda región que alcanza `A/(4ℓ_P²)` son oscuras | `TorusSaturation.isMax_of_saturated`, `HSaturationDark`, `hSaturationDark_satisfiable`, `HSaturationDark.darkShare_uniform`, `lightShare_eq_zero`, `darkShare_of_area` |
 
 | sector de **dos excitaciones**: `dΓ M (Σ Ψ a†a† Ω) = Σ (D M Ψ) a†a† Ω`, con `D M = M ⊗ 1 + 1 ⊗ M` | `TorusSectors.secondQuant_twoExcitation` |
 | `D ⁅M, N⁆ = ⁅D M, D N⁆` | `TorusSectors.twoBody_lie` |
