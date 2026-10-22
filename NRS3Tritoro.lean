@@ -8,6 +8,7 @@ public import NRS3Tritoro.TorusDark
 public import NRS3Tritoro.TorusArea
 public import NRS3Tritoro.BoundaryBits
 public import NRS3Tritoro.OpenCubeBoundary
+public import NRS3Tritoro.ClausiusInput
 public import NRS3Tritoro.TorusBekenstein
 public import NRS3Tritoro.TorusSaturation
 public import NRS3Tritoro.TorusBoundaryField

@@ -195,3 +195,7 @@ import NRS3Tritoro
 #print axioms OpenDirac.dirac_sq_of_relations
 #print axioms OpenDirac.stagger_mul_Td
 #print axioms OpenDirac.dirac_sq
+#print axioms ClausiusInput.entropyPerArea_eta
+#print axioms ClausiusInput.torus_eta
+#print axioms ClausiusInput.openCube_eta
+#print axioms ClausiusInput.eta_universal
