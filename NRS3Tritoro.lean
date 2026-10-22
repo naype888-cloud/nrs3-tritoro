@@ -47,6 +47,10 @@ public import NRS3Tritoro.FiberDark
 public import NRS3Tritoro.FiberBoundary
 public import NRS3Tritoro.FiberDirac
 public import NRS3Tritoro.FiberDiracAxis
+public import NRS3Tritoro.DiracSpeed
+public import NRS3Tritoro.SiteHop
+public import NRS3Tritoro.TorusFiberDirac
+public import NRS3Tritoro.TorusFiberGap
 public import NRS3Tritoro.Gravity.Unruh
 public import NRS3Tritoro.Gravity.Clausius
 public import NRS3Tritoro.Gravity.NullForms
