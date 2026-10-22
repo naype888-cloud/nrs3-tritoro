@@ -9,6 +9,26 @@ Lean 4 sobre [`nrs3-hopf`](../nrs3-hopf) (lemas del eje cerrado: `ClosedThree`,
 [`nrs3-dark`](../nrs3-dark) y [`nrs3-uncertainty-cone`](https://github.com/naype888-cloud/nrs3-uncertainty-cone).
 Dependencias por git, fijadas a un commit: [`nrs3-hopf`](https://github.com/naype888-cloud/nrs3-hopf), [`nrs3-dark`](https://github.com/naype888-cloud/nrs3-dark), [`nrs3-mandelstam-tamm-cramer-rao`](https://github.com/naype888-cloud/nrs3-mandelstam-tamm-cramer-rao) y [`nrs3-de-sitter`](https://github.com/naype888-cloud/nrs3-de-sitter). Páginas: [de Sitter en T³](https://naype888-cloud.github.io/nrs3-de-sitter/t3.html), [SL(2, ℂ) en T³](https://naype888-cloud.github.io/nrs3-uncertainty-cone/lorentz-t3.html), [NRS³-Minkowski en T³](https://naype888-cloud.github.io/nrs3-uncertainty-cone/index-t3.html), [Dark en T³](https://naype888-cloud.github.io/nrs3-dark/t3.html).
 
+## Three topologies: R³, T³ and the fibred box
+
+`R³`: the open cube, every axis open. `T³`: every axis closed. Fibred box: `x`, `y`, `z` open and
+the fiber `w` closed with three positions (`nrs3-hopf`).
+
+| | R³ | T³ | Fibred box |
+|---|---|---|---|
+| NRS / NRS³ uncertainty | Physlib #1723 (NRS), #1725 (NRS³) | `Torus.robertson_det_torus`, `TorusStrict.robertson_det_torus_lt` | `BoxStrict.robertson_det_box_lt`, `NRSCell16` |
+| light share / dark share | `DarkShare.lightShare_maxCurrentState`; limit ≈ 0.775 | `TorusDark.lightShare_maxState` (4/5, 1/5); limit ½ (`RingSzego`) | `FiberDark.darkShare_pos_of_band`, `lightShare_fiberMaxState` (4/5, 1/5) |
+| boundary entropy / area law | one wall, `dy·dz`: `OpenCubeBoundary.bekenstein_bound` | two walls, `2·dy·dz`: `TorusBekenstein.bekenstein_bound` | `dy·dz·3` across `x`, `2·dx·dy·dz` across `w`: `FiberBoundary.entropy_le_x`, `entropy_le_w` |
+| saturation / uniform field | `OpenCubeBoundary.saturated_iff_uniform`, `openProb_uniform` | `TorusSaturation.saturated_iff_uniform`, `TorusDarkFoam.meanField_uniform` | `FiberBoundary.saturated_iff_uniform_w`, `openProb_uniform_w` |
+| Bochner curvature | flat, `CD(0, 2)`: `BakryEmery.path_CD02` | flat: `TorusBochner.not_curvature_pos` | `K = 4` (16-cell): `BochnerCurvature.cell16_curvature` |
+| Lorentz cone / admissible cone | `UncertaintyCone.mem_futureCone` | `TorusCone.axisVector_mem_futureCone` | `BoxCone.axisVector_mem_futureCone` |
+| Dirac operator / doubler modes | `D_m² = T² + m²`, every size: `OpenDirac.dirac_sq` | even sizes, eight doublers: `TorusDirac3.dirac3_sq`, `dirac3_wave` | the fiber is the mass, `1` and `1/2`: `FiberDirac.dirac_sq`, `fiberMass_sq` |
+| Einstein / Unruh flow | `η = 1/(4ℓ_P²)`: `ClausiusInput.openCube_eta` | `ClausiusInput.torus_eta` | `FiberBoundary.eta_x`, `eta_w` |
+
+The Unruh temperature, the Clausius relation and the Einstein equation are the steps on Minkowski
+in PhyslibAlpha (`Rindler.unruhTemperature_mul_period`, `LightSheet.clausius_iff`,
+`Einstein.einstein_equation`); the rows above give them the same `η` on every cut.
+
 ## Resultados
 
 | Enunciado | Lean |
