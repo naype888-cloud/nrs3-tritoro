@@ -142,3 +142,9 @@ import NRS3Tritoro
 #print axioms TorusUniverse.dirac_sq
 #print axioms TorusUniverse.abs_velocity_lt_one_of_dirac
 #print axioms TorusUniverse.abs_velocity_le_of_dirac
+#print axioms TorusDipole.axis_bijective
+#print axioms TorusDipole.transport_sq_add_momentum_sq
+#print axioms TorusDipole.lam3_axisMode
+#print axioms TorusDipole.T3c_axisMode
+#print axioms TorusDirac3.dirac3_sq
+#print axioms TorusDirac3.dirac3_wave

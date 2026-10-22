@@ -42,6 +42,7 @@ Dependencias por git, fijadas a un commit: [`nrs3-hopf`](https://github.com/nayp
 | el campo de incertidumbre de `n` excitaciones es el de `D_n M, D_n N` sobre `√(n!) Ψ` | `TorusFock.uncertainty_nExcitation` |
 | el corte de `n` excitaciones: `n·(2dydz)·(dxdydz)^(n-1)` pasos | `TorusFockCut.card_bracketNSteps` |
 | eje cerrado en `ℂ^d`: todo estado unitario con `\|t\| ≥ 1` concentra su peso en la costura, `Var T° → 1/2`, `Var P → 1`, `Cov → 0` | `RingSzego.seam_bounds`, `tendsto_variance_transport`, `tendsto_variance_PdOp`, `tendsto_covariance` |
+| dipolo `ℓ = 1` ↔ tres ejes; modo puro de eje `m`: `T = cos`, `P = sin`, `T²+P² = 1`; `T3c` lo manda a `(T+2)` veces sí mismo | `TorusDipole.axis_bijective`, `transport_sq_add_momentum_sq`, `lam3_axisMode`, `T3c_axisMode` |
 | **límite de Szegő del eje cerrado**: luz y oscuro → `1/2`, ángulo → `45°` | `RingSzego.tendsto_lightShare`, `tendsto_darkShare`, `tendsto_angle` |
 | `det Σ / \|det Ω\|` del eje → `2` | `RingSzego.tendsto_det_ratio` |
 | todo tamaño tiene su estado `c`; en `c` el ángulo → `45°` y la razón → `2` | `RingSzego.exists_cState`, `tendsto_angle_cState`, `tendsto_det_ratio_cState` |

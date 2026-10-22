@@ -9,6 +9,7 @@ public import NRS3Tritoro.TorusArea
 public import NRS3Tritoro.TorusTime
 public import NRS3Tritoro.TorusSpeed
 public import NRS3Tritoro.TorusSpectrum
+public import NRS3Tritoro.TorusDipole
 public import NRS3Tritoro.TorusSharp
 public import NRS3Tritoro.RingSzego
 public import NRS3Tritoro.TorusField
@@ -29,3 +30,4 @@ public import NRS3Tritoro.TorusUniverseIsolation
 public import NRS3Tritoro.TorusUniverseBand
 public import NRS3Tritoro.TorusDirac
 public import NRS3Tritoro.TorusDiracBound
+public import NRS3Tritoro.TorusDirac3
