@@ -217,3 +217,5 @@ import NRS3Tritoro
 #print axioms FiberDirac.Tc_uniform
 #print axioms FiberDirac.Tc_rotating
 #print axioms FiberDirac.fiberMass_sq
+#print axioms Rindler.period_ge
+#print axioms Rindler.unruhTemperature_mul_period
