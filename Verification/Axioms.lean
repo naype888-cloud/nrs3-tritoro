@@ -212,3 +212,8 @@ import NRS3Tritoro
 #print axioms FiberBoundary.bitVariance_uniform_w
 #print axioms FiberBoundary.eta_x
 #print axioms FiberBoundary.eta_w
+#print axioms FiberDirac.dirac_sq_fiber_of_relations
+#print axioms FiberDirac.dirac_sq
+#print axioms FiberDirac.Tc_uniform
+#print axioms FiberDirac.Tc_rotating
+#print axioms FiberDirac.fiberMass_sq

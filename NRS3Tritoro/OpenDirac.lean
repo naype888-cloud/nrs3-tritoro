@@ -141,6 +141,21 @@ theorem liftAlong_neg (A : Matrix α α ℂ) : liftAlong e (-A) = -liftAlong e A
   simp only [liftAlong, Matrix.of_apply, Matrix.neg_apply]
   split_ifs <;> simp
 
+variable {d : ℕ} (e' : ι ≃ Fin d × β)
+
+omit [DecidableEq ι] in
+/-- On every open axis, lifted to any product, `T σ = −σ T`. -/
+theorem liftAlong_Td_mul_stagger :
+    liftAlong e' (Td d) * liftAlong e' (stagger d) =
+      -(liftAlong e' (stagger d) * liftAlong e' (Td d)) := by
+  have h : Td d * stagger d = -(stagger d * Td d) := by rw [stagger_mul_Td, neg_neg]
+  rw [← BoxTwoRelations.liftAlong_mul, ← BoxTwoRelations.liftAlong_mul, ← liftAlong_neg, h]
+
+/-- On every axis, lifted to any product, `σ² = 1`. -/
+theorem liftAlong_stagger_mul_self :
+    liftAlong e' (stagger d) * liftAlong e' (stagger d) = 1 := by
+  rw [← BoxTwoRelations.liftAlong_mul, stagger_mul_self, liftAlong_one]
+
 end Lift
 
 /-- The Kogut–Susskind Dirac operator of the open cube,
@@ -159,22 +174,12 @@ theorem dirac_sq (m : ℂ) :
       liftAlong (eX dx dy dz) (Td dx) * liftAlong (eX dx dy dz) (Td dx) +
         liftAlong (eY dx dy dz) (Td dy) * liftAlong (eY dx dy dz) (Td dy) +
         liftAlong (eZ dx dy dz) (Td dz) * liftAlong (eZ dx dy dz) (Td dz) + (m ^ 2) • 1 := by
-  have anti : ∀ {d : ℕ} {γ : Type} [Fintype γ] [DecidableEq γ] (e : Site3D dx dy dz ≃ Fin d × γ),
-      liftAlong e (Td d) * liftAlong e (stagger d) =
-        -(liftAlong e (stagger d) * liftAlong e (Td d)) := by
-    intro d γ _ _ e
-    have h : Td d * stagger d = -(stagger d * Td d) := by rw [stagger_mul_Td, neg_neg]
-    rw [← BoxTwoRelations.liftAlong_mul, ← BoxTwoRelations.liftAlong_mul, ← liftAlong_neg, h]
-  have one : ∀ {d : ℕ} {γ : Type} [Fintype γ] [DecidableEq γ] (e : Site3D dx dy dz ≃ Fin d × γ),
-      liftAlong e (stagger d) * liftAlong e (stagger d) = 1 := by
-    intro d γ _ _ e
-    rw [← BoxTwoRelations.liftAlong_mul, stagger_mul_self, liftAlong_one]
-  have hx := one (eX dx dy dz)
-  have hy := one (eY dx dy dz)
-  have hz := one (eZ dx dy dz)
-  have hXSx := anti (eX dx dy dz)
-  have hYSy := anti (eY dx dy dz)
-  have hZSz := anti (eZ dx dy dz)
+  have hx := liftAlong_stagger_mul_self (eX dx dy dz)
+  have hy := liftAlong_stagger_mul_self (eY dx dy dz)
+  have hz := liftAlong_stagger_mul_self (eZ dx dy dz)
+  have hXSx := liftAlong_Td_mul_stagger (eX dx dy dz)
+  have hYSy := liftAlong_Td_mul_stagger (eY dx dy dz)
+  have hZSz := liftAlong_Td_mul_stagger (eZ dx dy dz)
   have hYX := (liftAlong_xy_comm dx dy dz (Td dx) (Td dy)).symm
   have hZX := (liftAlong_xz_comm dx dy dz (Td dx) (Td dz)).symm
   have hZY := (liftAlong_yz_comm dx dy dz (Td dy) (Td dz)).symm
