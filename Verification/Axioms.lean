@@ -199,3 +199,7 @@ import NRS3Tritoro
 #print axioms ClausiusInput.torus_eta
 #print axioms ClausiusInput.openCube_eta
 #print axioms ClausiusInput.eta_universal
+#print axioms FiberDark.lightShare_add_darkShare
+#print axioms FiberDark.darkShare_pos_of_band
+#print axioms FiberDark.lightShare_fiberMaxState
+#print axioms FiberDark.darkShare_fiberMaxState
