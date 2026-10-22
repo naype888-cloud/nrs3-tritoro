@@ -116,10 +116,12 @@ theorem commutator_apply_of_steps {x : ZMod L → ℝ} {s : ℝ} {j : ZMod L}
 
 variable [NeZero L]
 
-theorem sum_add_one (f : ZMod L → ℝ) : ∑ j, f (j + 1) = ∑ j, f j :=
+theorem sum_add_one {M : Type*} [AddCommMonoid M] (f : ZMod L → M) :
+    ∑ j, f (j + 1) = ∑ j, f j :=
   Fintype.sum_equiv (Equiv.addRight 1) _ _ fun _ => rfl
 
-theorem sum_sub_one (f : ZMod L → ℝ) : ∑ j, f (j - 1) = ∑ j, f j :=
+theorem sum_sub_one {M : Type*} [AddCommMonoid M] (f : ZMod L → M) :
+    ∑ j, f (j - 1) = ∑ j, f j :=
   Fintype.sum_equiv (Equiv.subRight 1) _ _ fun _ => rfl
 
 /-- The steps of a coordinate add up to `0` around the closed axis. -/
