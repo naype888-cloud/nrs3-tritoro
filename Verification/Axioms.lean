@@ -231,6 +231,11 @@ import NRS3Tritoro
 #print axioms FiberDiracAxis.dirac_eigen_of_tensor
 #print axioms FiberDiracAxis.abs_velocity_le_inv_goldenRatio_of_rotating
 #print axioms FiberDiracAxis.abs_velocity_le_sqrt_two_sub_one_of_uniform
+#print axioms DiracSpeed.speedLimit_sq
+#print axioms DiracSpeed.speedLimit_nonneg
+#print axioms DiracSpeed.speedLimit_half
+#print axioms DiracSpeed.speedLimit_one
+#print axioms DiracSpeed.abs_le_speedLimit
 #print axioms DiracSpeed.norm_sq_add_of_anticomm
 #print axioms DiracSpeed.abs_energy_ge
 #print axioms DiracSpeed.abs_velocity_le

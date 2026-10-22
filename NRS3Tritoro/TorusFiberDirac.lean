@@ -6,7 +6,7 @@ Authors: Eduardo Nava-Hernandez
 module
 
 public import NRS3Tritoro.SiteHop
-public import NRS3Tritoro.TorusDirac3
+public import Mathlib.Data.ZMod.Basic
 
 /-!
 # Dirac on the three-torus with the fiber
@@ -96,11 +96,17 @@ def sxyz (p : Site a b c) : ℝ := (-1) ^ p.1.val * (-1) ^ p.2.1.val * (-1) ^ p.
 
 theorem neg_one_pow_add_one {n : ℕ} [NeZero n] (h : 2 ∣ n) (j : ZMod n) :
     (-1 : ℝ) ^ (j + 1).val = -(-1) ^ j.val := by
-  exact_mod_cast TorusUniverse.neg_one_pow_val_add_one h j
+  have hn : 2 ≤ n := Nat.le_of_dvd (Nat.pos_of_ne_zero (NeZero.ne n)) h
+  have h1 : (-1 : ℝ) ^ 2 = 1 := by norm_num
+  rw [ZMod.val_add, ZMod.val_one_eq_one_mod, Nat.mod_eq_of_lt (by omega : 1 < n),
+    pow_eq_pow_mod _ h1, Nat.mod_mod_of_dvd _ h, ← pow_eq_pow_mod _ h1, pow_succ]
+  ring
 
 theorem neg_one_pow_sub_one {n : ℕ} [NeZero n] (h : 2 ∣ n) (j : ZMod n) :
     (-1 : ℝ) ^ (j - 1).val = -(-1) ^ j.val := by
-  exact_mod_cast TorusUniverse.neg_one_pow_val_sub_one h j
+  have h' := neg_one_pow_add_one h (j - 1)
+  rw [sub_add_cancel] at h'
+  rw [h', neg_neg]
 
 /-- The transports, the current along `x` and the Dirac operator of `T³ × w`. -/
 def Tx : HT a b c →ₗ[ℂ] HT a b c := hop τx 1

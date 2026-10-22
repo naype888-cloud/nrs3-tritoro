@@ -7,7 +7,6 @@ module
 
 public import NRS3Tritoro.TorusFiberDirac
 public import NRS3Tritoro.DiracSpeed
-public import NRS3Tritoro.FiberDiracAxis
 
 /-!
 # The mass gap `1/2` and the speed limit `1/φ` on `T³ × w`
@@ -18,12 +17,11 @@ into two anticommuting parts, `‖Bχ‖² = ‖(A_y + A_z)χ‖² + ‖M_w χ�
 smaller than the mass `1/2`, and `DiracSpeed` applies:
 
 * **mass gap**: every eigenvalue of `D` has `|E| ≥ 1/2`; in the rotating mode of the fiber the
-  eight doublers of `T³` reach it, `E = −1/2` (and `+1/2`).
-* **speed limit**: a unit eigenvector of `D` and of `T_x²` moves along `x` at most at
-  `√(5/4) − 1/2 = 1/φ`. `T_x²` commutes with `D`, so every eigenspace of `D` has a basis of such
-  states.
+  eight doublers of `T³` reach it (`TorusFiberDoublers`).
+* **speed limit**: every unit eigenvector of `D` moves along `x` at most at
+  `√(5/4) − 1/2 = 1/φ`.
 
-Both hold for every state, not only for products with a fiber mode.
+Both hold for every state, not only for products with a fiber mode, and use only Mathlib.
 
 ## Main results
 
@@ -31,9 +29,7 @@ Both hold for every state, not only for products with a fiber mode.
 - `TorusFiberDirac.norm_sq_rest_ge` : `‖Bχ‖² ≥ ‖χ‖²/4`.
 - `TorusFiberDirac.abs_energy_ge` : `|E| ≥ 1/2` for every eigenvalue of `D`.
 - `TorusFiberDirac.dirac_Tx_sq` : `T_x²` commutes with `D`.
-- `TorusFiberDirac.abs_velocity_le_inv_goldenRatio` : `|⟨K_x⟩| ≤ 1/φ`.
-- `TorusFiberDirac.dirac_tensor` : `D (ψ ⊗ v) = (D_λ ψ) ⊗ v`, `D_λ` of `TorusDirac3`.
-- `TorusFiberDirac.dirac_doublers` : the doublers in the rotating mode have energy `−1/2`.
+- `TorusFiberDirac.abs_velocity_le_inv_goldenRatio` : `|⟨K_x⟩| ≤ 1/φ` for every eigenvector.
 -/
 
 @[expose] public noncomputable section
@@ -127,52 +123,14 @@ theorem dirac_Tx_sq (ha : 2 ∣ a) (χ : HT a b c) : dirac (Tx (Tx χ)) = Tx (Tx
   have h : ∀ η : HT a b c, rest (Tx η) = -Tx (rest η) := fun η => by rw [Tx_rest ha, neg_neg]
   simp only [dirac, LinearMap.add_apply, map_add, h, map_neg, neg_neg]
 
-/-- **Spin `1/2`, speed `1/φ`, on `T³ × w`**: a unit eigenvector of `D` and of `T_x²` moves
-along `x` at most at `1/φ`. -/
-theorem abs_velocity_le_inv_goldenRatio (ha : 2 ∣ a) (hb : 2 ∣ b) (hc : 2 ∣ c) {E t : ℝ}
-    {ψ : HT a b c} (hψ : ‖ψ‖ = 1) (hE : dirac ψ = (E : ℂ) • ψ) (hT : Tx (Tx ψ) = (t : ℂ) • ψ) :
+/-- **Spin `1/2`, speed `1/φ`, on `T³ × w`**: every unit eigenvector of `D` moves along `x` at
+most at `1/φ`. -/
+theorem abs_velocity_le_inv_goldenRatio (ha : 2 ∣ a) (hb : 2 ∣ b) (hc : 2 ∣ c) {E : ℝ}
+    {ψ : HT a b c} (hψ : ‖ψ‖ = 1) (hE : dirac ψ = (E : ℂ) • ψ) :
     |(inner ℂ ψ (Kx ψ)).re| ≤ Real.goldenRatio⁻¹ := by
-  rw [← TorusUniverse.speedLimit_half (m := 1 / 2) (by norm_num)]
+  rw [← DiracSpeed.speedLimit_half (m := 1 / 2) (by norm_num)]
   exact DiracSpeed.abs_velocity_le Tx_isSymmetric rest_isSymmetric Kx_isSymmetric
     (hop_cur τx) (Kx_rest ha) (Tx_rest ha) (cur_sq_add_hop_sq τx) (by norm_num)
-    (norm_sq_rest_ge hb hc) hψ hE hT
-
-/-! ## 3. Products with a fiber mode, and the doublers -/
-
-/-- The product `ψ ⊗ v` of a state of `T³` and a state of the fiber. -/
-def tensor (ψ : TorusDirac3.H3 a b c) (v : TorusUniverse.HU 3) : HT a b c :=
-  WithLp.toLp 2 fun p => ψ (p.1, p.2.1, p.2.2.1) * v p.2.2.2
-
-omit [NeZero a] [NeZero b] [NeZero c] in
-theorem tensor_smul (s : ℂ) (ψ : TorusDirac3.H3 a b c) (v : TorusUniverse.HU 3) :
-    tensor (s • ψ) v = s • tensor ψ v := by
-  ext p; simp only [tensor, PiLp.smul_apply, smul_eq_mul]; ring
-
-omit [NeZero a] [NeZero b] [NeZero c] in
-/-- **A fiber mode is a mass on `T³`**: `D (ψ ⊗ v) = (D_λ ψ) ⊗ v` if `T°_w v = λ v`. -/
-theorem dirac_tensor {lam : ℝ} {v : TorusUniverse.HU 3}
-    (hv : TorusUniverse.transport v = (lam : ℂ) • v) (ψ : TorusDirac3.H3 a b c) :
-    dirac (tensor ψ v) = tensor (TorusDirac3.dirac3 lam ψ) v := by
-  ext ⟨x, y, z, w⟩
-  have hk : (v (w + 1) + v (w - 1)) / 2 = lam * v w := by
-    simpa [TorusUniverse.transport_apply] using congrArg (fun χ : TorusUniverse.HU 3 => χ w) hv
-  simp only [dirac, rest, Tx, Ay, Az, Mw, LinearMap.add_apply, PiLp.add_apply, hop_apply,
-    τx_apply, τx_symm_apply, τy_apply, τy_symm_apply, τz_apply, τz_symm_apply, τw_apply,
-    τw_symm_apply, tensor, TorusDirac3.dirac3, LinearMap.smul_apply, PiLp.smul_apply,
-    smul_eq_mul, TorusDirac3.Tx_apply, TorusDirac3.Ay_apply, TorusDirac3.Az_apply,
-    TorusDirac3.eps_apply, TorusDirac3.sg, sx, sxy, sxyz, Pi.one_apply]
-  push_cast
-  linear_combination ((-1) ^ x.val * (-1) ^ y.val * (-1) ^ z.val * ψ (x, y, z)) * hk
-
-/-- **The doublers reach the gap**: in the rotating mode of the fiber, a pair of opposite
-doublers of `T³` has energy `−1/2` (and `e − e'` has `+1/2`). -/
-theorem dirac_doublers (ha : 4 ∣ a) (hb : 4 ∣ b) (hc : 4 ∣ c) {u v w : ℂ}
-    (hu : u = I ∨ u = -I) (hv : v = I ∨ v = -I) (hw : w = I ∨ w = -I) :
-    dirac (tensor (TorusDirac3.wave3 u v w + TorusDirac3.wave3 (-u) (-v) (-w) :
-        TorusDirac3.H3 a b c) FiberDiracAxis.rotating) =
-      ((-1 / 2 : ℝ) : ℂ) • tensor (TorusDirac3.wave3 u v w + TorusDirac3.wave3 (-u) (-v) (-w))
-        FiberDiracAxis.rotating := by
-  rw [dirac_tensor FiberDiracAxis.transport_rotating,
-    TorusDirac3.dirac3_pair_add ha hb hc hu hv hw, tensor_smul]
+    (norm_sq_rest_ge hb hc) hψ hE
 
 end TorusFiberDirac

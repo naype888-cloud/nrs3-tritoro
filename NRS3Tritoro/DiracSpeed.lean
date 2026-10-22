@@ -5,32 +5,35 @@ Authors: Eduardo Nava-Hernandez
 -/
 module
 
-public import NRS3Tritoro.TorusDiracBound
+public import Mathlib.Analysis.InnerProductSpace.Symmetric
+public import Mathlib.NumberTheory.Real.GoldenRatio
 
 /-!
 # The speed limit of a Dirac state, in any Hilbert space
 
 `TorusDiracBound` proves the speed limit on one closed axis, where the mass term is `m Σ` and
-`(m Σ)² = m²`. The same argument works when the rest of the Dirac operator is any symmetric `B`
-that anticommutes with the transport `A` of the axis and with its velocity `V`, as long as `B`
-is never smaller than the mass: `‖Bχ‖² ≥ m² ‖χ‖²`. Let
+`(m Σ)² = m²`. The argument works for any symmetric `B` that anticommutes with the transport
+`A` of the axis and with its velocity `V`, as long as `B` is never smaller than the mass,
+`‖Bχ‖² ≥ m² ‖χ‖²`. Let
 
-  `A V = V A`,  `V B = −B V`,  `A B = −B A`,  `V² + A² = 1`,
+  `A V = V A`,  `V B = −B V`,  `A B = −B A`,  `V² + A² = 1`,  `(A + B) ψ = E ψ`,  `‖ψ‖ = 1`.
 
-`(A + B) ψ = E ψ` and `A² ψ = a ψ`. Then `‖(A + B)χ‖² = ‖Aχ‖² + ‖Bχ‖²`, so `E² = a + ‖Bψ‖²`,
-and as on the axis `E ⟨V⟩ = ⟨V A⟩` with `‖V A ψ‖² = a (1 − a)`:
+* `‖(A + B)χ‖² = ‖Aχ‖² + ‖Bχ‖²`, so with `a = ‖Aψ‖²`, `E² = a + ‖Bψ‖² ≥ a + m²`.
+* `⟨ψ, (V B + B V) ψ⟩ = 0` and `Bψ = Eψ − Aψ` give `E ⟨V⟩ = ⟨V A⟩`.
+* `‖V A ψ‖² = ‖Aψ‖² − ‖A²ψ‖² ≤ a − a² = a (1 − a)`, by Cauchy–Schwarz `‖A²ψ‖ ≥ ⟨ψ, A²ψ⟩ = a`.
 
-  `(a + m²) ⟨V⟩² ≤ (a + ‖Bψ‖²) ⟨V⟩² ≤ a (1 − a)`,  `|⟨V⟩| ≤ √(1 + m²) − |m|`.
-
-The other axes only make `B` larger, and they slow the state down further.
+So `(a + m²) ⟨V⟩² ≤ E² ⟨V⟩² ≤ a (1 − a)` and `|⟨V⟩| ≤ √(1 + m²) − |m|`, for every eigenvector:
+no condition on `A²`. The other axes only make `B` larger, and they slow the state down further.
+At `|m| = 1/2` the limit is `1/φ`, at `|m| = 1` it is `√2 − 1`.
 
 ## Main results
 
+- `DiracSpeed.speedLimit_sq`, `DiracSpeed.speedLimit_half`, `DiracSpeed.speedLimit_one` :
+  `r = √(1 + m²) − |m|` solves `r² + 2|m| r = 1`; `r = 1/φ` at `|m| = 1/2`, `√2 − 1` at `|m| = 1`.
 - `DiracSpeed.norm_sq_add_of_anticomm` : `‖(A + B)χ‖² = ‖Aχ‖² + ‖Bχ‖²` for anticommuting
   symmetric `A`, `B`.
 - `DiracSpeed.abs_energy_ge` : if `‖Bχ‖² ≥ m² ‖χ‖²`, every eigenvalue of `A + B` has `|E| ≥ |m|`.
-- `DiracSpeed.abs_velocity_le` : `|⟨V⟩| ≤ √(1 + m²) − |m|` for a unit eigenvector of `A + B`
-  that is also an eigenvector of `A²`.
+- `DiracSpeed.abs_velocity_le` : `|⟨V⟩| ≤ √(1 + m²) − |m|` for every unit eigenvector of `A + B`.
 -/
 
 @[expose] public noncomputable section
@@ -38,6 +41,57 @@ The other axes only make `B` larger, and they slow the state down further.
 open Complex
 
 namespace DiracSpeed
+
+/-! ## 1. The scalar limit -/
+
+/-- `r = √(1 + m²) − |m|` solves `r² + 2|m| r = 1`. -/
+theorem speedLimit_sq (m : ℝ) :
+    (Real.sqrt (1 + m ^ 2) - |m|) ^ 2 + 2 * |m| * (Real.sqrt (1 + m ^ 2) - |m|) = 1 := by
+  have h := Real.sq_sqrt (by positivity : (0 : ℝ) ≤ 1 + m ^ 2)
+  have hm : |m| ^ 2 = m ^ 2 := sq_abs m
+  nlinarith only [h, hm]
+
+theorem speedLimit_nonneg (m : ℝ) : 0 ≤ Real.sqrt (1 + m ^ 2) - |m| := by
+  rw [sub_nonneg, ← Real.sqrt_sq (abs_nonneg m), sq_abs]
+  exact Real.sqrt_le_sqrt (by linarith)
+
+/-- **At mass `1/2` the speed limit is `1/φ`**: `√(1 + 1/4) − 1/2 = (√5 − 1)/2`. -/
+theorem speedLimit_half {m : ℝ} (hm : |m| = 1 / 2) :
+    Real.sqrt (1 + m ^ 2) - |m| = Real.goldenRatio⁻¹ := by
+  have hm2 : m ^ 2 = 1 / 4 := by rw [← sq_abs, hm]; norm_num
+  have h5 : Real.sqrt (1 + m ^ 2) = Real.sqrt 5 / 2 := by
+    rw [hm2, show (1 + 1 / 4 : ℝ) = (Real.sqrt 5 / 2) ^ 2 by
+      rw [div_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 5)]; norm_num]
+    exact Real.sqrt_sq (by positivity)
+  rw [h5, hm, Real.inv_goldenRatio, Real.goldenConj]
+  ring
+
+/-- At mass `1` the speed limit is `√2 − 1`. -/
+theorem speedLimit_one {m : ℝ} (hm : |m| = 1) : Real.sqrt (1 + m ^ 2) - |m| = Real.sqrt 2 - 1 := by
+  have hm2 : m ^ 2 = 1 := by rw [← sq_abs, hm]; norm_num
+  rw [hm2, hm]
+  norm_num
+
+/-- The scalar step: `(a + m²) v² ≤ a (1 − a)` gives `|v| ≤ √(1 + m²) − |m|`. -/
+theorem abs_le_speedLimit {a m v : ℝ} (hm : m ≠ 0) (ha0 : 0 ≤ a)
+    (hv : (a + m ^ 2) * v ^ 2 ≤ a * (1 - a)) : |v| ≤ Real.sqrt (1 + m ^ 2) - |m| := by
+  have hr := speedLimit_sq m
+  have hr0 := speedLimit_nonneg m
+  set r := Real.sqrt (1 + m ^ 2) - |m|
+  have hsq : a * (1 - a) ≤ r ^ 2 * (a + m ^ 2) := by
+    have hm2 : |m| ^ 2 = m ^ 2 := sq_abs m
+    have key : r ^ 2 * (a + m ^ 2) - a * (1 - a) = (a - |m| * r) ^ 2 := by
+      linear_combination a * hr - r ^ 2 * hm2
+    linarith only [key, sq_nonneg (a - |m| * r)]
+  have hpos : 0 < a + m ^ 2 := by positivity
+  have hvr : v ^ 2 ≤ r ^ 2 := by
+    refine le_of_mul_le_mul_left ?_ hpos
+    calc (a + m ^ 2) * v ^ 2 ≤ a * (1 - a) := hv
+      _ ≤ r ^ 2 * (a + m ^ 2) := hsq
+      _ = (a + m ^ 2) * r ^ 2 := by ring
+  exact (pow_le_pow_iff_left₀ (abs_nonneg v) hr0 two_ne_zero).1 (by rw [sq_abs]; exact hvr)
+
+/-! ## 2. Dirac operators -/
 
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] {A B V : H →ₗ[ℂ] H}
 
@@ -73,107 +127,54 @@ theorem abs_energy_ge (hA : A.IsSymmetric) (hB : B.IsSymmetric)
     rw [sq_abs]; exact le_of_mul_le_mul_right h2 hn
   exact (pow_le_pow_iff_left₀ (abs_nonneg m) (abs_nonneg E) two_ne_zero).1 h3
 
-/-- **The speed limit of a Dirac state**: a unit eigenvector of `A + B` that is also an
-eigenvector of `A²` moves at most at `√(1 + m²) − |m|`. -/
+/-- **The speed limit of a Dirac state**: every unit eigenvector of `A + B` moves at most at
+`√(1 + m²) − |m|`. -/
 theorem abs_velocity_le (hA : A.IsSymmetric) (hB : B.IsSymmetric) (hV : V.IsSymmetric)
     (hAV : ∀ χ, A (V χ) = V (A χ)) (hVB : ∀ χ, V (B χ) = -B (V χ))
     (hAB : ∀ χ, A (B χ) = -B (A χ)) (hVV : ∀ χ, V (V χ) + A (A χ) = χ)
     {m : ℝ} (hm : m ≠ 0) (hBm : ∀ χ, m ^ 2 * ‖χ‖ ^ 2 ≤ ‖B χ‖ ^ 2)
-    {E a : ℝ} {ψ : H} (hψ : ‖ψ‖ = 1) (hE : A ψ + B ψ = (E : ℂ) • ψ)
-    (ha : A (A ψ) = (a : ℂ) • ψ) :
+    {E : ℝ} {ψ : H} (hψ : ‖ψ‖ = 1) (hE : A ψ + B ψ = (E : ℂ) • ψ) :
     |(inner ℂ ψ (V ψ)).re| ≤ Real.sqrt (1 + m ^ 2) - |m| := by
   set v := (inner ℂ ψ (V ψ)).re
-  set b := ‖B ψ‖ ^ 2
-  have hψψ : inner ℂ ψ ψ = (1 : ℂ) := by rw [inner_self_eq_norm_sq_to_K, hψ]; simp
-  -- `a = ‖Aψ‖²`, `1 − a = ‖Vψ‖²`, `E² = a + b`
-  have hna : ‖A ψ‖ ^ 2 = a := by
-    have h1 : (inner ℂ (A ψ) (A ψ)).re = ‖A ψ‖ ^ 2 := by
-      rw [inner_self_eq_norm_sq_to_K]; norm_cast
-    rw [← h1, hA, ha, inner_smul_right, hψψ, mul_one, Complex.ofReal_re]
-  have hnv : ‖V ψ‖ ^ 2 = 1 - a := by
-    have h1 : (inner ℂ (V ψ) (V ψ)).re = ‖V ψ‖ ^ 2 := by
-      rw [inner_self_eq_norm_sq_to_K]; norm_cast
-    have h2 : V (V ψ) = ψ - (a : ℂ) • ψ := by rw [← ha]; exact eq_sub_of_add_eq (hVV ψ)
-    rw [← h1, hV, h2, inner_sub_right, inner_smul_right, hψψ]
-    simp
-  have hE2 : E ^ 2 = a + b := by
+  set a := ‖A ψ‖ ^ 2
+  have hre : ∀ χ : H, (inner ℂ χ χ).re = ‖χ‖ ^ 2 := fun χ => by
+    simpa only [RCLike.re_to_complex] using inner_self_eq_norm_sq (𝕜 := ℂ) χ
+  -- `E² = a + ‖Bψ‖² ≥ a + m²`
+  have hE2 : E ^ 2 = a + ‖B ψ‖ ^ 2 := by
     have h := norm_sq_add_of_anticomm hA hB hAB ψ
-    rw [hE, norm_smul, Complex.norm_real, Real.norm_eq_abs, hψ, mul_one, sq_abs, hna] at h
-    exact h
-  have hb : m ^ 2 ≤ b := by simpa [hψ] using hBm ψ
-  have ha0 : 0 ≤ a := by rw [← hna]; positivity
-  have ha1 : a ≤ 1 := by nlinarith only [hnv, sq_nonneg ‖V ψ‖]
-  have hE0 : E ≠ 0 := by
-    rintro rfl
-    have : 0 < m ^ 2 := by positivity
-    nlinarith only [hE2, ha0, hb, this]
-  -- `B²ψ = bψ` and `Bψ = Eψ − Aψ`
-  have hBB : B (B ψ) = ((E ^ 2 - a : ℝ) : ℂ) • ψ := by
-    have h : A (A ψ + B ψ) + B (A ψ + B ψ) = ((E : ℂ) * E) • ψ := by
-      rw [hE, map_smul, map_smul, ← smul_add, hE, smul_smul]
-    rw [map_add, map_add, hAB, ha] at h
-    have h' : B (B ψ) = ((E : ℂ) * E) • ψ - (a : ℂ) • ψ := by rw [← h]; abel
-    rw [h', ← sub_smul]
-    push_cast
-    ring_nf
-  have hBψ : B ψ = (E : ℂ) • ψ - A ψ := by rw [← hE]; abel
-  -- the velocity of `Bψ` is `−(E² − a) v`
-  have hvB : (inner ℂ (B ψ) (V (B ψ))).re = -(E ^ 2 - a) * v := by
-    rw [hVB, inner_neg_right, ← hB, hBB, inner_smul_left, Complex.conj_ofReal]
-    simp only [Complex.neg_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul,
-      sub_zero, v]
-    ring
+    rwa [hE, norm_smul, Complex.norm_real, Real.norm_eq_abs, hψ, mul_one, sq_abs] at h
+  have hb : m ^ 2 ≤ ‖B ψ‖ ^ 2 := by simpa [hψ] using hBm ψ
+  -- `E ⟨V⟩ = ⟨V A⟩`
   set z := inner ℂ ψ (V (A ψ))
-  have hAVψ : inner ℂ (A ψ) (V ψ) = z := by rw [hA, hAV]
-  have hAVA : inner ℂ (A ψ) (V (A ψ)) = (a : ℂ) * inner ℂ ψ (V ψ) := by
-    rw [hA, hAV, ha, map_smul, inner_smul_right]
-  have hexp : (inner ℂ (B ψ) (V (B ψ))).re = E ^ 2 * v - 2 * E * z.re + a * v := by
-    rw [hBψ]
-    simp only [map_sub, map_smul, inner_sub_left, inner_sub_right, inner_smul_left,
-      inner_smul_right, Complex.conj_ofReal, hAVψ, hAVA]
-    have hz : inner ℂ ψ (V (A ψ)) = z := rfl
-    rw [hz]
-    simp only [Complex.sub_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul,
-      sub_zero, v]
-    ring
-  have hw : z.re = E * v := by
-    have h : 2 * E * z.re = 2 * E * (E * v) := by linear_combination -(hexp.symm.trans hvB)
-    exact mul_left_cancel₀ (mul_ne_zero two_ne_zero hE0) h
-  -- `‖V A ψ‖² = a (1 − a)`
-  have hnorm : ‖V (A ψ)‖ ^ 2 = a * (1 - a) := by
-    have h1 : (inner ℂ (V (A ψ)) (V (A ψ))).re = ‖V (A ψ)‖ ^ 2 := by
-      rw [inner_self_eq_norm_sq_to_K]; norm_cast
-    have h3 : A (A (A ψ)) = (a : ℂ) • A ψ := by rw [ha, map_smul]
-    have h2 : V (V (A ψ)) = A ψ - (a : ℂ) • A ψ := by
-      rw [← h3]; exact eq_sub_of_add_eq (hVV (A ψ))
-    have hAA : inner ℂ (A ψ) (A ψ) = (a : ℂ) := by rw [hA, ha, inner_smul_right, hψψ, mul_one]
-    rw [← h1, hV, h2, inner_sub_right, inner_smul_right, hAA, ← Complex.ofReal_mul,
-      ← Complex.ofReal_sub, Complex.ofReal_re]
-    ring
-  have hz : z.re ^ 2 ≤ a * (1 - a) := by
+  have hBψ : B ψ = (E : ℂ) • ψ - A ψ := by rw [← hE]; abel
+  have hw : (E : ℂ) * inner ℂ ψ (V ψ) = z := by
+    have h1 : inner ℂ ψ (V (B ψ)) = -inner ℂ (B ψ) (V ψ) := by rw [hVB, inner_neg_right, hB]
+    rw [hBψ, map_sub, map_smul, inner_sub_right, inner_smul_right, inner_sub_left,
+      inner_smul_left, Complex.conj_ofReal, hA, hAV] at h1
+    linear_combination h1 / 2
+  have hzre : z.re = E * v := by
+    rw [← hw, Complex.re_ofReal_mul]
+  -- `‖V A ψ‖² = a − ‖A²ψ‖² ≤ a (1 − a)`
+  have hnorm : ‖V (A ψ)‖ ^ 2 = a - ‖A (A ψ)‖ ^ 2 := by
+    have h2 : V (V (A ψ)) = A ψ - A (A (A ψ)) := eq_sub_of_add_eq (hVV (A ψ))
+    rw [← hre, hV, h2, inner_sub_right, Complex.sub_re, hre, ← hA (A ψ) (A (A ψ)), hre]
+  have hA2 : a ^ 2 ≤ ‖A (A ψ)‖ ^ 2 := by
+    have h1 : a = (inner ℂ ψ (A (A ψ))).re := by rw [← hA, hre]
+    have h2 := norm_inner_le_norm (𝕜 := ℂ) ψ (A (A ψ))
+    rw [hψ, one_mul] at h2
+    have h3 := (Complex.abs_re_le_norm (inner ℂ ψ (A (A ψ)))).trans h2
+    rw [← h1] at h3
+    rw [← sq_abs a]
+    exact pow_le_pow_left₀ (abs_nonneg a) h3 2
+  have hz : z.re ^ 2 ≤ ‖V (A ψ)‖ ^ 2 := by
     have h1 := norm_inner_le_norm (𝕜 := ℂ) ψ (V (A ψ))
     rw [hψ, one_mul] at h1
-    have h2 := Complex.abs_re_le_norm z
-    rw [← hnorm, ← sq_abs]
-    exact pow_le_pow_left₀ (abs_nonneg _) (h2.trans h1) 2
-  -- the scalar step, as on the axis
+    rw [← sq_abs]
+    exact pow_le_pow_left₀ (abs_nonneg _) ((Complex.abs_re_le_norm z).trans h1) 2
+  have ha0 : 0 ≤ a := by positivity
   have hv : (a + m ^ 2) * v ^ 2 ≤ a * (1 - a) := by
-    have h1 : E ^ 2 * v ^ 2 = z.re ^ 2 := by rw [hw]; ring
-    nlinarith only [h1, hz, hE2, hb, sq_nonneg v]
-  have hr := TorusUniverse.speedLimit_sq m
-  have hr0 := TorusUniverse.speedLimit_nonneg m
-  set r := Real.sqrt (1 + m ^ 2) - |m|
-  have hsq : a * (1 - a) ≤ r ^ 2 * (a + m ^ 2) := by
-    have hm2 : |m| ^ 2 = m ^ 2 := sq_abs m
-    have key : r ^ 2 * (a + m ^ 2) - a * (1 - a) = (a - |m| * r) ^ 2 := by
-      linear_combination a * hr - r ^ 2 * hm2
-    linarith only [key, sq_nonneg (a - |m| * r)]
-  have hpos : 0 < a + m ^ 2 := by positivity
-  have hvr : v ^ 2 ≤ r ^ 2 := by
-    refine le_of_mul_le_mul_left ?_ hpos
-    calc (a + m ^ 2) * v ^ 2 ≤ a * (1 - a) := hv
-      _ ≤ r ^ 2 * (a + m ^ 2) := hsq
-      _ = (a + m ^ 2) * r ^ 2 := by ring
-  exact (pow_le_pow_iff_left₀ (abs_nonneg v) hr0 two_ne_zero).1 (by rw [sq_abs]; exact hvr)
+    have h1 : E ^ 2 * v ^ 2 = z.re ^ 2 := by rw [hzre]; ring
+    nlinarith only [h1, hz, hnorm, hA2, hE2, hb, sq_nonneg v]
+  exact abs_le_speedLimit hm ha0 hv
 
 end DiracSpeed

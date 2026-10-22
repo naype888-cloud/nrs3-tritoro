@@ -7,7 +7,7 @@ module
 
 public import NRS3Tritoro.TorusDirac
 public import NRS3Tritoro.TorusUniverseIsolation
-public import Mathlib.NumberTheory.Real.GoldenRatio
+public import NRS3Tritoro.DiracSpeed
 
 /-!
 # The speed limit of a massive Dirac state
@@ -69,14 +69,11 @@ theorem current_isSymmetric : (current : HU L →ₗ[ℂ] HU L).IsSymmetric := b
 
 /-- `r = √(1 + m²) − |m|` solves `r² + 2|m| r = 1`. -/
 theorem speedLimit_sq (m : ℝ) :
-    (Real.sqrt (1 + m ^ 2) - |m|) ^ 2 + 2 * |m| * (Real.sqrt (1 + m ^ 2) - |m|) = 1 := by
-  have h := Real.sq_sqrt (by positivity : (0 : ℝ) ≤ 1 + m ^ 2)
-  have hm : |m| ^ 2 = m ^ 2 := sq_abs m
-  nlinarith only [h, hm]
+    (Real.sqrt (1 + m ^ 2) - |m|) ^ 2 + 2 * |m| * (Real.sqrt (1 + m ^ 2) - |m|) = 1 :=
+  DiracSpeed.speedLimit_sq m
 
-theorem speedLimit_nonneg (m : ℝ) : 0 ≤ Real.sqrt (1 + m ^ 2) - |m| := by
-  rw [sub_nonneg, ← Real.sqrt_sq (abs_nonneg m), sq_abs]
-  exact Real.sqrt_le_sqrt (by linarith)
+theorem speedLimit_nonneg (m : ℝ) : 0 ≤ Real.sqrt (1 + m ^ 2) - |m| :=
+  DiracSpeed.speedLimit_nonneg m
 
 /-- **The speed limit of a massive Dirac state**: an eigenvector of `D_m`, `m ≠ 0`, moves at
 most at `√(1 + m²) − |m|`. -/
@@ -178,20 +175,12 @@ theorem abs_velocity_le_of_dirac (h2 : 2 ∣ L) {m : ℝ} (hm : m ≠ 0) {E : �
 
 /-- **At mass `1/2` the speed limit is `1/φ`**: `√(1 + 1/4) − 1/2 = (√5 − 1)/2`. -/
 theorem speedLimit_half {m : ℝ} (hm : |m| = 1 / 2) :
-    Real.sqrt (1 + m ^ 2) - |m| = Real.goldenRatio⁻¹ := by
-  have hm2 : m ^ 2 = 1 / 4 := by rw [← sq_abs, hm]; norm_num
-  have h5 : Real.sqrt (1 + m ^ 2) = Real.sqrt 5 / 2 := by
-    rw [hm2, show (1 + 1 / 4 : ℝ) = (Real.sqrt 5 / 2) ^ 2 by
-      rw [div_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 5)]; norm_num]
-    exact Real.sqrt_sq (by positivity)
-  rw [h5, hm, Real.inv_goldenRatio, Real.goldenConj]
-  ring
+    Real.sqrt (1 + m ^ 2) - |m| = Real.goldenRatio⁻¹ :=
+  DiracSpeed.speedLimit_half hm
 
 /-- At mass `1` the speed limit is `√2 − 1`. -/
-theorem speedLimit_one {m : ℝ} (hm : |m| = 1) : Real.sqrt (1 + m ^ 2) - |m| = Real.sqrt 2 - 1 := by
-  have hm2 : m ^ 2 = 1 := by rw [← sq_abs, hm]; norm_num
-  rw [hm2, hm]
-  norm_num
+theorem speedLimit_one {m : ℝ} (hm : |m| = 1) : Real.sqrt (1 + m ^ 2) - |m| = Real.sqrt 2 - 1 :=
+  DiracSpeed.speedLimit_one hm
 
 /-- **Mass `1/2`, speed `1/φ`**: an eigenvector of `D_m` with `|m| = 1/2` moves at most at
 `1/φ`. -/
