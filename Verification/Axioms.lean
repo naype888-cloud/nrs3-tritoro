@@ -184,3 +184,10 @@ import NRS3Tritoro
 #print axioms BoundaryBits.saturated_iff_uniform
 #print axioms BoundaryBits.openProb_uniform
 #print axioms BoundaryBits.bitVariance_uniform
+#print axioms OpenCubeBoundary.T3_ne_zero_iff
+#print axioms OpenCubeBoundary.openCrossSteps_eq
+#print axioms OpenCubeBoundary.crossSteps_eq_union
+#print axioms OpenCubeBoundary.bekenstein_bound
+#print axioms OpenCubeBoundary.saturated_iff_uniform
+#print axioms OpenCubeBoundary.openProb_uniform
+#print axioms OpenCubeBoundary.bitVariance_uniform
