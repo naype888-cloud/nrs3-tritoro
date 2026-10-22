@@ -46,6 +46,14 @@ Dependencias por git, fijadas a un commit: [`nrs3-hopf`](https://github.com/nayp
 | **límite de Szegő del eje cerrado**: luz y oscuro → `1/2`, ángulo → `45°` | `RingSzego.tendsto_lightShare`, `tendsto_darkShare`, `tendsto_angle` |
 | `det Σ / \|det Ω\|` del eje → `2` | `RingSzego.tendsto_det_ratio` |
 | todo tamaño tiene su estado `c`; en `c` el ángulo → `45°` y la razón → `2` | `RingSzego.exists_cState`, `tendsto_angle_cState`, `tendsto_det_ratio_cState` |
+| eje del universo `ZMod L`, `L = M d`: dentro de un cubo `i[T°, X] = s K`; si todos los enlaces menos uno avanzan `s`, el último avanza `−(L − 1) s` (el salto `−2` de la costura de `P_d`); ninguna coordenada avanza el mismo paso no nulo en todo el eje | `TorusUniverse.commutator_apply_of_steps`, `closing_step`, `step_eq_zero` |
+| nada avanza más de una posición por paso: `\|⟨K⟩\| ≤ 1`; `⟨T°⟩² + Var T° + ⟨K⟩² + Var K = 1`, y `Var T° > 0` da `\|⟨K⟩\| < 1`; el modo de fase `i^j` va a `−1` con `T° i^j = 0` (`4 ∣ L`) | `TorusUniverse.abs_velocity_le`, `statistics_sum`, `abs_velocity_lt_one`, `current_phaseMode`, `transport_phaseMode` |
+| Robertson–Schrödinger en el eje del universo: el excedente es la brecha de Cauchy–Schwarz, `≥ 0`, y se anula exactamente con `T̃Ψ = κ X̃Ψ` | `TorusUniverse.surplus_eq`, `surplus_nonneg`, `exists_parallel_of_surplus_eq_zero` |
+| las dos ondas más rápidas `e_{±i}` (`4 ∣ L`): `S e_u = u e_u`, `T° e_u = 0`, ortogonales, `X` las acopla con `−1/2`; `S − u` acotado por debajo fuera de `e_u`; `‖(S ∓ i)Ψ‖² = 2 ± 2⟨K⟩` | `TorusUniverse.shift_wave`, `transport_wave`, `inner_wave_chart`, `exists_gap`, `norm_sq_shift_sub_I` |
+| los estados que saturan con `Var T° > 0` quedan lejos de las ondas más rápidas | `TorusUniverse.exists_transport_gap`, `isolation` |
+| **banda del eje del universo**: saturar con `Var T° > 0` da `\|⟨K⟩\| ≤ 1 − ε`; `v*(L) < 1`, la banda `Ϙ(L) = (v*(L), 1)` nunca es vacía y en ella el excedente es estrictamente positivo | `TorusUniverse.exists_velocity_le`, `threshold_lt_one`, `band_nonempty`, `surplus_pos_of_mem_band` |
+| dobladores del eje (`L` par): el signo alternado `Σ` anticonmuta con `T°` y `K` e intercambia `e_u ↔ e_{−u}`; es la `β` de Dirac, y `D_m = T° + m Σ` cumple `D_m² = T°² + m²`; con `m ≠ 0` ningún estado estacionario llega al cono | `TorusUniverse.transport_stagger`, `current_stagger`, `stagger_wave`, `dirac_sq`, `abs_velocity_lt_one_of_dirac` |
+| límite de velocidad de un estado de Dirac con masa: `T°² + K² = 1` y `\|⟨K⟩\| ≤ √(1 + m²) − \|m\| < 1` (en `m = 1/2`, `1/φ`) | `TorusUniverse.transport_sq_add_current_sq`, `abs_velocity_le_of_dirac` |
 | raíz de Dirac en `T³` (lados pares, signos de Kogut–Susskind): `D_m² = T_x² + T_y² + T_z² + m²`; los ocho dobladores `(±π/2)³` (`4` divide cada lado) cumplen `D_m e_{uvw} = m e_{−u,−v,−w}`, ceros de `D_0` | `TorusDirac3.dirac3_sq`, `dirac3_wave` |
 
 ### La prueba del estricto, en una línea por paso
