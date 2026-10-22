@@ -148,3 +148,7 @@ import NRS3Tritoro
 #print axioms TorusDipole.T3c_axisMode
 #print axioms TorusDirac3.dirac3_sq
 #print axioms TorusDirac3.dirac3_wave
+#print axioms TorusBekenstein.entropy_le_cutEntropy
+#print axioms TorusBekenstein.entropy_uniform
+#print axioms TorusBekenstein.bekenstein_bound
+#print axioms TorusBekenstein.exists_saturating

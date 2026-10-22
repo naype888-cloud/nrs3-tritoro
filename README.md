@@ -27,6 +27,10 @@ Dependencias por git, fijadas a un commit: [`nrs3-hopf`](https://github.com/nayp
 | luz + oscuro = 1 en cada eje, todo estado | `TorusDark.lightShare_add_darkShare` |
 | en la banda cada eje guarda una parte oscura > 0, todo estado | `TorusDark.darkShare_pos_of_band` |
 | en `c` cada eje resuelve `4/5` y guarda `1/5` oscuro (el cubo abierto de 3 guarda `0`) | `TorusDark.lightShare_maxState`, `TorusDark.darkShare_maxState` |
+| **ley de área del toro**: el corte `{x ≤ c}` tiene dos caras, el plano y la costura, con `dy·dz` pasos cada una; `S = 2·dy·dz·log 2`, sin depender de la profundidad `dx` ni del plano | `TorusArea.card_planeSteps`, `card_seamSteps`, `card_crossSteps`, `cutEntropy_eq`, `cutEntropy_eq_of_depth` |
+| Bekenstein–Hawking: con área `a²` por paso, `S = a²A/(4ℓ_P²)` ⟺ `a² = 4ℓ_P² log 2`, el mismo bit que en el cubo abierto | `TorusArea.bekensteinHawking_iff` |
+| defecto del corte `Ω = 2·dy·dz·δ(dx)`, mitad por cara; desde `4` posiciones `S = (log 2/δ) Ω`; las tres caras cargan `Ω_xΩ_yΩ_z = 8V²𝒱` y el cuanto del interior se lee en el borde, `𝒱 = (log 2)³ Ω_xΩ_yΩ_z/(S_xS_yS_z)` | `TorusArea.cutDefect_eq`, `cutEntropy_eq_mul_cutDefect`, `prod_cutDefect`, `volQuantum_eq_boundary` |
+| **cota de Bekenstein en T³**: toda distribución de los bits del borde tiene `H ≤ S = 2·dy·dz·log 2`; con el bit de área, `H ≤ A/(4ℓ_P²)`; la uniforme la alcanza | `TorusBekenstein.entropy_le_cutEntropy`, `entropy_le`, `bekenstein_bound`, `entropy_uniform`, `exists_saturating` |
 
 | sector de **dos excitaciones**: `dΓ M (Σ Ψ a†a† Ω) = Σ (D M Ψ) a†a† Ω`, con `D M = M ⊗ 1 + 1 ⊗ M` | `TorusSectors.secondQuant_twoExcitation` |
 | `D ⁅M, N⁆ = ⁅D M, D N⁆` | `TorusSectors.twoBody_lie` |

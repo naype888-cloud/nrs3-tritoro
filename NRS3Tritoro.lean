@@ -6,6 +6,7 @@ public import NRS3Tritoro.TorusStrict
 public import NRS3Tritoro.TorusCone
 public import NRS3Tritoro.TorusDark
 public import NRS3Tritoro.TorusArea
+public import NRS3Tritoro.TorusBekenstein
 public import NRS3Tritoro.TorusTime
 public import NRS3Tritoro.TorusSpeed
 public import NRS3Tritoro.TorusSpectrum
