@@ -223,3 +223,8 @@ import NRS3Tritoro
 #print axioms LightSheet.eight_pi
 #print axioms Lorentz.Vector.apply_eq_mul_minkowskiProduct_of_null
 #print axioms Einstein.einstein_equation
+#print axioms CutEinstein.clausius_cut
+#print axioms CutEinstein.einstein_cut
+#print axioms CutEinstein.clausius_openCube
+#print axioms CutEinstein.clausius_torus
+#print axioms CutEinstein.clausius_fiber

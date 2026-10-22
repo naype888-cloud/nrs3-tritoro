@@ -16,18 +16,19 @@ the fiber `w` closed with three positions (`nrs3-hopf`).
 
 | | R³ | T³ | Fibred box |
 |---|---|---|---|
-| NRS / NRS³ uncertainty | Physlib #1723 (NRS), #1725 (NRS³) | `Torus.robertson_det_torus`, `TorusStrict.robertson_det_torus_lt` | `BoxStrict.robertson_det_box_lt`, `NRSCell16` |
+| uncertainty relation / covariance determinant | Physlib #1723 (NRS), #1725 (NRS³) | `Torus.robertson_det_torus`, `TorusStrict.robertson_det_torus_lt` | `BoxStrict.robertson_det_box_lt`, `NRSCell16` |
 | light share / dark share | `DarkShare.lightShare_maxCurrentState`; limit ≈ 0.775 | `TorusDark.lightShare_maxState` (4/5, 1/5); limit ½ (`RingSzego`) | `FiberDark.darkShare_pos_of_band`, `lightShare_fiberMaxState` (4/5, 1/5) |
 | boundary entropy / area law | one wall, `dy·dz`: `OpenCubeBoundary.bekenstein_bound` | two walls, `2·dy·dz`: `TorusBekenstein.bekenstein_bound` | `dy·dz·3` across `x`, `2·dx·dy·dz` across `w`: `FiberBoundary.entropy_le_x`, `entropy_le_w` |
 | saturation / uniform field | `OpenCubeBoundary.saturated_iff_uniform`, `openProb_uniform` | `TorusSaturation.saturated_iff_uniform`, `TorusDarkFoam.meanField_uniform` | `FiberBoundary.saturated_iff_uniform_w`, `openProb_uniform_w` |
-| Bochner curvature | flat, `CD(0, 2)`: `BakryEmery.path_CD02` | flat: `TorusBochner.not_curvature_pos` | `K = 4` (16-cell): `BochnerCurvature.cell16_curvature` |
+| Bakry–Émery curvature / Ricci lower bound | flat, `CD(0, 2)`: `BakryEmery.path_CD02` | flat: `TorusBochner.not_curvature_pos` | `K = 4` (16-cell): `BochnerCurvature.cell16_curvature` |
 | Lorentz cone / admissible cone | `UncertaintyCone.mem_futureCone` | `TorusCone.axisVector_mem_futureCone` | `BoxCone.axisVector_mem_futureCone` |
 | Dirac operator / doubler modes | `D_m² = T² + m²`, every size: `OpenDirac.dirac_sq` | even sizes, eight doublers: `TorusDirac3.dirac3_sq`, `dirac3_wave` | the fiber is the mass, `1` and `1/2`: `FiberDirac.dirac_sq`, `fiberMass_sq` |
-| Einstein / Unruh flow | `η = 1/(4ℓ_P²)`: `ClausiusInput.openCube_eta` | `ClausiusInput.torus_eta` | `FiberBoundary.eta_x`, `eta_w` |
+| Einstein / Unruh flow | `η = 1/(4ℓ_P²)`, `R_kk = 8πℓ_P² T_kk`: `CutEinstein.clausius_openCube` | `CutEinstein.clausius_torus` | `CutEinstein.clausius_fiber` |
 
-The Unruh temperature, the Clausius relation and the Einstein equation are the steps on Minkowski
-in PhyslibAlpha (`Rindler.unruhTemperature_mul_period`, `LightSheet.clausius_iff`,
-`Einstein.einstein_equation`); the rows above give them the same `η` on every cut.
+On every cut `η = 1/(4ℓ_P²)` (`ClausiusInput`, `FiberBoundary.eta_w`), so with the Unruh
+temperature (`Rindler.unruhTemperature_mul_period`) the Clausius relation on every light sheet is
+`R_kk = 8πℓ_P² T_kk` (`LightSheet.eight_pi`), and on every light sheet through every point it gives
+`Ric − ½R g + Λ g = 8πℓ_P² T` (`CutEinstein.einstein_cut`, from `Einstein.einstein_equation`).
 
 ## Resultados
 
