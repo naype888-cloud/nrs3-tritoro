@@ -160,3 +160,9 @@ import NRS3Tritoro
 #print axioms TorusSaturation.eq_uniform_of_entropy_eq
 #print axioms TorusSaturation.saturated_iff_uniform
 #print axioms TorusSaturation.HSaturationDark.eq_uniform_of_saturation
+#print axioms TorusBoundaryField.secondQuant_injective
+#print axioms TorusBoundaryField.cutBracket_injective
+#print axioms TorusBoundaryField.configField_eq_sum
+#print axioms TorusBoundaryField.configField_injective
+#print axioms TorusBoundaryField.card_fieldConfigs
+#print axioms TorusBoundaryField.log_card_fieldConfigs
