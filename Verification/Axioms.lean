@@ -219,3 +219,5 @@ import NRS3Tritoro
 #print axioms FiberDirac.fiberMass_sq
 #print axioms Rindler.period_ge
 #print axioms Rindler.unruhTemperature_mul_period
+#print axioms LightSheet.clausius_iff
+#print axioms LightSheet.eight_pi

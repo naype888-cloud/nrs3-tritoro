@@ -44,3 +44,4 @@ public import NRS3Tritoro.FiberDark
 public import NRS3Tritoro.FiberBoundary
 public import NRS3Tritoro.FiberDirac
 public import NRS3Tritoro.Gravity.Unruh
+public import NRS3Tritoro.Gravity.Clausius
