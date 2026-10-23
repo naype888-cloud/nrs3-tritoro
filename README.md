@@ -22,7 +22,7 @@ the fiber `w` closed with three positions (`nrs3-hopf`).
 | saturation / uniform field | `OpenCubeBoundary.saturated_iff_uniform`, `openProb_uniform` | `TorusSaturation.saturated_iff_uniform`, `TorusDarkFoam.meanField_uniform` | `FiberBoundary.saturated_iff_uniform_w`, `openProb_uniform_w` |
 | Bakry–Émery curvature / Ricci lower bound | flat, `CD(0, 2)`: `BakryEmery.path_CD02` | flat: `TorusBochner.not_curvature_pos` | `K = 4` (16-cell): `BochnerCurvature.cell16_curvature` |
 | Lorentz cone / admissible cone | `UncertaintyCone.mem_futureCone` | `TorusCone.axisVector_mem_futureCone` | `BoxCone.axisVector_mem_futureCone` |
-| Dirac operator / doubler modes | `D_m² = T² + m²`, every size: `OpenDirac.dirac_sq` | even sizes, eight doublers in four pairs split to `±m`: `TorusDirac3.dirac3_sq`, `dirac3_pair_add` | the fiber is the mass, `1` and `1/2`; on `T³ × w` mass gap `1/2` and speed at most `1/φ` on every axis, every state: `FiberDirac.dirac_sq`, `TorusFiberDirac.abs_energy_ge`, `abs_velocity_le_inv_goldenRatio` |
+| Dirac operator / doubler modes | `D_m² = T² + m²`, every size: `OpenDirac.dirac_sq` | even sizes, eight doublers in four pairs split to `±m`: `TorusDirac3.dirac3_sq`, `dirac3_pair_add` | the fiber is the mass, `1` and `1/2`; mass gap `1/2` on the box (`FiberDirac.abs_energy_ge`) and on `T³ × w`; on `T³ × w` also speed at most `1/φ` on every axis, every state: `FiberDirac.dirac_sq`, `TorusFiberDirac.abs_energy_ge`, `abs_velocity_le_inv_goldenRatio` |
 | Einstein / Unruh flow | `η = 1/(4ℓ_P²)`, `R_kk = 8πℓ_P² T_kk`: `CutEinstein.clausius_openCube` | `CutEinstein.clausius_torus` | `CutEinstein.clausius_fiber` |
 
 On every cut `η = 1/(4ℓ_P²)` (`ClausiusInput`, `FiberBoundary.eta_w`), so with the Unruh

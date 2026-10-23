@@ -81,18 +81,8 @@ theorem norm_sq_eq_re_inner {X : HT a b c →ₗ[ℂ] HT a b c} (hX : X.IsSymmet
   simpa only [RCLike.re_to_complex] using this.symm
 
 /-- **The fiber gap**: `‖T°_w χ‖² ≥ ‖χ‖²/4` for every state. -/
-theorem norm_sq_fiber_ge (χ : HT a b c) : (1 / 2 : ℝ) ^ 2 * ‖χ‖ ^ 2 ≤ ‖Tw χ‖ ^ 2 := by
-  have hN : (inner ℂ χ χ).re = ‖χ‖ ^ 2 := by
-    simpa only [RCLike.re_to_complex] using inner_self_eq_norm_sq (𝕜 := ℂ) χ
-  set t := (inner ℂ χ (Tw χ)).re
-  have hT2 : ‖Tw χ‖ ^ 2 = 1 / 2 * (‖χ‖ ^ 2 + t) := by
-    rw [norm_sq_eq_re_inner Tw_isSymmetric, Tw_sq, inner_smul_right, Complex.re_ofReal_mul,
-      inner_add_right, Complex.add_re, hN]
-  have hpos := sq_nonneg ‖Tw χ + ((1 / 2 : ℝ) : ℂ) • χ‖
-  rw [norm_add_sq (𝕜 := ℂ), norm_smul, Complex.norm_real, inner_smul_right,
-    RCLike.re_to_complex, Complex.re_ofReal_mul, Tw_isSymmetric] at hpos
-  norm_num at hpos
-  nlinarith only [hpos, hT2]
+theorem norm_sq_fiber_ge (χ : HT a b c) : (1 / 2 : ℝ) ^ 2 * ‖χ‖ ^ 2 ≤ ‖Tw χ‖ ^ 2 :=
+  DiracSpeed.norm_sq_ge_of_sq_eq Tw_isSymmetric Tw_sq χ
 
 /-- The fiber term keeps the norm of the fiber transport. -/
 theorem norm_sq_Mw (χ : HT a b c) : ‖Mw χ‖ ^ 2 = ‖Tw χ‖ ^ 2 := by

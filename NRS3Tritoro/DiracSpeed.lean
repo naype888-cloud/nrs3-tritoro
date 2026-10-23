@@ -39,6 +39,7 @@ At `|m| = 1/2` the limit is `1/φ`, at `|m| = 1` it is `√2 − 1`.
   symmetric `A`, `B`.
 - `DiracSpeed.abs_energy_ge` : if `‖Bχ‖² ≥ m² ‖χ‖²`, every eigenvalue of `A + B` has `|E| ≥ |m|`.
 - `DiracSpeed.abs_velocity_le` : `|⟨V⟩| ≤ √(1 + m²) − |m|` for every unit eigenvector of `A + B`.
+- `DiracSpeed.norm_sq_ge_of_sq_eq` : a symmetric `S` with `S² = (1 + S)/2` has `‖Sχ‖² ≥ ‖χ‖²/4`.
 -/
 
 @[expose] public noncomputable section
@@ -167,6 +168,23 @@ theorem abs_energy_ge (hA : A.IsSymmetric) (hB : B.IsSymmetric)
   have h3 : |m| ^ 2 ≤ |E| ^ 2 := by
     rw [sq_abs]; exact le_of_mul_le_mul_right h2 hn
   exact (pow_le_pow_iff_left₀ (abs_nonneg m) (abs_nonneg E) two_ne_zero).1 h3
+
+/-- **A ring of three is never smaller than `1/2`**: if `S` is symmetric with `S² = (1 + S)/2`
+(eigenvalues `1` and `−1/2`), then `‖Sχ‖² ≥ ‖χ‖²/4`. -/
+theorem norm_sq_ge_of_sq_eq {S : H →ₗ[ℂ] H} (hS : S.IsSymmetric)
+    (h : ∀ χ, S (S χ) = ((1 / 2 : ℝ) : ℂ) • (χ + S χ)) (χ : H) :
+    (1 / 2 : ℝ) ^ 2 * ‖χ‖ ^ 2 ≤ ‖S χ‖ ^ 2 := by
+  have hre : ∀ η : H, (inner ℂ η η).re = ‖η‖ ^ 2 := fun η => by
+    simpa only [RCLike.re_to_complex] using inner_self_eq_norm_sq (𝕜 := ℂ) η
+  set t := (inner ℂ χ (S χ)).re
+  have hT2 : ‖S χ‖ ^ 2 = 1 / 2 * (‖χ‖ ^ 2 + t) := by
+    rw [← hre, hS, h, inner_smul_right, Complex.re_ofReal_mul, inner_add_right, Complex.add_re,
+      hre]
+  have hpos := sq_nonneg ‖S χ + ((1 / 2 : ℝ) : ℂ) • χ‖
+  rw [norm_add_sq (𝕜 := ℂ), norm_smul, Complex.norm_real, inner_smul_right,
+    RCLike.re_to_complex, Complex.re_ofReal_mul, hS] at hpos
+  norm_num at hpos
+  nlinarith only [hpos, hT2]
 
 /-- **The speed limit of a Dirac state**: every unit eigenvector of `A + B` moves at most at
 `√(1 + m²) − |m|`. -/

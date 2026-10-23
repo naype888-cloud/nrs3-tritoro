@@ -340,6 +340,11 @@ import NRS3Tritoro
 #print axioms TorusFiberDirac.rate_torusFiber
 #print axioms TorusFiberDirac.sum_rate_torusFiber
 #print axioms TorusFiberDirac.rate_torusFiber_sq_le
+#print axioms DiracSpeed.norm_sq_ge_of_sq_eq
+#print axioms FiberDirac.Tc_sq
+#print axioms FiberDirac.fiberOp_sq
+#print axioms FiberDirac.norm_sq_fiber_ge
+#print axioms FiberDirac.abs_energy_ge
 #print axioms Rindler.period_ge
 #print axioms Rindler.unruhTemperature_mul_period
 #print axioms LightSheet.clausius_iff
