@@ -47,8 +47,8 @@ abbrev fiberOp (dx dy dz : ℕ) :=
   toEuclideanLin (liftAlong (eW dx dy dz 3) ClosedThree.Tc)
 
 theorem lift_isSymmetric {d : ℕ} {β : Type*} [Fintype β] [DecidableEq β]
-    (e : Site4D dx dy dz 3 ≃ Fin d × β)
-    {A : Matrix (Fin d) (Fin d) ℂ} (hA : A.IsHermitian) : (toEuclideanLin (liftAlong e A)).IsSymmetric :=
+    (e : Site4D dx dy dz 3 ≃ Fin d × β) {A : Matrix (Fin d) (Fin d) ℂ} (hA : A.IsHermitian) :
+    (toEuclideanLin (liftAlong e A)).IsSymmetric :=
   isSymmetric_toEuclideanLin_iff.mpr (SiteEventsTopologies.liftAlong_isHermitian e hA)
 
 theorem fiberOp_sq (χ : EuclideanSpace ℂ (Site4D dx dy dz 3)) :
