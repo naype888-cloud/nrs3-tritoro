@@ -391,3 +391,16 @@ import NRS3Tritoro
 #print axioms EventClock.tick
 #print axioms EventClock.leave_half
 #print axioms EventClock.spread_smul
+#print axioms SeamRedshift.light_add_dark
+#print axioms SeamRedshift.light_pos
+#print axioms SeamRedshift.light_strictAnti
+#print axioms SeamRedshift.tendsto_light
+#print axioms SeamRedshift.tendsto_dark
+#print axioms SeamRedshift.image_cast
+#print axioms SeamRedshift.onePlusZ_eq_exp
+#print axioms SeamRedshift.hubble_le
+#print axioms SeamRedshift.onePlusZ_strictMono
+#print axioms SeamRedshift.one_le_onePlusZ
+#print axioms SeamRedshift.amplitude_redshift
+#print axioms SeamRedshift.spread_redshift
+#print axioms SeamRedshift.orthogonality_time_redshift
