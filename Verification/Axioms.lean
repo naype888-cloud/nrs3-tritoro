@@ -380,3 +380,14 @@ import NRS3Tritoro
 #print axioms TorusLayers.disjoint_planeSteps
 #print axioms TorusLayers.card_layerSteps
 #print axioms TorusLayers.card_interiors_torus
+#print axioms EventClock.leave
+#print axioms EventClock.prob_leave
+#print axioms EventClock.prob_le_prob_leave
+#print axioms EventClock.inner_basis_evolve
+#print axioms EventClock.weight_evolve
+#print axioms EventClock.norm_evolve
+#print axioms EventClock.spreadOf_evolve
+#print axioms EventClock.prob_le_sin_sq
+#print axioms EventClock.tick
+#print axioms EventClock.leave_half
+#print axioms EventClock.spread_smul

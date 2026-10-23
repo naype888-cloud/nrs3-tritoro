@@ -59,6 +59,7 @@ public import NRS3Tritoro.DiracQubitAxis
 public import NRS3Tritoro.MinUncertaintyDiracMap
 public import NRS3Tritoro.QuantumEvents
 public import NRS3Tritoro.EventsTopology
+public import NRS3Tritoro.EventClock
 public import NRS3Tritoro.SiteEvents
 public import NRS3Tritoro.SiteEventsTopologies
 public import NRS3Tritoro.TorusFiberSquare
