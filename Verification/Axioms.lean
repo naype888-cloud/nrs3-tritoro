@@ -404,3 +404,15 @@ import NRS3Tritoro
 #print axioms SeamRedshift.amplitude_redshift
 #print axioms SeamRedshift.spread_redshift
 #print axioms SeamRedshift.orthogonality_time_redshift
+#print axioms SeamLightShare.seamFraction_eq
+#print axioms SeamLightShare.seamFraction_eq_fiber
+#print axioms SeamLightShare.light_seam
+#print axioms SeamLightShare.dark_seam
+#print axioms SeamLightShare.onePlusZ_seam
+#print axioms SeamLightShare.z_one
+#print axioms SeamLightShare.kappa_seam
+#print axioms SeamLightShare.hubble_seam
+#print axioms SeamLightShare.size_of_hubble
+#print axioms SeamLightShare.orthogonality_time_seam
+#print axioms SeamLightShare.tendsto_lightShare_cState
+#print axioms SeamLightShare.onePlusZ_half
