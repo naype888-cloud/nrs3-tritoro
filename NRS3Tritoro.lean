@@ -58,6 +58,7 @@ public import NRS3Tritoro.DiracQubitParam
 public import NRS3Tritoro.DiracQubitAxis
 public import NRS3Tritoro.MinUncertaintyDiracMap
 public import NRS3Tritoro.QuantumEvents
+public import NRS3Tritoro.EventsTopology
 public import NRS3Tritoro.TorusFiberDoublers
 public import NRS3Tritoro.Gravity.Unruh
 public import NRS3Tritoro.Gravity.Clausius

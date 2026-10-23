@@ -304,6 +304,16 @@ import NRS3Tritoro
 #print axioms QuantumEvents.im_inner_eq_zero_of_decided
 #print axioms QuantumEvents.rate_eq
 #print axioms QuantumEvents.rate_sq_le
+#print axioms EventsTopology.prob_openEvent
+#print axioms EventsTopology.openEvent_comm
+#print axioms EventsTopology.variance_openEvent
+#print axioms EventsTopology.norm_bitState
+#print axioms EventsTopology.prob_siteEvent
+#print axioms EventsTopology.rate_siteEvent
+#print axioms EventsTopology.sum_rate_siteEvent
+#print axioms EventsTopology.velocity_eq_sum_flow
+#print axioms EventsTopology.flow_sq_le
+#print axioms EventsTopology.flow_eq_of_decided
 #print axioms Rindler.period_ge
 #print axioms Rindler.unruhTemperature_mul_period
 #print axioms LightSheet.clausius_iff
