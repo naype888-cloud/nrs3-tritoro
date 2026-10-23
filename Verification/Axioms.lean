@@ -335,6 +335,11 @@ import NRS3Tritoro
 #print axioms SiteEventsTopologies.rate_box
 #print axioms SiteEventsTopologies.sum_rate_box
 #print axioms SiteEventsTopologies.rate_box_sq_le
+#print axioms TorusFiberDirac.hop_sq_of_sign
+#print axioms TorusFiberDirac.dirac_sq
+#print axioms TorusFiberDirac.rate_torusFiber
+#print axioms TorusFiberDirac.sum_rate_torusFiber
+#print axioms TorusFiberDirac.rate_torusFiber_sq_le
 #print axioms Rindler.period_ge
 #print axioms Rindler.unruhTemperature_mul_period
 #print axioms LightSheet.clausius_iff

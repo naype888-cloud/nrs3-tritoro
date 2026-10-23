@@ -61,6 +61,7 @@ public import NRS3Tritoro.QuantumEvents
 public import NRS3Tritoro.EventsTopology
 public import NRS3Tritoro.SiteEvents
 public import NRS3Tritoro.SiteEventsTopologies
+public import NRS3Tritoro.TorusFiberSquare
 public import NRS3Tritoro.TorusFiberDoublers
 public import NRS3Tritoro.Gravity.Unruh
 public import NRS3Tritoro.Gravity.Clausius
