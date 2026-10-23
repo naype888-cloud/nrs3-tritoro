@@ -53,6 +53,10 @@ public import NRS3Tritoro.TorusFiberDirac
 public import NRS3Tritoro.TorusFiberGap
 public import NRS3Tritoro.TorusFiberAxes
 public import NRS3Tritoro.MinUncertaintyFiber
+public import NRS3Tritoro.DiracQubit
+public import NRS3Tritoro.DiracQubitParam
+public import NRS3Tritoro.DiracQubitAxis
+public import NRS3Tritoro.MinUncertaintyDiracMap
 public import NRS3Tritoro.TorusFiberDoublers
 public import NRS3Tritoro.Gravity.Unruh
 public import NRS3Tritoro.Gravity.Clausius
