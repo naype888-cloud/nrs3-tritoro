@@ -16,7 +16,7 @@ The electric term of a link `e` is the projector `P_e`; the magnetic term of a p
 a multiplication operator that depends only on the four links of `q`. The two commute unless
 `e` is a link of `q` (`elecProj_mul_comm`). So two links interact exactly when they are links of a
 common plaquette of `R`, and the distance between links is the number of such steps. It is the
-discrete form of the NRS cone: one link per step, `|⟨K⟩| ≤ 1`.
+discrete form of the RS^N cone: one link per step, `|⟨K⟩| ≤ 1`.
 
 ## Main results
 

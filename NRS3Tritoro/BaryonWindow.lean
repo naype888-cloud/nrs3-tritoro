@@ -12,7 +12,7 @@ public import NRS3Dark.Dark
 
 For a coherence constant `c > 1` the window is `(1 − 1/c) e^{−1/c}`: the share of the quantum,
 `g_s = 1 − 1/c`, times the Boltzmann factor `e^{−η}` with `η = 1/c`. With the Szegő limit of the
-open axis, `c = C∞`, it is `omegaPi` (`D26a`), and `omegaPi` lies inside the measured `Ω_b`
+open axis, `c = C_N^∞`, it is `omegaPi` (`D26a`), and `omegaPi` lies inside the measured `Ω_b`
 (`NRS3Dark.omegaPi_mem_planck`).
 
 The baryon density `Ω_b` enters as the measured datum (CMB, deuterium, BAO), as `c` enters as the

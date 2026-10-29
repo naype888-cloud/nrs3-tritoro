@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NRS³·T³ · Baryon window on the ring</title>
+<title>RS^N³·T³ · Baryon window on the ring</title>
 <meta name="description" content="The window (1 − 1/c) e^{−1/c} on the closed axis: positive because c > 1; with the random walk of the state.">
 <script src="https://naype888-cloud.github.io/nrs3-uncertainty-cone/cone-core.js?v=20261020d"></script>
 <script src="https://naype888-cloud.github.io/nrs3-uncertainty-cone/cone-t3.js?v=20261020d"></script>
@@ -33,9 +33,9 @@
 <body>
 <main>
   <button class="theme" id="theme" type="button">Theme</button>
-  <h1>NRS³·T³ · The baryon window on the ring</h1>
+  <h1>RS^N³·T³ · The baryon window on the ring</h1>
   <p class="lead">The window <code>(1 − 1/c) e^{−1/c}</code> needs <code>c &gt; 1</code>: <code>c = 1</code> gives 0 (the quantum saturates). On the open axis, at its Szegő limit
-    <code>C∞ ≈ 1.1355</code>, it is <code>0.0495</code>, inside the measured Ω_b. On the ring, the limit is <code>c = √2</code>: the window is <code>0.1444</code>, positive because
+    <code>C_N^∞ ≈ 1.1355</code>, it is <code>0.0495</code>, inside the measured Ω_b. On the ring, the limit is <code>c = √2</code>: the window is <code>0.1444</code>, positive because
     the limit does not saturate. What the window needs is <code>c &gt; 1</code>; Ω_b, w and c enter as measured data and the dark part is <code>1 − Ω_b</code>.</p>
 
   <h2>The window against c</h2>
@@ -46,7 +46,7 @@
       <div class="stat"><div class="k">C°(d) = 1/β</div><div class="v" id="b1">–</div></div>
       <div class="stat"><div class="k">window at C°(d)</div><div class="v" id="b2">–</div></div>
       <div class="stat"><div class="k">ring limit c = √2</div><div class="v" id="b3">–</div></div>
-      <div class="stat"><div class="k">open C∞ → omegaPi</div><div class="v" id="b4">–</div></div>
+      <div class="stat"><div class="k">open C_N^∞ → omegaPi</div><div class="v" id="b4">–</div></div>
     </div>
     <p class="note">Grey band: Ω_b = ω_b/h² from Planck 2018 at 1σ, 0.04820 to 0.05044. Orange: ring. Blue: open axis.</p>
   </div>
@@ -91,7 +91,7 @@
     g.strokeStyle = css("--ink"); g.lineWidth = 2; g.beginPath();
     for (let c = 1; c <= cmax + 1e-9; c += 0.01) { const x = X(c), y = Y(win(c)); c === 1 ? g.moveTo(x, y) : g.lineTo(x, y); } g.stroke();
     const mark = (c, col, lab, up) => { g.fillStyle = css(col); g.beginPath(); g.arc(X(c), Y(win(c)), 6, 0, 7); g.fill(); g.fillText(lab, X(c) + 8, Y(win(c)) + (up ? -8 : 14)); };
-    mark(CINF, "--blue", "open C∞", false); mark(Math.SQRT2, "--orange", "ring √2", true);
+    mark(CINF, "--blue", "open C_N^∞", false); mark(Math.SQRT2, "--orange", "ring √2", true);
     const cd = R.CNava(dd()); if (cd <= cmax) { g.strokeStyle = css("--orange"); g.lineWidth = 1.5; g.strokeRect(X(cd) - 6, Y(win(cd)) - 6, 12, 12); }
     g.fillStyle = css("--muted"); g.fillText("c", L + W - 8, T + H + 18);
     $("vbd").textContent = dd(); $("b1").textContent = cd.toFixed(4); $("b2").textContent = win(cd).toFixed(4);

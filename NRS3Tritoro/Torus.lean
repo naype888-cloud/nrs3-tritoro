@@ -16,10 +16,10 @@ each, the space `ℂ^(Fin k → Fin 3)`. With `k = 3` it is the three-torus `T³
 and without boundary; with `k = 4` it is `T⁴ = x × y × z × w`, the box of `NRS3Hopf` with every
 axis closed. Each axis carries the pair `(T°, P₃)` of `ClosedThree`.
 
-* **NRS³ on every axis.** The defect of a closed axis in its band is positive for every state of
+* **RS^N³ on every axis.** The defect of a closed axis in its band is positive for every state of
   the torus, entangled with the other axes or not (`ClosedAxisEntangled`): each axis is a
   `ℂ³ ⊗ ℂ^β` with `β` the other `k − 1` axes.
-* **det|NRS³| at the maximal current state.** Each closed axis contributes `F = 5/4`
+* **det|RS^N³| at the maximal current state.** Each closed axis contributes `F = 5/4`
   (`BoxExcess.closedFactor_eq`), so `det Σ = (5/4)^k |det Ω|`: `125/64` on `T³`, `625/256` on
   `T⁴`. Robertson 1934 is strict for every `k ≥ 1`.
 
@@ -71,14 +71,14 @@ theorem robertson_det_torus (Φ : HT k) :
     |(imMatrix (torusPairs k) Φ).det| ≤ (covMatrix (torusPairs k) Φ).det :=
   robertson_det _ Φ
 
-/-- **NRS³ on every axis of the torus.** If the tension of axis `i` exceeds `1`, its defect is
+/-- **RS^N³ on every axis of the torus.** If the tension of axis `i` exceeds `1`, its defect is
 positive, for every unit state, entangled with the other axes or not. -/
 theorem gramDefect_pos (i : Fin k) {Φ : HT k} (hΦ : ‖Φ‖ = 1)
     (hb : 1 < |tensionG (torusPairs k (0, i)) (torusPairs k (1, i)) Φ|) :
     0 < gramDefectC (centeredG (torusPairs k (0, i)) Φ) (centeredG (torusPairs k (1, i)) Φ) :=
   ClosedAxisEntangled.gramDefect_pos_of_band (split i) hΦ hb
 
-/-- **det|NRS³| on the torus**: at the maximal current state, `det Σ = (5/4)^k |det Ω|`. -/
+/-- **det|RS^N³| on the torus**: at the maximal current state, `det Σ = (5/4)^k |det Ω|`. -/
 theorem det_covMatrix_maxState (k : ℕ) :
     (covMatrix (torusPairs k) (maxState k)).det =
       (5 / 4) ^ k * |(imMatrix (torusPairs k) (maxState k)).det| := by

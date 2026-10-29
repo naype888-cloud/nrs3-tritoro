@@ -1,4 +1,4 @@
-# NRS³ · Tritoro — el campo de incertidumbre en T³
+# RS^N³ · Tritoro — el campo de incertidumbre en T³
 
 **Los tres ejes cerrados.** `T³ = x × y × z`, cada eje cerrado con tres posiciones: finito y sin
 borde. Cada eje lleva el par `(T°, P₃)` del eje cerrado. La teoría del campo de incertidumbre
@@ -7,7 +7,7 @@ borde. Cada eje lleva el par `(T°, P₃)` del eje cerrado. La teoría del campo
 Lean 4 sobre [`nrs3-hopf`](../nrs3-hopf) (lemas del eje cerrado: `ClosedThree`,
 `ClosedAxisEntangled`, `StackedFibers`, `ClosedThreeIdeal`, `RobertsonEquality*`),
 [`nrs3-dark`](../nrs3-dark) y [`nrs3-uncertainty-cone`](https://github.com/naype888-cloud/nrs3-uncertainty-cone).
-Dependencias por git, fijadas a un commit: [`nrs3-hopf`](https://github.com/naype888-cloud/nrs3-hopf), [`nrs3-dark`](https://github.com/naype888-cloud/nrs3-dark), [`nrs3-mandelstam-tamm-cramer-rao`](https://github.com/naype888-cloud/nrs3-mandelstam-tamm-cramer-rao) y [`nrs3-de-sitter`](https://github.com/naype888-cloud/nrs3-de-sitter). Páginas: [de Sitter en T³](https://naype888-cloud.github.io/nrs3-de-sitter/t3.html), [SL(2, ℂ) en T³](https://naype888-cloud.github.io/nrs3-uncertainty-cone/lorentz-t3.html), [NRS³-Minkowski en T³](https://naype888-cloud.github.io/nrs3-uncertainty-cone/index-t3.html), [Dark en T³](https://naype888-cloud.github.io/nrs3-dark/t3.html).
+Dependencias por git, fijadas a un commit: [`nrs3-hopf`](https://github.com/naype888-cloud/nrs3-hopf), [`nrs3-dark`](https://github.com/naype888-cloud/nrs3-dark), [`nrs3-mandelstam-tamm-cramer-rao`](https://github.com/naype888-cloud/nrs3-mandelstam-tamm-cramer-rao) y [`nrs3-de-sitter`](https://github.com/naype888-cloud/nrs3-de-sitter). Páginas: [de Sitter en T³](https://naype888-cloud.github.io/nrs3-de-sitter/t3.html), [SL(2, ℂ) en T³](https://naype888-cloud.github.io/nrs3-uncertainty-cone/lorentz-t3.html), [RS^N³-Minkowski en T³](https://naype888-cloud.github.io/nrs3-uncertainty-cone/index-t3.html), [Dark en T³](https://naype888-cloud.github.io/nrs3-dark/t3.html).
 
 ## Three topologies: R³, T³ and the fibred box
 
@@ -16,7 +16,7 @@ the fiber `w` closed with three positions (`nrs3-hopf`).
 
 | | R³ | T³ | Fibred box |
 |---|---|---|---|
-| uncertainty relation / covariance determinant | Physlib #1723 (NRS), #1725 (NRS³) | `Torus.robertson_det_torus`, `TorusStrict.robertson_det_torus_lt` | `BoxStrict.robertson_det_box_lt`, `NRSCell16` |
+| uncertainty relation / covariance determinant | Physlib #1723 (RS^N), #1725 (RS^N³) | `Torus.robertson_det_torus`, `TorusStrict.robertson_det_torus_lt` | `BoxStrict.robertson_det_box_lt`, `NRSCell16` |
 | light share / dark share | `DarkShare.lightShare_maxCurrentState`; limit ≈ 0.775 | `TorusDark.lightShare_maxState` (4/5, 1/5); limit ½ (`RingSzego`) | `FiberDark.darkShare_pos_of_band`, `lightShare_fiberMaxState` (4/5, 1/5) |
 | boundary entropy / area law | one wall, `dy·dz`: `OpenCubeBoundary.bekenstein_bound` | two walls, `2·dy·dz`: `TorusBekenstein.bekenstein_bound` | `dy·dz·3` across `x`, `2·dx·dy·dz` across `w`: `FiberBoundary.entropy_le_x`, `entropy_le_w` |
 | saturation / uniform field | `OpenCubeBoundary.saturated_iff_uniform`, `openProb_uniform` | `TorusSaturation.saturated_iff_uniform`, `TorusDarkFoam.meanField_uniform` | `FiberBoundary.saturated_iff_uniform_w`, `openProb_uniform_w` |
@@ -35,13 +35,13 @@ temperature (`Rindler.unruhTemperature_mul_period`) the Clausius relation on eve
 | Enunciado | Lean |
 |---|---|
 | Robertson 1934 en el toro, todo estado | `Torus.robertson_det_torus` |
-| NRS³ en cada eje: tensión > 1 ⇒ defecto > 0, todo estado, entrelazado o no | `Torus.gramDefect_pos` |
+| RS^N³ en cada eje: tensión > 1 ⇒ defecto > 0, todo estado, entrelazado o no | `Torus.gramDefect_pos` |
 | en el estado de corriente máxima `det Σ = (5/4)^k \|det Ω\|` | `Torus.det_covMatrix_maxState` |
 | `T³`: `125/64`; `T⁴`: `625/256`; estricto desde `k = 1` | `Torus.three_torus`, `Torus.four_torus`, `Torus.robertson_det_maxState_strict` |
 | escalera: cubo abierto `1`, caja `5/4`, `T³` `125/64`, `T⁴` `625/256` | `Torus.ladder` |
 | los ejes distintos del toro conmutan | `TorusCommute.liftAlong_split_comm`, `TorusCommute.torusPairs_comm` |
 | `[[T°, P₃], w₀T° + w₁P₃] ≠ 0` para `w ≠ 0` | `TorusStrict.lie_lie_ne_zero` |
-| **det\|NRS³\| estricto en `T³` para todo estado con los tres ejes en su banda** | `TorusStrict.robertson_det_torus_lt` |
+| **det\|RS^N³\| estricto en `T³` para todo estado con los tres ejes en su banda** | `TorusStrict.robertson_det_torus_lt` |
 | todo eje de todo estado cae en el cono futuro cerrado | `TorusCone.axisVector_mem_futureCone` |
 | el intervalo de un eje es su defecto de Robertson–Schrödinger | `TorusCone.interval_axisVector` |
 | en la banda el eje es estrictamente temporal; tiempo propio > 0 | `TorusCone.timelike_of_band`, `TorusCone.properTime_pos_of_band` |
@@ -70,7 +70,7 @@ temperature (`Rindler.unruhTemperature_mul_period`) the Clausius relation on eve
 | **saturada = perfectamente distribuida**: `H = S` ⟺ la distribución del corte es la uniforme (igualdad de Jensen para `−x log x` estrictamente cóncava); la región oscura del postulado es esa | `TorusSaturation.eq_uniform_of_entropy_eq`, `saturated_iff_uniform`, `HSaturationDark.eq_uniform_of_saturation` |
 | **los bits del borde los carga el campo**: cada configuración `S` es el operador `F(S) = Σ_{(p,q) ∈ S} [T3c, P_x]_pq a†_p a_q` (paso abierto = el campo mueve una excitación a través del corte); con la estructura estrella `dΓ` es inyectiva, `S ↦ F(S)` también, el campo carga `2^(2·dy·dz)` configuraciones y `log #F = S` | `TorusBoundaryField.secondQuant_injective`, `configField_eq_sum`, `configField_injective`, `card_fieldConfigs`, `log_card_fieldConfigs` |
 | **el campo oscuro es espuma**: en la uniforme (y en toda distribución saturada) cada paso del borde está abierto con probabilidad `1/2`, sin gradiente; el corchete medio es la mitad del corchete completo en cada paso, `Σ_S d(S) F(S) = ½ F(todo abierto)`; cada paso fluctúa lo máximo que puede un bit, `p(1−p) = 1/4` | `TorusDarkFoam.openProb_uniform`, `meanBracket_uniform`, `meanField_uniform`, `bitVariance_le`, `bitVariance_uniform`, `openProb_of_saturated`, `meanBracket_of_saturated`, `bitVariance_of_saturated` |
-| **Bochner en T³: el toro es plano**: con el transporte de seis vecinos, `Γ₂(f)` es una suma de cuadrados de segundas diferencias (por eje y mixtas entre pares de ejes), así que `Γ₂ ≥ 0`, curvatura `≥ 0` para todo tamaño; con `5` posiciones en un eje la cota es justa (`Γ = 1`, `Γ₂ = 0`) y ningún `K > 0` vale; `Γ = ½[f,[f,A]]1` lee la curvatura del corchete de NRS (el 16-cell, en cambio, tiene `K = 4`) | `TorusBochner.gam2_eq`, `torus_curvature`, `torus_sharp`, `not_curvature_pos`; `BochnerCurvature.gamma_eq_lie` |
+| **Bochner en T³: el toro es plano**: con el transporte de seis vecinos, `Γ₂(f)` es una suma de cuadrados de segundas diferencias (por eje y mixtas entre pares de ejes), así que `Γ₂ ≥ 0`, curvatura `≥ 0` para todo tamaño; con `5` posiciones en un eje la cota es justa (`Γ = 1`, `Γ₂ = 0`) y ningún `K > 0` vale; `Γ = ½[f,[f,A]]1` lee la curvatura del corchete de RS^N (el 16-cell, en cambio, tiene `K = 4`) | `TorusBochner.gam2_eq`, `torus_curvature`, `torus_sharp`, `not_curvature_pos`; `BochnerCurvature.gamma_eq_lie` |
 | una región saturada (`H = S`) está llena: ninguna distribución del corte guarda más; **postulado de Nava (puente declarado)**: saturar un cuanto lo vuelve oscuro, parte oscura `1` y luz `0`; satisfacible; la uniforme y toda región que alcanza `A/(4ℓ_P²)` son oscuras | `TorusSaturation.isMax_of_saturated`, `HSaturationDark`, `hSaturationDark_satisfiable`, `HSaturationDark.darkShare_uniform`, `lightShare_eq_zero`, `darkShare_of_area` |
 
 | sector de **dos excitaciones**: `dΓ M (Σ Ψ a†a† Ω) = Σ (D M Ψ) a†a† Ω`, con `D M = M ⊗ 1 + 1 ⊗ M` | `TorusSectors.secondQuant_twoExcitation` |

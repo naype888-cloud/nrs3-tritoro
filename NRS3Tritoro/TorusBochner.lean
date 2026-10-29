@@ -15,7 +15,7 @@ public import NRS3Hopf.BochnerCurvature
 `½ Δ|∇f|² = |Hess f|² + ⟨∇f, ∇Δf⟩ + Ric(∇f, ∇f)`: with the carré du champ `Γ` and its iterate
 `Γ₂ = ½ ΔΓ − Γ(f, Δf)` (Bakry–Émery), the curvature is at least `K` when `Γ₂(f) ≥ K Γ(f, f)`
 for every `f`. The carré du champ is the double commutator of the position with transport,
-`Γ(f, f) = ½ [f, [f, A]] 1` (`gamma_eq_lie`): the curvature is read from the bracket of NRS.
+`Γ(f, f) = ½ [f, [f, A]] 1` (`gamma_eq_lie`): the curvature is read from the bracket of RS^N.
 
 Here `A` is the transport of `T³ = ZMod a × ZMod b × ZMod c`: one step `±1` along one axis, six
 steps from every point. The discrete Bochner identity is exact: `Γ₂(f)` at `(x, y, z)` is the sum
