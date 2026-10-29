@@ -43,12 +43,16 @@ public import NRS3Tritoro.TorusDirac
 public import NRS3Tritoro.TorusDiracBound
 public import NRS3Tritoro.TorusDirac3
 public import NRS3Tritoro.OpenDirac
+public import NRS3Tritoro.OpenDiracVelocity
+public import NRS3Tritoro.OpenDiracDispersion
 public import NRS3Tritoro.FiberDark
 public import NRS3Tritoro.FiberBoundary
 public import NRS3Tritoro.FiberDirac
 public import NRS3Tritoro.FiberDiracAxis
 public import NRS3Tritoro.DiracSpeed
 public import NRS3Tritoro.SiteHop
+public import NRS3Tritoro.SiteHopL2
+public import NRS3Tritoro.LatticeFiberDirac
 public import NRS3Tritoro.GaugeWilson
 public import NRS3Tritoro.KogutSusskind
 public import NRS3Tritoro.KogutSusskindGap
